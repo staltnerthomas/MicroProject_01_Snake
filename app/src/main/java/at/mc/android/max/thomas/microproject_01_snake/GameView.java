@@ -25,7 +25,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     private int SViewWidth;
     private int SViewHeight;
 
-    private int snakeWidth;
+    private int snakeWidth = 15;
     private int snakeHead = 20;
     private int fruitWidth = snakeWidth;
 
@@ -52,26 +52,6 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             public void surfaceCreated(SurfaceHolder holder) {
                 Log.i(TAG, "surfaceCreated!");
                 sHolder = holder;
-//                Thread t = new Thread() {
-//                   public void run() {
-//                       for (int i = 0 ; i < 10 ; i++) {
-//                           try {
-//                               Thread.sleep(500);
-//                           } catch (InterruptedException e) {
-//                               e.printStackTrace();
-//                           }
-//                           mHandler.post(new Runnable() {
-//                               @Override
-//                               public void run() {
-//                                   setFruit();
-//                               }
-//                           });
-//                       }
-//                   }
-//                };
-//                t.start();
-
-
             }
 
             @Override
@@ -91,7 +71,6 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-//        setFruit((int)event.getX(),(int) event.getY());
         return true;
     }
 
@@ -107,11 +86,11 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             Canvas c = sHolder.lockCanvas();
 
             SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
-//            int bGC = sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0);
+
             c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0));
 
             Paint p = new Paint();
-            p.setStrokeWidth(6.0f);
+            p.setStrokeWidth(3.0f);
             p.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, 0x0));
 
             do {
@@ -122,10 +101,10 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 y = (int) (Math.random() * SViewHeight);
             } while (y < fruitWidth / 2 || y > SViewHeight - fruitWidth / 2 );
 
-//            RectF rect = new RectF(x-5, y+5, x+5, y-5);
-            RectF rect = new RectF(x-snakeHead/2, y+snakeHead/2, x+snakeHead/2, y-snakeHead/2);
+
+            RectF rect = new RectF(x-fruitWidth/2, y+fruitWidth/2, x+fruitWidth/2, y-fruitWidth/2);
             c.drawRect(rect,p);
-//            c.drawOval(rect,p);
+
             Log.i(TAG, "draw fruit --> " + rect);
             sHolder.unlockCanvasAndPost(c);
         }

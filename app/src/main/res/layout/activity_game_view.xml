@@ -8,9 +8,24 @@
     tools:context="at.mc.android.max.thomas.microproject_01_snake.GameView"
     android:animateLayoutChanges="false">
 
+
     <SurfaceView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/game_surface_view"
         android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_text_view_score"
+            android:id="@+id/game_text_view_score"
+            android:layout_gravity="right" />
+    </LinearLayout>
 </FrameLayout>
