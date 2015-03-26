@@ -90,41 +90,40 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             @Override
             public boolean onScroll(MotionEvent _e1, MotionEvent _e2, float _distanceX, float _distanceY) {
-                Toast.makeText(GameView.this, "scroll detected", Toast.LENGTH_SHORT).show();
-                float xDif = _e1.getX() - _e2.getX();
-                float yDif = _e1.getY() - _e2.getY();
+                float xDif = _e1.getX(0) - _e2.getX(0);
+                float yDif = _e1.getY(0) - _e2.getY(0);
                 float max = Math.max(Math.abs(xDif), Math.abs(yDif));
                 //float max = Math.max(_distanceX, _distanceY);
                 if (Math.abs(xDif) > Math.abs(yDif)) {
                     if (xDif < 0) {
-                        if (!mNextMotion.equals("left")) {
+                        if (!mNextMotion.equals("left") && !mNextMotion.equals("right")) {
                             mNextMotion = "right";//dir
                             Log.i("snake", "right");
                         } else {
-                            Log.i("snake", "right detected");
+                            Log.i("snake", "right/left detected");
                         }
                     } else {
-                        if (!mNextMotion.equals("right")) {
+                        if (!mNextMotion.equals("left") && !mNextMotion.equals("right")) {
                             mNextMotion = "left";
                             Log.i("snake", "left");
                         } else {
-                            Log.i("snake", "left detected");
+                            Log.i("snake", "left/right detected");
                         }
                     }
                 } else {
                     if (yDif < 0) {
-                        if (!mNextMotion.equals("up")) {
+                        if (!mNextMotion.equals("up") && !mNextMotion.equals("down")) {
                             mNextMotion = "down";
                             Log.i("snake", "down");
                         } else {
-                            Log.i("snake", "down detected");
+                            Log.i("snake", "down/up detected");
                         }
                     } else {
-                        if (!mNextMotion.equals("down")) {
+                        if (!mNextMotion.equals("up") && !mNextMotion.equals("down")) {
                             mNextMotion = "up";
                             Log.i("snake", "up");
                         } else {
-                            Log.i("snake", "up detected, not done...");
+                            Log.i("snake", "up/down detected");
                         }
                     }
                 }
