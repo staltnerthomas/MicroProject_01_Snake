@@ -2,6 +2,7 @@ package at.mc.android.max.thomas.microproject_01_snake;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,8 +13,17 @@ import android.widget.Button;
 
 public class StartScreen extends Activity implements View.OnClickListener {
 
-    public static final String TAG = "Snake 01";
+    public static final String TAG = "Snake 01 StartScreen";
     Button b = null;
+
+    public static final String SHARED_PREFS = "Preverences_Name";
+    public static final String GAME_VIEW_BACKGROUND_COLOUR = "Backgroundcolor_of_GameView";
+
+    public static final String GAME_VIEW_SNAKE_HEAD_COLOUR  = "Snake_Head_color_of_GameView";
+    public static final String GAME_VIEW_SNAKE_BODY_COLOUR  = "Snake_Body_color_of_GameView";
+    public static final String GAME_VIEW_FRUIT_COLOUR       = "Fruit_color_of_GameView";
+    public static final String GAME_VIEW_HI_SCORE           = "High_Score";
+    public static final String GAME_VIEW_LAST_SCORE         = "Last_Score";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +32,20 @@ public class StartScreen extends Activity implements View.OnClickListener {
 
         b = (Button) findViewById(R.id.start_button_start);
         b.setOnClickListener(this);
+
+
+        SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
+        sharedPrefs.getInt(GAME_VIEW_BACKGROUND_COLOUR, 0x88888888);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putInt(GAME_VIEW_BACKGROUND_COLOUR, 0xffff0000);
+
+        editor.putInt(GAME_VIEW_SNAKE_HEAD_COLOUR, 0xffff0000);
+        editor.putInt(GAME_VIEW_SNAKE_BODY_COLOUR, 0xffff0000);
+        editor.putInt(GAME_VIEW_FRUIT_COLOUR,      0xffff0000);
+        editor.putInt(GAME_VIEW_HI_SCORE,          0x0);
+        editor.putInt(GAME_VIEW_LAST_SCORE,        0x0);
+
+        editor.commit();
 
     }
 
