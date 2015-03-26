@@ -26,6 +26,6 @@
             android:layout_height="wrap_content"
             android:text="@string/game_text_view_score"
             android:id="@+id/game_text_view_score"
-            android:layout_gravity="right" />
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </FrameLayout>
