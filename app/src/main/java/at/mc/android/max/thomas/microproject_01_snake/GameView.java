@@ -83,36 +83,37 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 float xDif = _e1.getX() - _e2.getX();
                 float yDif = _e1.getY() - _e2.getY();
                 float max = Math.max(Math.abs(xDif), Math.abs(yDif));
-                if (max - _distanceX < 0.0001) {
+                //float max = Math.max(_distanceX, _distanceY);
+                if (Math.abs(xDif) > Math.abs(yDif)) {
                     if (xDif < 0) {
                         if (!mNextMotion.equals("left")) {
                             mNextMotion = "right";
-                            Log.e("snake", "right");
+                            Log.i("snake", "right");
                         } else {
-                            Log.e("snake", "right detected, not done...");
+                            Log.i("snake", "right detected");
                         }
                     } else {
                         if (!mNextMotion.equals("right")) {
                             mNextMotion = "left";
-                            Log.e("snake", "left");
+                            Log.i("snake", "left");
                         } else {
-                            Log.e("snake", "left detected, not done...");
+                            Log.i("snake", "left detected");
                         }
                     }
-                } else if (max - _distanceY < 0.0001) {
+                } else {
                     if (yDif < 0) {
                         if (!mNextMotion.equals("up")) {
                             mNextMotion = "down";
-                            Log.e("snake", "down");
+                            Log.i("snake", "down");
                         } else {
-                            Log.e("snake", "left detected, not done...");
+                            Log.i("snake", "down detected");
                         }
                     } else {
                         if (!mNextMotion.equals("down")) {
                             mNextMotion = "up";
-                            Log.e("snake", "up");
+                            Log.i("snake", "up");
                         } else {
-                            Log.e("snake", "up detected, not done...");
+                            Log.i("snake", "up detected, not done...");
                         }
                     }
                 }
@@ -138,6 +139,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
     @Override
     public boolean onTouch(View _v, MotionEvent _e) {
+        Log.i("snake", _e.getX() + "/" + _e.getY());
         mG.onTouchEvent(_e);
         return true;
     }
