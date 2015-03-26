@@ -3,7 +3,6 @@ package at.mc.android.max.thomas.microproject_01_snake;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -27,9 +26,8 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     private int SViewHeight;
 
     private int snakeWidth;
-    private int snakeHead = 10;
+    private int snakeHead = 20;
     private int fruitWidth = snakeWidth;
-    private int colourFruit = 0xff0000;
 
 
 
@@ -109,12 +107,12 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             Canvas c = sHolder.lockCanvas();
 
             SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
-            int bGC = sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0);
-            c.drawColor(bGC);
+//            int bGC = sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0);
+            c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0));
 
             Paint p = new Paint();
             p.setStrokeWidth(6.0f);
-            p.setColor(Color.CYAN);
+            p.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, 0x0));
 
             do {
                 x = (int) (Math.random() * SViewWidth);

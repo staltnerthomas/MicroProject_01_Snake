@@ -39,9 +39,9 @@ public class StartScreen extends Activity implements View.OnClickListener {
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt(GAME_VIEW_BACKGROUND_COLOUR, 0xffff0000);
 
-        editor.putInt(GAME_VIEW_SNAKE_HEAD_COLOUR, 0xffff0000);
-        editor.putInt(GAME_VIEW_SNAKE_BODY_COLOUR, 0xffff0000);
-        editor.putInt(GAME_VIEW_FRUIT_COLOUR,      0xffff0000);
+        editor.putInt(GAME_VIEW_SNAKE_HEAD_COLOUR, 0xff00ff00);
+        editor.putInt(GAME_VIEW_SNAKE_BODY_COLOUR, 0xff0000ff);
+        editor.putInt(GAME_VIEW_FRUIT_COLOUR,      0xffffff00);
         editor.putInt(GAME_VIEW_HI_SCORE,          0x0);
         editor.putInt(GAME_VIEW_LAST_SCORE,        0x0);
 
