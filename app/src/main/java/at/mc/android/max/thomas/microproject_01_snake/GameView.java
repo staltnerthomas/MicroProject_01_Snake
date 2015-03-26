@@ -253,8 +253,8 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
 
             /**
-             * This method sets the snake and the foot
-             * The first element of the list is the head, the last is the foot
+             * This method sets the snake and the food
+             * The first element of the list is the head, the last is the food
              * Between is the tail of the snake.
              */
             SnakeNode n = snList.getHead();
@@ -264,10 +264,10 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
 
                 if (i == 0) {
-                    if(mNextMotion.equals("left") || mNextMotion.equals("right")) {
+                    if (mNextMotion.equals("left") || mNextMotion.equals("right")) {
                         c.drawOval(new RectF(n.getValueX() - snakeHeadHeight / 2, n.getValueY() + snakeHeadWidth / 2, n.getValueX() + snakeHeadHeight / 2, n.getValueY() - snakeHeadWidth / 2), h);
 
-                        if(mNextMotion.equals("right")) {
+                        if (mNextMotion.equals("right")) {
                             c.drawOval(new RectF(n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
                             c.drawOval(new RectF(n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
                         } else {
@@ -277,7 +277,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                     } else {
                         c.drawOval(new RectF(n.getValueX() - snakeHeadWidth / 2, n.getValueY() + snakeHeadHeight / 2, n.getValueX() + snakeHeadWidth / 2, n.getValueY() - snakeHeadHeight / 2), h);
 
-                        if(mNextMotion.equals("up")) {
+                        if (mNextMotion.equals("up")) {
                             c.drawOval(new RectF(n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
                             c.drawOval(new RectF(n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
                         } else {
@@ -305,8 +305,8 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
         SnakeNode n = snList.getHead();
         for (int i = 0; i < (snList.elements() - 1); i++) {
-        //Because last node is the foot
-            if(i == 0){
+            //Because last node is the foot
+            if (i == 0) {
 
             } else {
 
@@ -332,7 +332,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 snList.pushFront(x + snakeBody, y);
                 snList.pushFront(x + 2 * snakeBody, y);
                 mNextMotion = "right";
-                snList.getHead().setValueX(snList.getHead().getValueX()-snakeHeadHeight/2);
+                snList.getHead().setValueX(snList.getHead().getValueX() - snakeHeadHeight / 2);
             }
             break;
 
@@ -340,7 +340,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 snList.pushFront(x - snakeBody, y);
                 snList.pushFront(x - 2 * snakeBody, y);
                 mNextMotion = "left";
-                snList.getHead().setValueX(snList.getHead().getValueX()+snakeHeadHeight/2);
+                snList.getHead().setValueX(snList.getHead().getValueX() + snakeHeadHeight / 2);
             }
             break;
 
@@ -356,14 +356,14 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 snList.pushFront(x, y - snakeBody);
                 snList.pushFront(x, y - 2 * snakeBody);
                 mNextMotion = "down";
-                snList.getHead().setValueY(snList.getHead().getValueY()+snakeHeadHeight/2);
+                snList.getHead().setValueY(snList.getHead().getValueY() + snakeHeadHeight / 2);
             }
             break;
             default: {
                 snList.pushFront(x, y - snakeBody);
                 snList.pushFront(x, y - 2 * snakeBody);
                 mNextMotion = "down";
-                snList.getHead().setValueY(snList.getHead().getValueY()+snakeHeadHeight/2);
+                snList.getHead().setValueY(snList.getHead().getValueY() + snakeHeadHeight / 2);
             }
 
         }
