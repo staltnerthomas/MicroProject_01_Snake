@@ -87,7 +87,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 if (Math.abs(xDif) > Math.abs(yDif)) {
                     if (xDif < 0) {
                         if (!mNextMotion.equals("left")) {
-                            mNextMotion = "right";
+                            mNextMotion = "right";//dir
                             Log.i("snake", "right");
                         } else {
                             Log.i("snake", "right detected");
