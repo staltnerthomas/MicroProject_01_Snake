@@ -26,11 +26,10 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     private SurfaceHolder sHolder;
     private int SViewWidth;
     private int SViewHeight;
-    private int snakeWidth = 15;
-    private int fruitWidth = snakeWidth;
-    private int snakeHead = 20;
+    private int snakeBody = 15;
+    private int fruitWidth = snakeBody;
+    private int snakeHead = 30;
     private SnakeList snList = new SnakeList();
-
 
 
     @Override
@@ -59,8 +58,12 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 //                Canvas c = sHolder.lockCanvas();
 //                SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
 //                c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0));
-                snList.pushBack(getRandom(fruitWidth, SViewWidth), getRandom(fruitWidth, SViewHeight));
-                snList.pushFront(getRandom(fruitWidth, SViewWidth), getRandom(fruitWidth, SViewHeight));
+
+
+                setSnakeAtBeginning();
+                setFruit();
+
+
                 setPixel();
             }
 
@@ -147,6 +150,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
     @Override
     public boolean onTouch(View _v, MotionEvent _e) {
+        // Max
         Log.i("snake", _e.getX() + "/" + _e.getY());
         mG.onTouchEvent(_e);
         return true;
@@ -154,69 +158,69 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
 
     //Set a new Fruit into the game-view
-    private boolean setFruit() {
-        int x;
-        int y;
-
-        //Set the Fruit
-        if (sHolder != null) {
-            Canvas c = sHolder.lockCanvas();
-
-            SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
-
-            c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0));
-
-            Paint p = new Paint();
-            p.setStrokeWidth(3.0f);
-            p.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, 0x0));
-
-            do {
-                x = (int) (Math.random() * SViewWidth);
-            } while (x < fruitWidth / 2 || x > SViewWidth - fruitWidth / 2);
-
-            do {
-                y = (int) (Math.random() * SViewHeight);
-            } while (y < fruitWidth / 2 || y > SViewHeight - fruitWidth / 2);
-
-
-            RectF rect = new RectF(x - fruitWidth / 2, y + fruitWidth / 2, x + fruitWidth / 2, y - fruitWidth / 2);
-            c.drawRect(rect, p);
-
-            Log.i(TAG, "draw fruit --> " + rect);
-            sHolder.unlockCanvasAndPost(c);
-        }
-        return true;
-    }
-
+//    private boolean setFruit() {
+//        int x;
+//        int y;
+//
+//        //Set the Fruit
+//        if (sHolder != null) {
+//            Canvas c = sHolder.lockCanvas();
+//
+//            SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
+//
+//            c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0));
+//
+//            Paint p = new Paint();
+//            p.setStrokeWidth(3.0f);
+//            p.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, 0x0));
+//
+//            do {
+//                x = (int) (Math.random() * SViewWidth);
+//            } while (x < fruitWidth / 2 || x > SViewWidth - fruitWidth / 2);
+//
+//            do {
+//                y = (int) (Math.random() * SViewHeight);
+//            } while (y < fruitWidth / 2 || y > SViewHeight - fruitWidth / 2);
+//
+//
+//            RectF rect = new RectF(x - fruitWidth / 2, y + fruitWidth / 2, x + fruitWidth / 2, y - fruitWidth / 2);
+//            c.drawRect(rect, p);
+//
+//            Log.i(TAG, "draw fruit --> " + rect);
+//            sHolder.unlockCanvasAndPost(c);
+//        }
+//        return true;
+//    }
 
 
     private int getRandom(int border, int max) {
         int ret = Integer.MIN_VALUE;
 
         do {
-            ret = (int) (Math.random() * max);
+            ret = (int) (Math.random() * (max + 1));
         } while (ret < border / 2 || ret > max - border / 2);
 
         return ret;
     }
 
-    private int[] getRandomOld(int border) {
-        int[] ret = new int[2];
-
-        do {
-            ret[0] = (int) (Math.random() * SViewWidth);
-        } while (ret[0] < border / 2 || ret[0] > SViewWidth - border / 2);
-
-        do {
-            ret[1] = (int) (Math.random() * SViewHeight);
-        } while (ret[1] < border / 2 || ret[1] > SViewHeight - border / 2);
-
-        return ret;
-    }
+//    private int[] getRandomOld(int border) {
+//        int[] ret = new int[2];
+//
+//        do {
+//            ret[0] = (int) (Math.random() * SViewWidth);
+//        } while (ret[0] < border / 2 || ret[0] > SViewWidth - border / 2);
+//
+//        do {
+//            ret[1] = (int) (Math.random() * SViewHeight);
+//        } while (ret[1] < border / 2 || ret[1] > SViewHeight - border / 2);
+//
+//        return ret;
+//    }
 
 
     //    private boolean first = true;
     private void setPixel() {
+
 
         if (sHolder != null) {
             Canvas c = sHolder.lockCanvas();
@@ -263,6 +267,61 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             }
             sHolder.unlockCanvasAndPost(c);
         }
+    }
+
+    private void setFruit() {
+        int x = getRandom(fruitWidth, SViewWidth);
+        int y = getRandom(fruitWidth, SViewHeight);
+
+        snList.pushBack(x, y);
+
+    }
+
+
+    //Sets the first Snake in the GameField
+    private void setSnakeAtBeginning() {
+        int x = getRandom(3 * snakeHead, SViewWidth);
+        int y = getRandom(3 * snakeHead, SViewHeight);
+        int dir = (int) (Math.random() * 5);
+
+        snList.pushFront(x, y);
+
+        switch (dir) {
+            case 1: {
+                snList.pushFront(x + snakeBody, y);
+                snList.pushFront(x + 2 * snakeBody, y);
+                mNextMotion = "right";
+            }
+            break;
+
+            case 2: {
+                snList.pushFront(x - snakeBody, y);
+                snList.pushFront(x - 2 * snakeBody, y);
+                mNextMotion = "left";
+            }
+            break;
+
+            case 3: {
+                snList.pushFront(x, y + snakeBody);
+                snList.pushFront(x, y + 2 * snakeBody);
+                mNextMotion = "up";
+            }
+            break;
+
+            case 4: {
+                snList.pushFront(x, y - snakeBody);
+                snList.pushFront(x, y - 2 * snakeBody);
+                mNextMotion = "down";
+            }
+            break;
+            default: {
+                snList.pushFront(x, y - snakeBody);
+                snList.pushFront(x, y - 2 * snakeBody);
+                mNextMotion = "down";
+            }
+
+        }
+
     }
 
 
