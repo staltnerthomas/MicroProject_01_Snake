@@ -41,7 +41,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
         SViewWidth = gameSurfaceView.getWidth();
         SViewHeight = gameSurfaceView.getHeight();
 
-//        setFruit();
+        setFruit();
 
 
 
