@@ -236,6 +236,21 @@ public class SnakeList {
         return this.elements;
     }
 
+    /**
+     * Returns the Head of an SnakeList
+     */
+    public SnakeNode getHead(){
+        return this.head;
+    }
+
+    /**
+     * Returns the Head of an SnakeList
+     */
+    public SnakeNode getTail(){
+        return this.tail;
+    }
+
+
     /** Returns true if the element val exists in the list, false otherwise. */
     public boolean search(int val) {
         SnakeNode p = this.head;
