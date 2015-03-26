@@ -63,7 +63,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-
+                //switch id //test commit
             }
         });
     }
