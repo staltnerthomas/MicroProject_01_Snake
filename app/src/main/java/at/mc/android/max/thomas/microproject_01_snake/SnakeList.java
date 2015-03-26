@@ -21,14 +21,14 @@ public class SnakeList {
      * must COPY all elements of the other list. The elements of the other list
      * must NOT be changed! Initializes the double linked list instance
      **/
-    public SnakeList(SnakeList list) {
-        SnakeNode p = list.head;
-
-        while (p != null) {
-            this.pushBack(p.getValue());
-            p = p.getNext();
-        }
-    }
+//    public SnakeList(SnakeList list) {
+//        SnakeNode p = list.head;
+//
+//        while (p != null) {
+//            this.pushBack(p.getValue());
+//            p = p.getNext();
+//        }
+//    }
 
     // ########################### --Methods--
     /**
@@ -54,8 +54,8 @@ public class SnakeList {
     }
 
     /** Adds an element at the front of the linked list */
-    public void pushFront(int val) {
-        SnakeNode p = new SnakeNode(val);
+    public void pushFront(int valX, int valY) {
+        SnakeNode p = new SnakeNode(valX, valY);
         p.setNext(head);
         if (head == null) {
             tail = p;
@@ -70,20 +70,20 @@ public class SnakeList {
      * Adds all elements from another list at the front of this linked list.
      * other list MUST NOT be the same like this list.
      */
-    public void pushFront(SnakeList other) {
-        if (this != other) {
-            SnakeNode p = other.tail;
-
-            while (p != null) {
-                this.pushFront(p.getValue());
-                p = p.getPrev();
-            }
-        }
-    }
+//    public void pushFront(SnakeList other) {
+//        if (this != other) {
+//            SnakeNode p = other.tail;
+//
+//            while (p != null) {
+//                this.pushFront(p.getValue());
+//                p = p.getPrev();
+//            }
+//        }
+//    }
 
     /** Adds an element at the back of the linked list. */
-    public void pushBack(int val) {
-        SnakeNode p = new SnakeNode(val);
+    public void pushBack(int valX, int valY) {
+        SnakeNode p = new SnakeNode(valX, valY);
         // check empty list
         if (head == null) {
             head = p;
@@ -97,34 +97,34 @@ public class SnakeList {
         elements++;
     }
 
-    /**
-     * Adds all elements from another list at the end of this linked list. other
-     * list MUST NOT be the same like this list.
-     */
-    public void pushBack(SnakeList other) {
-        if (this != other) {
-            SnakeNode p = other.head;
+//    /**
+//     * Adds all elements from another list at the end of this linked list. other
+//     * list MUST NOT be the same like this list.
+//     */
+//    public void pushBack(SnakeList other) {
+//        if (this != other) {
+//            SnakeNode p = other.head;
+//
+//            while (p != null) {
+//                this.pushBack(p.getValue());
+//                p = p.getNext();
+//            }
+//        }
+//    }
 
-            while (p != null) {
-                this.pushBack(p.getValue());
-                p = p.getNext();
-            }
-        }
-    }
-
-    /** Clones this SnakeList instance and returns an exact COPY. */
-    public SnakeList clone() {
-        SnakeList ret = new SnakeList();
-        SnakeNode p = this.head;
-
-        while (p != null) {
-            ret.pushBack(p.getValue());
-            p = p.getNext();
-        }
-
-        return ret;
-
-    }
+//    /** Clones this SnakeList instance and returns an exact COPY. */
+//    public SnakeList clone() {
+//        SnakeList ret = new SnakeList();
+//        SnakeNode p = this.head;
+//
+//        while (p != null) {
+//            ret.pushBack(p.getValue());
+//            p = p.getNext();
+//        }
+//
+//        return ret;
+//
+//    }
 
     /**
      * Returns true if the other list is equal to this one, false otherwise. *
@@ -137,7 +137,7 @@ public class SnakeList {
             SnakeNode p = this.head;
             SnakeNode q = other.head;
             while (p != null) {
-                if (p.getValue() != q.getValue()) {
+                if (p.getValueX() != q.getValueX() || p.getValueY() != q.getValueY()) {
                     return false;
                 }
                 p = p.getNext();
