@@ -85,19 +85,35 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 float max = Math.max(Math.abs(xDif), Math.abs(yDif));
                 if (max - _distanceX < 0.0001) {
                     if (xDif < 0) {
-                        mNextMotion = "right";
-                        Log.e("snake", "right");
+                        if (!mNextMotion.equals("left")) {
+                            mNextMotion = "right";
+                            Log.e("snake", "right");
+                        } else {
+                            Log.e("snake", "right detected, not done...");
+                        }
                     } else {
-                        mNextMotion = "left";
-                        Log.e("snake", "left");
+                        if (!mNextMotion.equals("right")) {
+                            mNextMotion = "left";
+                            Log.e("snake", "left");
+                        } else {
+                            Log.e("snake", "left detected, not done...");
+                        }
                     }
                 } else if (max - _distanceY < 0.0001) {
                     if (yDif < 0) {
-                        mNextMotion = "down";
-                        Log.e("snake", "down");
+                        if (!mNextMotion.equals("up")) {
+                            mNextMotion = "down";
+                            Log.e("snake", "down");
+                        } else {
+                            Log.e("snake", "left detected, not done...");
+                        }
                     } else {
-                        mNextMotion = "up";
-                        Log.e("snake", "up");
+                        if (!mNextMotion.equals("down")) {
+                            mNextMotion = "up";
+                            Log.e("snake", "up");
+                        } else {
+                            Log.e("snake", "up detected, not done...");
+                        }
                     }
                 }
                 //start motion method call
@@ -127,14 +143,13 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     }
 
 
-
     //Set a new Fruit into the game-view
     private boolean setFruit() {
         int x;
         int y;
 
         //Set the Fruit
-        if(sHolder != null) {
+        if (sHolder != null) {
             Canvas c = sHolder.lockCanvas();
 
             SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
@@ -147,15 +162,15 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             do {
                 x = (int) (Math.random() * SViewWidth);
-            } while (x < fruitWidth / 2 || x > SViewWidth - fruitWidth / 2 );
+            } while (x < fruitWidth / 2 || x > SViewWidth - fruitWidth / 2);
 
             do {
                 y = (int) (Math.random() * SViewHeight);
-            } while (y < fruitWidth / 2 || y > SViewHeight - fruitWidth / 2 );
+            } while (y < fruitWidth / 2 || y > SViewHeight - fruitWidth / 2);
 
 
-            RectF rect = new RectF(x-fruitWidth/2, y+fruitWidth/2, x+fruitWidth/2, y-fruitWidth/2);
-            c.drawRect(rect,p);
+            RectF rect = new RectF(x - fruitWidth / 2, y + fruitWidth / 2, x + fruitWidth / 2, y - fruitWidth / 2);
+            c.drawRect(rect, p);
 
             Log.i(TAG, "draw fruit --> " + rect);
             sHolder.unlockCanvasAndPost(c);
