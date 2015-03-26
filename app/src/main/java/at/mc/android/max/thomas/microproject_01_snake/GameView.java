@@ -61,6 +61,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             }
         });
+
         mG = new GestureDetector(this, new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
@@ -77,12 +78,12 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             }
 
             @Override
-            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            public boolean onScroll(MotionEvent _e1, MotionEvent _e2, float _distanceX, float _distanceY) {
                 Toast.makeText(GameView.this, "scroll detected", Toast.LENGTH_SHORT).show();
-                float xDif = e1.getX() - e2.getX();
-                float yDif = e1.getY() - e2.getY();
+                float xDif = _e1.getX() - _e2.getX();
+                float yDif = _e1.getY() - _e2.getY();
                 float max = Math.max(Math.abs(xDif), Math.abs(yDif));
-                if (max - Math.abs(xDif) < 0.0001) {
+                if (max - _distanceX < 0.0001) {
                     if (xDif < 0) {
                         mNextMotion = "right";
                         Log.e("snake", "right");
@@ -90,7 +91,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                         mNextMotion = "left";
                         Log.e("snake", "left");
                     }
-                } else if (max - Math.abs(xDif) < 0.0001) {
+                } else if (max - _distanceY < 0.0001) {
                     if (yDif < 0) {
                         mNextMotion = "down";
                         Log.e("snake", "down");
