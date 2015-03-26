@@ -150,10 +150,13 @@ public class SnakeList {
     /**
      * Removes and returns the front element Integer.MIN_VALUE if empty
      */
-    public int popFront() {
+    public int[] popFront() {
         // check empty list
+        int[] ret = new int[2];
+
         if (head != null) {
-            int ret = head.getValue();
+            ret[0] = head.getValueX();
+            ret[1] = head.getValueY();
             head = head.getNext();
             if (head != null)
                 head.setPrev(null);
@@ -161,19 +164,27 @@ public class SnakeList {
             return ret;
         } else {
             this.tail = null;
-            return Integer.MIN_VALUE;
+            ret[0] = Integer.MIN_VALUE;
+            ret[1] = Integer.MIN_VALUE;
+            return ret;
         }
     }
 
     /**
      * Returns the front element of the list Returns Integer.MIN_VALUE if empty
      */
-    public int peekFront() {
+    public int[] peekFront() {
         // check empty list
+        int[] ret = new int[2];
+
         if (head != null) {
-            return head.getValue();
+            ret[0] = head.getValueX();
+            ret[1] = head.getValueY();
+            return ret;
         } else {
-            return Integer.MIN_VALUE;
+            ret[0] = Integer.MIN_VALUE;
+            ret[1] = Integer.MIN_VALUE;
+            return ret;
         }
     }
 
@@ -181,10 +192,13 @@ public class SnakeList {
      * Removes and returns the element from the back of the linked list. Returns
      * Integer.MIN_VALUE if empty
      */
-    public int popBack() {
+    public int[] popBack() {
         // check empty list
+        int[] ret = new int[2];
+
         if (this.tail != null) {
-            int ret = tail.getValue();
+            ret[0] = tail.getValueX();
+            ret[1] = tail.getValueY();
             tail = tail.getPrev();
             if (tail != null)
                 tail.setNext(null);
@@ -192,7 +206,9 @@ public class SnakeList {
             return ret;
         } else {
             this.head = null;
-            return Integer.MIN_VALUE;
+            ret[0] = Integer.MIN_VALUE;
+            ret[1] = Integer.MIN_VALUE;
+            return ret;
         }
     }
 
