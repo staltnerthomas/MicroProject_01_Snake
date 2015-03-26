@@ -75,7 +75,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
                 return false;
-            }
+            }ödlkafdsölkfjasöldfjadlsöfa
 
             @Override
             public boolean onScroll(MotionEvent _e1, MotionEvent _e2, float _distanceX, float _distanceY) {
