@@ -8,32 +8,27 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Toast;
 
 
 public class GameView extends Activity implements SurfaceHolder.Callback, View.OnTouchListener {
 
     public static final String TAG = "Snake 01 GameView";
-
+    Handler mHandler = new Handler();
+    GestureDetector mG = null;
+    String mNextMotion = "default";
     private SurfaceView gameSurfaceView = null;
     private SurfaceHolder sHolder;
-    Handler mHandler = new Handler();
-
     private int SViewWidth;
     private int SViewHeight;
-
     private int snakeWidth = 15;
-    private int snakeHead = 20;
     private int fruitWidth = snakeWidth;
-
-
-
-
-
-
+    private int snakeHead = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +61,88 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             }
         });
+
+        mG = new GestureDetector(this, new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent _e1, MotionEvent _e2, float _distanceX, float _distanceY) {
+                Toast.makeText(GameView.this, "scroll detected", Toast.LENGTH_SHORT).show();
+                float xDif = _e1.getX() - _e2.getX();
+                float yDif = _e1.getY() - _e2.getY();
+                float max = Math.max(Math.abs(xDif), Math.abs(yDif));
+                //float max = Math.max(_distanceX, _distanceY);
+                if (Math.abs(xDif) > Math.abs(yDif)) {
+                    if (xDif < 0) {
+                        if (!mNextMotion.equals("left")) {
+                            mNextMotion = "right";
+                            Log.i("snake", "right");
+                        } else {
+                            Log.i("snake", "right detected");
+                        }
+                    } else {
+                        if (!mNextMotion.equals("right")) {
+                            mNextMotion = "left";
+                            Log.i("snake", "left");
+                        } else {
+                            Log.i("snake", "left detected");
+                        }
+                    }
+                } else {
+                    if (yDif < 0) {
+                        if (!mNextMotion.equals("up")) {
+                            mNextMotion = "down";
+                            Log.i("snake", "down");
+                        } else {
+                            Log.i("snake", "down detected");
+                        }
+                    } else {
+                        if (!mNextMotion.equals("down")) {
+                            mNextMotion = "up";
+                            Log.i("snake", "up");
+                        } else {
+                            Log.i("snake", "up detected, not done...");
+                        }
+                    }
+                }
+                //start motion method call
+                return true;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent _e) {
+                Toast.makeText(GameView.this, "long press detected", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+                return false;
+            }
+        }) {
+
+        };
     }
 
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    public boolean onTouch(View _v, MotionEvent _e) {
+        Log.i("snake", _e.getX() + "/" + _e.getY());
+        mG.onTouchEvent(_e);
         return true;
     }
-
 
 
     //Set a new Fruit into the game-view
@@ -82,7 +151,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
         int y;
 
         //Set the Fruit
-        if(sHolder != null) {
+        if (sHolder != null) {
             Canvas c = sHolder.lockCanvas();
 
             SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
@@ -95,15 +164,15 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             do {
                 x = (int) (Math.random() * SViewWidth);
-            } while (x < fruitWidth / 2 || x > SViewWidth - fruitWidth / 2 );
+            } while (x < fruitWidth / 2 || x > SViewWidth - fruitWidth / 2);
 
             do {
                 y = (int) (Math.random() * SViewHeight);
-            } while (y < fruitWidth / 2 || y > SViewHeight - fruitWidth / 2 );
+            } while (y < fruitWidth / 2 || y > SViewHeight - fruitWidth / 2);
 
 
-            RectF rect = new RectF(x-fruitWidth/2, y+fruitWidth/2, x+fruitWidth/2, y-fruitWidth/2);
-            c.drawRect(rect,p);
+            RectF rect = new RectF(x - fruitWidth / 2, y + fruitWidth / 2, x + fruitWidth / 2, y - fruitWidth / 2);
+            c.drawRect(rect, p);
 
             Log.i(TAG, "draw fruit --> " + rect);
             sHolder.unlockCanvasAndPost(c);
