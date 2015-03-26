@@ -14,16 +14,14 @@ import android.widget.Button;
 public class StartScreen extends Activity implements View.OnClickListener {
 
     public static final String TAG = "Snake 01 StartScreen";
-    Button b = null;
-
     public static final String SHARED_PREFS = "Preverences_Name";
     public static final String GAME_VIEW_BACKGROUND_COLOUR = "Backgroundcolor_of_GameView";
-
     public static final String GAME_VIEW_SNAKE_HEAD_COLOUR  = "Snake_Head_color_of_GameView";
     public static final String GAME_VIEW_SNAKE_BODY_COLOUR  = "Snake_Body_color_of_GameView";
     public static final String GAME_VIEW_FRUIT_COLOUR       = "Fruit_color_of_GameView";
     public static final String GAME_VIEW_HI_SCORE           = "High_Score";
     public static final String GAME_VIEW_LAST_SCORE         = "Last_Score";
+    Button b = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +79,7 @@ public class StartScreen extends Activity implements View.OnClickListener {
             } break;
             default:{
                 Log.e(TAG, "StartScreen undefined button pressed...");
-            }
+            } //switch id //text comment
         }
 
     }
