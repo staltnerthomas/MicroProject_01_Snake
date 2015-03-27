@@ -4,8 +4,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- screen margins for grid layout in Activity StartScreen between its children-->
-    <dimen name="activity_horizontal_margin_grid_layout">1dp</dimen>
-    <dimen name="activity_vertical_margin_grid_layout">1dp</dimen>
+    <dimen name="activity_horizontal_margin_grid_layout">7dp</dimen>
+    <dimen name="activity_vertical_margin_grid_layout">7dp</dimen>
 
     <!-- Default screen margins for GameView, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin_game_view">0dp</dimen>

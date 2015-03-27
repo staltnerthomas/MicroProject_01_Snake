@@ -80,7 +80,7 @@ public class StartScreen extends Activity implements View.OnClickListener {
                 startActivity(i);
             } break;
             default:{
-                Log.e(TAG, "StartScreen undefined button pressed...");
+                Log.e(TAG, "StartScreen::undefined button pressed...");
             } //switch id //text comment
         }
 
