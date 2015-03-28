@@ -212,6 +212,12 @@ public class SnakeList {
         }
     }
 
+    public void removeTail(){
+        this.getTail().setPrev(this.getTail().getPrev().getPrev());
+        this.getTail().getPrev().setNext(this.getTail());
+        elements--;
+    }
+
     /**
      * Returns the element at the back of the list without removing it. Returns
      * Integer.MIN_VALUE if empty

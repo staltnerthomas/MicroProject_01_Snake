@@ -19,6 +19,10 @@ import android.widget.Toast;
 public class GameView extends Activity implements SurfaceHolder.Callback, View.OnTouchListener {
 
     public static final String TAG = "Snake 01 GameView";
+    public static final String LEFT = "left";
+    public static final String RIGHT = "right";
+    public static final String UP = "up";
+    public static final String DOWN = "down";
     Handler mHandler = new Handler();
     GestureDetector mG = null;
     String mNextMotion = "default";
@@ -26,13 +30,14 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     private SurfaceHolder sHolder;
     private int SViewWidth;
     private int SViewHeight;
-    private int snakeBody = 25;
-    private int fruitWidth = snakeBody;
+    private int snakeBodyWidth = 25;
+    private int fruitWidth = snakeBodyWidth;
     private int snakeHeadWidth = 35;
     private int snakeHeadHeight = 18;
     private int snakeHeadEye = 4;
 
     private SnakeList snList = new SnakeList();
+    private int delayTime = 500;
 
 
     @Override
@@ -56,6 +61,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                Log.i(TAG, "surfaceChanged!");
                 SViewWidth = width;
                 SViewHeight = height;
                 //                Canvas c = sHolder.lockCanvas();
@@ -67,8 +73,46 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 setFruit();
 
 
-                setPixel();
+                drawGameView();
+                playGame();
             }
+
+            private void playGame() {
+                Log.i(TAG, "playGame!");
+
+
+                //This is for playing the game
+                if (!gameOver()) {
+
+                    moveSnake();
+                    if(!isFruitEaten()){
+                        cutTail();
+                    } else {
+                        setFruit();
+                    }
+                    drawGameView();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            playGame();
+                        }
+                    }, delayTime);
+
+
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
@@ -99,32 +143,32 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 //float max = Math.max(_distanceX, _distanceY);
                 if (Math.abs(xDif) > Math.abs(yDif)) {
                     if (xDif < 0) {
-                        if (!mNextMotion.equals("left") && !mNextMotion.equals("right")) {
-                            mNextMotion = "right";//dir
-                            Log.i("snake", "right");
+                        if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
+                            mNextMotion = RIGHT;//dir
+                            Log.i("snake", RIGHT);
                         } else {
                             Log.i("snake", "right/left detected");
                         }
                     } else {
-                        if (!mNextMotion.equals("left") && !mNextMotion.equals("right")) {
-                            mNextMotion = "left";
-                            Log.i("snake", "left");
+                        if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
+                            mNextMotion = LEFT;
+                            Log.i("snake", LEFT);
                         } else {
                             Log.i("snake", "left/right detected");
                         }
                     }
                 } else {
                     if (yDif < 0) {
-                        if (!mNextMotion.equals("up") && !mNextMotion.equals("down")) {
-                            mNextMotion = "down";
-                            Log.i("snake", "down");
+                        if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
+                            mNextMotion = UP;
+                            Log.i("snake", UP);
                         } else {
                             Log.i("snake", "down/up detected");
                         }
                     } else {
-                        if (!mNextMotion.equals("up") && !mNextMotion.equals("down")) {
-                            mNextMotion = "up";
-                            Log.i("snake", "up");
+                        if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
+                            mNextMotion = DOWN;
+                            Log.i("snake", DOWN);
                         } else {
                             Log.i("snake", "up/down detected");
                         }
@@ -147,6 +191,31 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
         }) {
 
         };
+    }
+
+
+
+    private boolean gameOver() {
+        Log.i(TAG, "gameOver!");
+        if (snList.getHead().getValueX() >= SViewWidth - snakeHeadHeight/* / 2 */ || snList.getHead().getValueX() <= 0 + snakeHeadHeight /* / 2 */ || snList.getHead().getValueY() <= 0 + snakeHeadHeight /* / 2 */ || snList.getHead().getValueY() >= SViewHeight - snakeHeadHeight /* / 2 */) {
+            return true;
+        }
+
+        SnakeNode n = snList.getHead().getNext();
+        SnakeNode head = snList.getHead();
+
+        for (int i = 0; i <= snList.elements() - 3; i++) {
+            if(head.getValueX() >= n.getValueX() - snakeBodyWidth/2 && head.getValueX() <= n.getValueX() + snakeBodyWidth/2){
+                //Head and Body has the same x-coordinate
+                if(head.getValueY() >= n.getValueY() - snakeBodyWidth/2 && head.getValueY() <= n.getValueY() + snakeBodyWidth/2){
+                    //Head and Body are in identical regions
+                    return true;
+                }
+            }
+            n=n.getNext();
+        }
+
+        return false;
     }
 
 
@@ -221,7 +290,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
 
     //    private boolean first = true;
-    private void setPixel() {
+    private void drawGameView() {
 
 
         if (sHolder != null) {
@@ -253,8 +322,8 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
 
             /**
-             * This method sets the snake and the food
-             * The first element of the list is the head, the last is the food
+             * This method sets the snake and the foot
+             * The first element of the list is the head, the last is the foot
              * Between is the tail of the snake.
              */
             SnakeNode n = snList.getHead();
@@ -264,10 +333,11 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
 
                 if (i == 0) {
-                    if (mNextMotion.equals("left") || mNextMotion.equals("right")) {
+                    //Draw the head of the snake
+                    if (mNextMotion.equals(LEFT) || mNextMotion.equals(RIGHT)) {
                         c.drawOval(new RectF(n.getValueX() - snakeHeadHeight / 2, n.getValueY() + snakeHeadWidth / 2, n.getValueX() + snakeHeadHeight / 2, n.getValueY() - snakeHeadWidth / 2), h);
 
-                        if (mNextMotion.equals("right")) {
+                        if (mNextMotion.equals(RIGHT)) {
                             c.drawOval(new RectF(n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
                             c.drawOval(new RectF(n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
                         } else {
@@ -277,7 +347,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                     } else {
                         c.drawOval(new RectF(n.getValueX() - snakeHeadWidth / 2, n.getValueY() + snakeHeadHeight / 2, n.getValueX() + snakeHeadWidth / 2, n.getValueY() - snakeHeadHeight / 2), h);
 
-                        if (mNextMotion.equals("up")) {
+                        if (mNextMotion.equals(UP)) {
                             c.drawOval(new RectF(n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
                             c.drawOval(new RectF(n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
                         } else {
@@ -304,18 +374,65 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
         int y = getRandom(fruitWidth, SViewHeight);
 
         SnakeNode n = snList.getHead();
-        for (int i = 0; i < (snList.elements() - 1); i++) {
+        for (int i = 0; i < (snList.elements() - 2); i++) {
             //Because last node is the foot
-            if (i == 0) {
-
-            } else {
-
+            if (x >= n.getValueX() - snakeBodyWidth && x <= n.getValueX() + snakeBodyWidth) {
+                //Fruit is in the same x-line
+                if (y >= n.getValueY() - snakeBodyWidth && y <= n.getValueY() + snakeBodyWidth) {
+                    //Fruit is in the same x-line and y-line
+                    setFruit();
+                }
             }
             n = n.getNext();
         }
+        snList.getTail().setValueX(x);
+        snList.getTail().setValueY(y);
 
-        snList.pushBack(x, y);
+    }
 
+    private boolean isFruitEaten() {
+        if (snList != null) {
+            if (snList.getTail().getValueY() >= snList.getHead().getValueY() - snakeHeadWidth / 2 && snList.getTail().getValueY() <= snList.getHead().getValueY() + snakeHeadWidth / 2) {
+                //same Height of Head and Fruit
+                if (snList.getTail().getValueX() >= snList.getHead().getValueX() - snakeHeadHeight / 2 && snList.getTail().getValueX() <= snList.getHead().getValueX() + snakeHeadHeight / 2) {
+                    //same Height of Head and Fruit
+                    //same Width of Head and Fruit
+
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    private void moveSnake() {
+        switch (mNextMotion) {
+            case LEFT: {
+                snList.pushFront(snList.getHead().getValueX() - snakeBodyWidth, snList.getHead().getValueY());
+            }
+            break;
+
+            case RIGHT: {
+                snList.pushFront(snList.getHead().getValueX() + snakeBodyWidth, snList.getHead().getValueY());
+            }
+            break;
+
+            case UP: {
+                snList.pushFront(snList.getHead().getValueX(), snList.getHead().getValueY() + snakeBodyWidth);
+            }
+            break;
+
+            case DOWN: {
+                snList.pushFront(snList.getHead().getValueX(), snList.getHead().getValueY() - snakeBodyWidth);
+            }
+            break;
+            default:
+        }
+    }
+
+    private void cutTail() {
+        snList.removeTail();
     }
 
 
@@ -329,40 +446,40 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
         switch (dir) {
             case 1: {
-                snList.pushFront(x + snakeBody, y);
-                snList.pushFront(x + 2 * snakeBody, y);
-                mNextMotion = "right";
+                snList.pushFront(x + snakeBodyWidth, y);
+                snList.pushFront(x + 2 * snakeBodyWidth, y);
+                mNextMotion = RIGHT;
                 snList.getHead().setValueX(snList.getHead().getValueX() - snakeHeadHeight / 2);
             }
             break;
 
             case 2: {
-                snList.pushFront(x - snakeBody, y);
-                snList.pushFront(x - 2 * snakeBody, y);
-                mNextMotion = "left";
+                snList.pushFront(x - snakeBodyWidth, y);
+                snList.pushFront(x - 2 * snakeBodyWidth, y);
+                mNextMotion = LEFT;
                 snList.getHead().setValueX(snList.getHead().getValueX() + snakeHeadHeight / 2);
             }
             break;
 
             case 3: {
-                snList.pushFront(x, y + snakeBody);
-                snList.pushFront(x, y + 2 * snakeBody);
-                mNextMotion = "up";
+                snList.pushFront(x, y + snakeBodyWidth);
+                snList.pushFront(x, y + 2 * snakeBodyWidth);
+                mNextMotion = UP;
                 snList.getHead().setValueY(snList.getHead().getValueY() - snakeHeadHeight / 2);
             }
             break;
 
             case 4: {
-                snList.pushFront(x, y - snakeBody);
-                snList.pushFront(x, y - 2 * snakeBody);
-                mNextMotion = "down";
+                snList.pushFront(x, y - snakeBodyWidth);
+                snList.pushFront(x, y - 2 * snakeBodyWidth);
+                mNextMotion = DOWN;
                 snList.getHead().setValueY(snList.getHead().getValueY() + snakeHeadHeight / 2);
             }
             break;
             default: {
-                snList.pushFront(x, y - snakeBody);
-                snList.pushFront(x, y - 2 * snakeBody);
-                mNextMotion = "down";
+                snList.pushFront(x, y - snakeBodyWidth);
+                snList.pushFront(x, y - 2 * snakeBodyWidth);
+                mNextMotion = DOWN;
                 snList.getHead().setValueY(snList.getHead().getValueY() + snakeHeadHeight / 2);
             }
 
