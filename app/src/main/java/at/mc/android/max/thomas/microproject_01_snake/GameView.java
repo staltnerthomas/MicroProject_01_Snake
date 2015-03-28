@@ -37,7 +37,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     private int snakeHeadEye = 4;
 
     private SnakeList snList = new SnakeList();
-    private int delayTime = 500;
+    private float delayTime = 500;
 
 
     @Override
@@ -90,13 +90,14 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                     } else {
                         setFruit();
                     }
+                    delayTime =delayTime * 0.99f;
                     drawGameView();
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             playGame();
                         }
-                    }, delayTime);
+                    }, ((int) delayTime));
 
 
                 }
