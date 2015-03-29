@@ -6,4 +6,5 @@
     <string name="start_text_view_last_score">Lastscore</string>
     <string name="start_text_view_high_score_value" />
     <string name="start_text_view_last_score_value" />
+    <string name="options_control">Bewegungssteuerung</string>
 </resources>

@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="at.mc.android.max.thomas.microproject_01_snake.Settings">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="@string/options_text_view_control"
+            android:id="@+id/options_text_view_control" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/options_switch_control"
+            android:layout_gravity="center_horizontal"
+            android:checked="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="@string/options_text_view_takeoffspeed"
+            android:id="@+id/options_text_view_takeoffspeed" />
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/seekBar"
+            android:paddingStart="650dp"
+            android:paddingEnd="200dp" />
+    </LinearLayout>
+</RelativeLayout>
