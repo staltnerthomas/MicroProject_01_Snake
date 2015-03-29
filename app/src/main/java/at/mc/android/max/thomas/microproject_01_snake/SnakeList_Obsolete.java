@@ -3,14 +3,14 @@ package at.mc.android.max.thomas.microproject_01_snake;
 /**
  * Created by thomasstaltner on 26/03/15.
  */
-public class SnakeList {
+public class SnakeList_Obsolete {
     /** Pointer to the first and the last element of the list */
-    private SnakeNode head, tail;
+    private SnakeNode_Obsolete head, tail;
     private int elements;
 
     // ########################### --Constructor--
     /** Constructor initializes list with a standard size. */
-    public SnakeList() {
+    public SnakeList_Obsolete() {
         this.head = null;
         this.tail = null;
         this.elements = 0;
@@ -42,7 +42,7 @@ public class SnakeList {
         // is better
     }
 
-    public static SnakeList finalize2() {
+    public static SnakeList_Obsolete finalize2() {
         return null;
     }
 
@@ -55,7 +55,7 @@ public class SnakeList {
 
     /** Adds an element at the front of the linked list */
     public void pushFront(int valX, int valY) {
-        SnakeNode p = new SnakeNode(valX, valY);
+        SnakeNode_Obsolete p = new SnakeNode_Obsolete(valX, valY);
         p.setNext(head);
         if (head == null) {
             tail = p;
@@ -83,7 +83,7 @@ public class SnakeList {
 
     /** Adds an element at the back of the linked list. */
     public void pushBack(int valX, int valY) {
-        SnakeNode p = new SnakeNode(valX, valY);
+        SnakeNode_Obsolete p = new SnakeNode_Obsolete(valX, valY);
         // check empty list
         if (head == null) {
             head = p;
@@ -130,12 +130,12 @@ public class SnakeList {
      * Returns true if the other list is equal to this one, false otherwise. *
      * The contents of the two lists must not be changed!
      */
-    public boolean equals(SnakeList other) {
+    public boolean equals(SnakeList_Obsolete other) {
         if (this.elements != other.elements) {
             return false;
         } else {
-            SnakeNode p = this.head;
-            SnakeNode q = other.head;
+            SnakeNode_Obsolete p = this.head;
+            SnakeNode_Obsolete q = other.head;
             while (p != null) {
                 if (p.getValueX() != q.getValueX() || p.getValueY() != q.getValueY()) {
                     return false;
@@ -245,21 +245,21 @@ public class SnakeList {
     /**
      * Returns the Head of an SnakeList
      */
-    public SnakeNode getHead(){
+    public SnakeNode_Obsolete getHead(){
         return this.head;
     }
 
     /**
      * Returns the Head of an SnakeList
      */
-    public SnakeNode getTail(){
+    public SnakeNode_Obsolete getTail(){
         return this.tail;
     }
 
 
     /** Returns true if the element val exists in the list, false otherwise. */
     public boolean search(int val) {
-        SnakeNode p = this.head;
+        SnakeNode_Obsolete p = this.head;
         while (p != null) {
             if (p.getValueX() == val || p.getValueY() == val) {
                 return true;
@@ -274,8 +274,8 @@ public class SnakeList {
      * be last!”
      */
     public void reverse() {
-        SnakeNode temp = null;
-        SnakeNode current = this.head;
+        SnakeNode_Obsolete temp = null;
+        SnakeNode_Obsolete current = this.head;
 
         // swap next and prev for all nodes of
         // double linked list

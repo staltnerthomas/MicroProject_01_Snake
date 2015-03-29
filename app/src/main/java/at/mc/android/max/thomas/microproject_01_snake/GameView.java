@@ -8,12 +8,17 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.util.Range;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class GameView extends Activity implements SurfaceHolder.Callback, View.OnTouchListener {
@@ -26,18 +31,27 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     Handler mHandler = new Handler();
     GestureDetector mG = null;
     String mNextMotion = "default";
+
+    //defines the SurfaceView
     private SurfaceView gameSurfaceView = null;
     private SurfaceHolder sHolder;
     private int SViewWidth;
     private int SViewHeight;
-    private int snakeBodyWidth = 25;
-    private int fruitWidth = snakeBodyWidth;
-    private int snakeHeadWidth = 35;
-    private int snakeHeadHeight = 18;
+
+    //defines the Fruit
+    private int dimensionFruit = 25;
+//    private int fruitHeigth = 10;
+
+    //Defines the snake
+    private int dimensionSnakeBodyWidth = 25;
+    private int dimensionSnakeHeadWidth = 35;
+    private int dimensionSnakeHeadHeight = 18;
     private int snakeHeadEye = 4;
 
-    private SnakeList snList = new SnakeList();
-    private float delayTime = 500;
+    //defines constants
+    private float delayTime = 450;
+
+    private List<Coordinates> snakeList = Collections.synchronizedList(new LinkedList<Coordinates>());
 
 
     @Override
@@ -64,55 +78,10 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 Log.i(TAG, "surfaceChanged!");
                 SViewWidth = width;
                 SViewHeight = height;
-                //                Canvas c = sHolder.lockCanvas();
-//                SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
-//                c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0));
-
 
                 setSnakeAtBeginning();
-                setFruit();
-
-
                 drawGameView();
-                playGame();
             }
-
-            private void playGame() {
-                Log.i(TAG, "playGame!");
-
-
-                //This is for playing the game
-                if (!gameOver()) {
-
-                    moveSnake();
-                    if(!isFruitEaten()){
-                        cutTail();
-                    } else {
-                        setFruit();
-                    }
-                    delayTime =delayTime * 0.99f;
-                    drawGameView();
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            playGame();
-                        }
-                    }, ((int) delayTime));
-
-
-                }
-            }
-
-
-
-
-
-
-
-
-
-
-
 
 
             @Override
@@ -182,11 +151,11 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             @Override
             public void onLongPress(MotionEvent _e) {
                 Toast.makeText(GameView.this, "long press detected", Toast.LENGTH_SHORT).show();
+                playGame();
             }
 
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-
                 return false;
             }
         }) {
@@ -195,27 +164,33 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     }
 
 
-
     private boolean gameOver() {
         Log.i(TAG, "gameOver!");
-        if (snList.getHead().getValueX() >= SViewWidth - snakeHeadHeight/* / 2 */ || snList.getHead().getValueX() <= 0 + snakeHeadHeight /* / 2 */ || snList.getHead().getValueY() <= 0 + snakeHeadHeight /* / 2 */ || snList.getHead().getValueY() >= SViewHeight - snakeHeadHeight /* / 2 */) {
+        Coordinates headCoordinate = snakeList.get(0);
+
+        if (headCoordinate.getCoorX() >= SViewWidth - dimensionSnakeHeadHeight ||
+                headCoordinate.getCoorX() <= 0 + dimensionSnakeHeadHeight ||
+                headCoordinate.getCoorY() <= 0 + dimensionSnakeHeadHeight ||
+                headCoordinate.getCoorY() >= SViewHeight - dimensionSnakeHeadHeight) {
             return true;
         }
 
-        SnakeNode n = snList.getHead().getNext();
-        SnakeNode head = snList.getHead();
+        for (int i = 1; i <= (snakeList.size() - 2); i++) {
+            //i = 1 because first Node is the head itself
+            Coordinates coor = snakeList.get(i);
 
-        for (int i = 0; i <= snList.elements() - 3; i++) {
-            if(head.getValueX() >= n.getValueX() - snakeBodyWidth/2 && head.getValueX() <= n.getValueX() + snakeBodyWidth/2){
-                //Head and Body has the same x-coordinate
-                if(head.getValueY() >= n.getValueY() - snakeBodyWidth/2 && head.getValueY() <= n.getValueY() + snakeBodyWidth/2){
-                    //Head and Body are in identical regions
+            int rangeXBodyMin = coor.getCoorX() - (dimensionSnakeBodyWidth / 2);
+            int rangeXBodyMax = coor.getCoorX() + (dimensionSnakeBodyWidth / 2);
+
+            int rangeYBodyMin = coor.getCoorY() - (dimensionSnakeBodyWidth / 2);
+            int rangeYBodyMax = coor.getCoorY() + (dimensionSnakeBodyWidth / 2);
+
+            if (snakeList != null) {
+                if(headCoordinate.getCoorX() >= rangeXBodyMin && headCoordinate.getCoorX() <= rangeXBodyMax && headCoordinate.getCoorY() >= rangeYBodyMin && headCoordinate.getCoorY() <= rangeYBodyMax){
                     return true;
                 }
             }
-            n=n.getNext();
         }
-
         return false;
     }
 
@@ -228,71 +203,67 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
         return true;
     }
 
-
-    //Set a new Fruit into the game-view
-//    private boolean setFruit() {
-//        int x;
-//        int y;
-//
-//        //Set the Fruit
-//        if (sHolder != null) {
-//            Canvas c = sHolder.lockCanvas();
-//
-//            SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
-//
-//            c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0));
-//
-//            Paint p = new Paint();
-//            p.setStrokeWidth(3.0f);
-//            p.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, 0x0));
-//
-//            do {
-//                x = (int) (Math.random() * SViewWidth);
-//            } while (x < fruitWidth / 2 || x > SViewWidth - fruitWidth / 2);
-//
-//            do {
-//                y = (int) (Math.random() * SViewHeight);
-//            } while (y < fruitWidth / 2 || y > SViewHeight - fruitWidth / 2);
-//
-//
-//            RectF rect = new RectF(x - fruitWidth / 2, y + fruitWidth / 2, x + fruitWidth / 2, y - fruitWidth / 2);
-//            c.drawRect(rect, p);
-//
-//            Log.i(TAG, "draw fruit --> " + rect);
-//            sHolder.unlockCanvasAndPost(c);
-//        }
-//        return true;
-//    }
-
-
-    private int getRandom(int border, int max) {
-        int ret = Integer.MIN_VALUE;
-
-        do {
-            ret = (int) (Math.random() * (max + 1));
-        } while (ret < border / 2 || ret > max - border / 2);
-
-        return ret;
+    private void playGame() {
+        Log.i(TAG, "playGame!");
+        //This is for playing the game
+        if (!gameOver()) {
+            moveSnake();
+            if (!isFruitEaten()) {
+                cutTail();
+            } else {
+                setNextFruit();
+            }
+//            delayTime = delayTime * 0.999f;
+            drawGameView();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    playGame();
+                }
+            }, ((int) delayTime));
+        }
     }
 
-//    private int[] getRandomOld(int border) {
-//        int[] ret = new int[2];
-//
-//        do {
-//            ret[0] = (int) (Math.random() * SViewWidth);
-//        } while (ret[0] < border / 2 || ret[0] > SViewWidth - border / 2);
-//
-//        do {
-//            ret[1] = (int) (Math.random() * SViewHeight);
-//        } while (ret[1] < border / 2 || ret[1] > SViewHeight - border / 2);
-//
-//        return ret;
-//    }
+    /**
+     * Returns the random coordinates for the fruit.
+     *
+     * @return x and y-Coordinates
+     */
+    private Coordinates getRandomCoordinates() {
+        //new Thomas
+        Range<Integer> widthRange = new Range<Integer>(dimensionFruit / 2, SViewWidth - dimensionFruit / 2);
+        Range<Integer> heightRange = new Range<Integer>(dimensionFruit / 2, SViewHeight - dimensionFruit / 2);
+        int xCoor = 0;
+        int yCoor = 0;
 
+        do {
+            xCoor = randomInRange(SViewWidth);
+        } while (!(widthRange.contains(xCoor)));
 
-    //    private boolean first = true;
+        do {
+            yCoor = randomInRange(SViewHeight);
+        } while (!(heightRange.contains(yCoor)));
+
+        return new Coordinates(xCoor, yCoor);
+    }
+
+    private int randomInRange(int max) {
+        //new Thomas
+        return (int) (Math.random() * (max + 1));
+    }
+
+    private void setNextFruit(){
+        Coordinates coor = getRandomCoordinates();
+        snakeList.set(snakeList.size() - 1, coor);
+    }
+
+    /**
+     * Draws the GameView
+     * The given ListNodes contains the Coordinates-object for the Body and the fruit
+     */
     private void drawGameView() {
-
+        Log.i(TAG, "drawGameView!");
+        //new Thomas
 
         if (sHolder != null) {
             Canvas c = sHolder.lockCanvas();
@@ -302,24 +273,24 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0));
 
             //The fruit
-            Paint f = new Paint();
-            f.setStrokeWidth(3.0f);
-            f.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, 0x0));
+            Paint fruit = new Paint();
+            fruit.setStrokeWidth(3.0f);
+            fruit.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, 0x0));
 
             //The head
-            Paint h = new Paint();
-            h.setStrokeWidth(3.0f);
-            h.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOUR, 0x0));
+            Paint head = new Paint();
+            head.setStrokeWidth(3.0f);
+            head.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOUR, 0x0));
 
             //The tail
-            Paint t = new Paint();
-            t.setStrokeWidth(3.0f);
-            t.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOUR, 0x0));
+            Paint tail = new Paint();
+            tail.setStrokeWidth(3.0f);
+            tail.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOUR, 0x0));
 
             //The eye
-            Paint e = new Paint();
-            e.setStrokeWidth(3.0f);
-            e.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOUR, 0x0));
+            Paint eye = new Paint();
+            eye.setStrokeWidth(3.0f);
+            eye.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOUR, 0x0));
 
 
             /**
@@ -327,105 +298,99 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
              * The first element of the list is the head, the last is the foot
              * Between is the tail of the snake.
              */
-            SnakeNode n = snList.getHead();
-            double factorsnakeHeadWidth = 0.3;
-            double factorsnakeHeadHeight = 0.5;
-            for (int i = 0; i < snList.elements(); i++) {
+            double factorDimensionSnakeHeadWidth = 0.3;
+            double factorDimensionSnakeHeadHeight = 0.5;
+            int headDelayToBody = 5;
+            int eyesDelayToBody = 5;
 
 
+            for (int i = 0; i < snakeList.size(); i++) {
+                Coordinates coor = snakeList.get(i);
                 if (i == 0) {
                     //Draw the head of the snake
+                    //in all four directions
                     if (mNextMotion.equals(LEFT) || mNextMotion.equals(RIGHT)) {
-                        c.drawOval(new RectF(n.getValueX() - snakeHeadHeight / 2, n.getValueY() + snakeHeadWidth / 2, n.getValueX() + snakeHeadHeight / 2, n.getValueY() - snakeHeadWidth / 2), h);
-
                         if (mNextMotion.equals(RIGHT)) {
-                            c.drawOval(new RectF(n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
-                            c.drawOval(new RectF(n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
+                            //Draw the Head
+                            c.drawOval(new RectF(coor.getCoorX() - dimensionSnakeHeadHeight / 2 - headDelayToBody, coor.getCoorY() + dimensionSnakeHeadWidth / 2, coor.getCoorX() + dimensionSnakeHeadHeight / 2 - headDelayToBody, coor.getCoorY() - dimensionSnakeHeadWidth / 2), head);
+                            //Draw the Eyes
+                            c.drawOval(new RectF(coor.getCoorX() + ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) - eyesDelayToBody - snakeHeadEye, coor.getCoorY() - ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) + snakeHeadEye, coor.getCoorX() + ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) - eyesDelayToBody + snakeHeadEye, coor.getCoorY() - ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) - snakeHeadEye), eye);
+                            c.drawOval(new RectF(coor.getCoorX() + ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) - eyesDelayToBody - snakeHeadEye, coor.getCoorY() + ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) + snakeHeadEye, coor.getCoorX() + ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) - eyesDelayToBody + snakeHeadEye, coor.getCoorY() + ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) - snakeHeadEye), eye);
                         } else {
-                            c.drawOval(new RectF(n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
-                            c.drawOval(new RectF(n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
+                            //Draw the Head
+                            c.drawOval(new RectF(coor.getCoorX() - dimensionSnakeHeadHeight / 2 + headDelayToBody, coor.getCoorY() + dimensionSnakeHeadWidth / 2, coor.getCoorX() + dimensionSnakeHeadHeight / 2 + headDelayToBody, coor.getCoorY() - dimensionSnakeHeadWidth / 2), head);
+                            //Draw the Eyes
+                            c.drawOval(new RectF(coor.getCoorX() - ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) + eyesDelayToBody - snakeHeadEye, coor.getCoorY() - ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) + snakeHeadEye, coor.getCoorX() - ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) + eyesDelayToBody + snakeHeadEye, coor.getCoorY() - ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) - snakeHeadEye), eye);
+                            c.drawOval(new RectF(coor.getCoorX() - ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) + eyesDelayToBody - snakeHeadEye, coor.getCoorY() + ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) + snakeHeadEye, coor.getCoorX() - ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) + eyesDelayToBody + snakeHeadEye, coor.getCoorY() + ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) - snakeHeadEye), eye);
                         }
                     } else {
-                        c.drawOval(new RectF(n.getValueX() - snakeHeadWidth / 2, n.getValueY() + snakeHeadHeight / 2, n.getValueX() + snakeHeadWidth / 2, n.getValueY() - snakeHeadHeight / 2), h);
-
                         if (mNextMotion.equals(UP)) {
-                            c.drawOval(new RectF(n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
-                            c.drawOval(new RectF(n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() + ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
+                            //Draw the Head
+                            c.drawOval(new RectF(coor.getCoorX() - dimensionSnakeHeadWidth / 2, coor.getCoorY() + dimensionSnakeHeadHeight / 2 - headDelayToBody, coor.getCoorX() + dimensionSnakeHeadWidth / 2, coor.getCoorY() - dimensionSnakeHeadHeight / 2 - headDelayToBody), head);
+                            //Draw the Eyes
+                            c.drawOval(new RectF(coor.getCoorX() - ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) - snakeHeadEye, coor.getCoorY() + ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) - eyesDelayToBody + snakeHeadEye, coor.getCoorX() - ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) + snakeHeadEye, coor.getCoorY() + ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) - eyesDelayToBody - snakeHeadEye), eye);
+                            c.drawOval(new RectF(coor.getCoorX() + ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) - snakeHeadEye, coor.getCoorY() + ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) - eyesDelayToBody + snakeHeadEye, coor.getCoorX() + ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) + snakeHeadEye, coor.getCoorY() + ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) - eyesDelayToBody - snakeHeadEye), eye);
                         } else {
-                            c.drawOval(new RectF(n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() - ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
-                            c.drawOval(new RectF(n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) - snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) + snakeHeadEye, n.getValueX() + ((int) (snakeHeadWidth * factorsnakeHeadWidth)) + snakeHeadEye, n.getValueY() - ((int) (snakeHeadHeight * factorsnakeHeadHeight)) - snakeHeadEye), e);
+                            //Draw the Head
+                            c.drawOval(new RectF(coor.getCoorX() - dimensionSnakeHeadWidth / 2, coor.getCoorY() + dimensionSnakeHeadHeight / 2 + headDelayToBody, coor.getCoorX() + dimensionSnakeHeadWidth / 2, coor.getCoorY() - dimensionSnakeHeadHeight / 2 + headDelayToBody), head);
+                            //Draw the Eyes
+                            c.drawOval(new RectF(coor.getCoorX() - ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) - snakeHeadEye, coor.getCoorY() - ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) + eyesDelayToBody + snakeHeadEye, coor.getCoorX() - ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) + snakeHeadEye, coor.getCoorY() - ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) + eyesDelayToBody - snakeHeadEye), eye);
+                            c.drawOval(new RectF(coor.getCoorX() + ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) - snakeHeadEye, coor.getCoorY() - ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) + eyesDelayToBody + snakeHeadEye, coor.getCoorX() + ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) + snakeHeadEye, coor.getCoorY() - ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) + eyesDelayToBody - snakeHeadEye), eye);
                         }
                     }
-                } else if (i == snList.elements() - 1) {
-                    c.drawRect(new RectF(n.getValueX() - fruitWidth / 2, n.getValueY() + fruitWidth / 2, n.getValueX() + fruitWidth / 2, n.getValueY() - fruitWidth / 2), f);
+                //Draw the Fruit
+                } else if (i == snakeList.size() - 1) {
+                    c.drawRect(new RectF(coor.getCoorX() - dimensionFruit / 2, coor.getCoorY() + dimensionFruit / 2, coor.getCoorX() + dimensionFruit / 2, coor.getCoorY() - dimensionFruit / 2), fruit);
                 } else {
-                    c.drawRect(new RectF(n.getValueX() - fruitWidth / 2, n.getValueY() + fruitWidth / 2, n.getValueX() + fruitWidth / 2, n.getValueY() - fruitWidth / 2), t);
+                    //Draw the body of the snake
+                    c.drawRect(new RectF(coor.getCoorX() - dimensionSnakeBodyWidth / 2, coor.getCoorY() + dimensionSnakeBodyWidth / 2, coor.getCoorX() + dimensionSnakeBodyWidth / 2, coor.getCoorY() - dimensionSnakeBodyWidth / 2), tail);
                 }
-
-                n = n.getNext();
                 Log.i(TAG, "draw fruit --> ");
-
             }
             sHolder.unlockCanvasAndPost(c);
         }
     }
 
-    private void setFruit() {
-        int x = getRandom(fruitWidth, SViewWidth);
-        int y = getRandom(fruitWidth, SViewHeight);
-
-        SnakeNode n = snList.getHead();
-        for (int i = 0; i < (snList.elements() - 2); i++) {
-            //Because last node is the foot
-            if (x >= n.getValueX() - snakeBodyWidth && x <= n.getValueX() + snakeBodyWidth) {
-                //Fruit is in the same x-line
-                if (y >= n.getValueY() - snakeBodyWidth && y <= n.getValueY() + snakeBodyWidth) {
-                    //Fruit is in the same x-line and y-line
-                    setFruit();
-                }
-            }
-            n = n.getNext();
-        }
-        snList.getTail().setValueX(x);
-        snList.getTail().setValueY(y);
-
-    }
-
     private boolean isFruitEaten() {
-        if (snList != null) {
-            if (snList.getTail().getValueY() >= snList.getHead().getValueY() - snakeHeadWidth / 2 && snList.getTail().getValueY() <= snList.getHead().getValueY() + snakeHeadWidth / 2) {
-                //same Height of Head and Fruit
-                if (snList.getTail().getValueX() >= snList.getHead().getValueX() - snakeHeadHeight / 2 && snList.getTail().getValueX() <= snList.getHead().getValueX() + snakeHeadHeight / 2) {
-                    //same Height of Head and Fruit
-                    //same Width of Head and Fruit
+        //new Thomas
+        int rangeXFruitMin = snakeList.get(snakeList.size() - 1).getCoorX() - (dimensionFruit / 2) - (dimensionSnakeHeadWidth / 4);
+        int rangeXFruitMax = snakeList.get(snakeList.size() - 1).getCoorX() + (dimensionFruit / 2) + (dimensionSnakeHeadWidth / 4);
 
-                    return true;
-                }
+        int rangeYFruitMin = snakeList.get(snakeList.size() - 1).getCoorY() - (dimensionFruit / 2) - (dimensionSnakeHeadWidth / 4);
+        int rangeYFruitMax = snakeList.get(snakeList.size() - 1).getCoorY() + (dimensionFruit / 2) + (dimensionSnakeHeadWidth / 4);
+
+        if (snakeList != null) {
+            if(snakeList.get(0).getCoorX() >= rangeXFruitMin && snakeList.get(0).getCoorX() <= rangeXFruitMax && snakeList.get(0).getCoorY() >= rangeYFruitMin && snakeList.get(0).getCoorY() <= rangeYFruitMax){
+                return true;
             }
-            return false;
         }
         return false;
     }
 
     private void moveSnake() {
+        //new Thomas
+        Coordinates head = snakeList.get(0);
+
+        int headX = head.getCoorX();
+        int headY = head.getCoorY();
         switch (mNextMotion) {
             case LEFT: {
-                snList.pushFront(snList.getHead().getValueX() - snakeBodyWidth, snList.getHead().getValueY());
+                snakeList.add(0, new Coordinates(headX - dimensionSnakeBodyWidth, headY));
             }
             break;
 
             case RIGHT: {
-                snList.pushFront(snList.getHead().getValueX() + snakeBodyWidth, snList.getHead().getValueY());
+                snakeList.add(0, new Coordinates(headX + dimensionSnakeBodyWidth, headY));
             }
             break;
 
             case UP: {
-                snList.pushFront(snList.getHead().getValueX(), snList.getHead().getValueY() + snakeBodyWidth);
+                snakeList.add(0, new Coordinates(headX, headY + dimensionSnakeBodyWidth));
             }
             break;
 
             case DOWN: {
-                snList.pushFront(snList.getHead().getValueX(), snList.getHead().getValueY() - snakeBodyWidth);
+                snakeList.add(0, new Coordinates(headX, headY - dimensionSnakeBodyWidth));
             }
             break;
             default:
@@ -433,59 +398,55 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     }
 
     private void cutTail() {
-        snList.removeTail();
+        //new Thomas
+        snakeList.remove(snakeList.size() - 2);
     }
 
 
     //Sets the first Snake in the GameField
     private void setSnakeAtBeginning() {
-        int x = getRandom(3 * Math.max(snakeHeadWidth, snakeHeadHeight), SViewWidth);
-        int y = getRandom(3 * Math.max(snakeHeadWidth, snakeHeadHeight), SViewHeight);
-        int dir = (int) (Math.random() * 5);
-
-        snList.pushFront(x, y);
-
-        switch (dir) {
-            case 1: {
-                snList.pushFront(x + snakeBodyWidth, y);
-                snList.pushFront(x + 2 * snakeBodyWidth, y);
-                mNextMotion = RIGHT;
-                snList.getHead().setValueX(snList.getHead().getValueX() - snakeHeadHeight / 2);
-            }
-            break;
-
-            case 2: {
-                snList.pushFront(x - snakeBodyWidth, y);
-                snList.pushFront(x - 2 * snakeBodyWidth, y);
+        //new Thomas
+        int headPointX = SViewWidth / 2;
+        int headPointY = SViewHeight / 2;
+        int direction = (int) (Math.random() * 5);
+        
+        
+        //set the Snake with a lenght of three
+        snakeList.add(new Coordinates(headPointX, headPointY));
+        switch (direction){
+            case 1:{
+                snakeList.add(new Coordinates(headPointX + dimensionSnakeBodyWidth, headPointY));
+                snakeList.add(new Coordinates(headPointX + dimensionSnakeBodyWidth + dimensionSnakeBodyWidth, headPointY));
                 mNextMotion = LEFT;
-                snList.getHead().setValueX(snList.getHead().getValueX() + snakeHeadHeight / 2);
-            }
-            break;
+            } break;
 
-            case 3: {
-                snList.pushFront(x, y + snakeBodyWidth);
-                snList.pushFront(x, y + 2 * snakeBodyWidth);
+            case 2:{
+                snakeList.add(new Coordinates(headPointX - dimensionSnakeBodyWidth, headPointY));
+                snakeList.add(new Coordinates(headPointX - dimensionSnakeBodyWidth - dimensionSnakeBodyWidth, headPointY));
+                mNextMotion = RIGHT;
+            } break;
+
+            case 3:{
+                snakeList.add(new Coordinates(headPointX, headPointY + dimensionSnakeBodyWidth));
+                snakeList.add(new Coordinates(headPointX, headPointY + dimensionSnakeBodyWidth + dimensionSnakeBodyWidth));
+                mNextMotion = DOWN;
+            } break;
+
+            case 4:{
+                snakeList.add(new Coordinates(headPointX, headPointY - dimensionSnakeBodyWidth));
+                snakeList.add(new Coordinates(headPointX, headPointY - dimensionSnakeBodyWidth - dimensionSnakeBodyWidth));
                 mNextMotion = UP;
-                snList.getHead().setValueY(snList.getHead().getValueY() - snakeHeadHeight / 2);
-            }
-            break;
+            } break;
 
-            case 4: {
-                snList.pushFront(x, y - snakeBodyWidth);
-                snList.pushFront(x, y - 2 * snakeBodyWidth);
-                mNextMotion = DOWN;
-                snList.getHead().setValueY(snList.getHead().getValueY() + snakeHeadHeight / 2);
+            default:{
+                snakeList.add(new Coordinates(headPointX, headPointY - dimensionSnakeBodyWidth));
+                snakeList.add(new Coordinates(headPointX, headPointY - dimensionSnakeBodyWidth - dimensionSnakeBodyWidth));
+                mNextMotion = UP;
             }
-            break;
-            default: {
-                snList.pushFront(x, y - snakeBodyWidth);
-                snList.pushFront(x, y - 2 * snakeBodyWidth);
-                mNextMotion = DOWN;
-                snList.getHead().setValueY(snList.getHead().getValueY() + snakeHeadHeight / 2);
-            }
-
         }
 
+        //set the first Fruit
+        snakeList.add(getRandomCoordinates());
     }
 
 
