@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class StartScreen extends Activity implements View.OnClickListener {
@@ -23,6 +24,8 @@ public class StartScreen extends Activity implements View.OnClickListener {
     public static final String GAME_VIEW_HI_SCORE           = "High_Score";
     public static final String GAME_VIEW_LAST_SCORE         = "Last_Score";
     Button b = null;
+    TextView highScore = null;
+    TextView lastScore = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +35,33 @@ public class StartScreen extends Activity implements View.OnClickListener {
         b = (Button) findViewById(R.id.start_button_start);
         b.setOnClickListener(this);
 
+        highScore = (TextView) findViewById(R.id.start_text_view_high_score_value);
+        lastScore = (TextView) findViewById(R.id.start_text_view_last_score_value);
+
 
         SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
-        sharedPrefs.getInt(GAME_VIEW_BACKGROUND_COLOUR, 0x88888888);
+//        sharedPrefs.getInt(GAME_VIEW_BACKGROUND_COLOUR, 0x88888888);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt(GAME_VIEW_BACKGROUND_COLOUR, 0xffff0000);
-
         editor.putInt(GAME_VIEW_SNAKE_HEAD_COLOUR, 0xff00ff00);
         editor.putInt(GAME_VIEW_SNAKE_BODY_COLOUR, 0xff0000ff);
         editor.putInt(GAME_VIEW_SNAKE_EYE_COLOUR,  0xff000000);
         editor.putInt(GAME_VIEW_FRUIT_COLOUR,      0xffffff00);
-        editor.putInt(GAME_VIEW_HI_SCORE,          0x0);
-        editor.putInt(GAME_VIEW_LAST_SCORE,        0x0);
+        editor.putInt(GAME_VIEW_LAST_SCORE, Integer.MAX_VALUE);
+        editor.putInt(GAME_VIEW_HI_SCORE, Integer.MAX_VALUE);
 
         editor.commit();
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
+        highScore.setText(Integer.toString(sharedPrefs.getInt(GAME_VIEW_HI_SCORE, -1)));
+        lastScore.setText(Integer.toString(sharedPrefs.getInt(GAME_VIEW_LAST_SCORE, -1)));
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,10 +78,30 @@ public class StartScreen extends Activity implements View.OnClickListener {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        switch(item.getItemId()){
+            case R.id.action_settings:{
+                Log.i(TAG, "SettingsButton pressed...");
+            } break;
 
+            case R.id.background_color:{
+                Log.i(TAG, "Background-Button pressed...");
+            } break;
+
+            case R.id.snake_head_color:{
+                Log.i(TAG, "Head-Button pressed...");
+            } break;
+
+            case R.id.snake_body_color:{
+                Log.i(TAG, "Body-Button pressed...");
+            } break;
+
+            case R.id.snake_foot_color:{
+                Log.i(TAG, "Foot-Button pressed...");
+            } break;
+            default:{
+                Log.i(TAG, "unknown SettingsButton pressed...");
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 

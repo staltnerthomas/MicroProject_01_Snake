@@ -19,6 +19,52 @@
         android:layout_gravity="center_horizontal|bottom"
         android:text="@string/start_button_start_text" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="380dp"
+        android:layout_gravity="bottom"
+        android:id="@+id/linearLayoutOfHighAndLastScore">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_text_view_high_score"
+            android:id="@+id/start_text_view_high_score" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/start_text_view_high_score_value"
+            android:id="@+id/start_text_view_high_score_value"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#ff00ff00"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_text_view_last_score"
+            android:id="@+id/start_text_view_last_score" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/start_text_view_last_score_value"
+            android:id="@+id/start_text_view_last_score_value"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ff00ff00"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:gravity="center_vertical|center_horizontal"
+            android:typeface="monospace" />
+    </LinearLayout>
+
     <GridLayout
         android:layout_width="fill_parent"
         android:layout_height="105dp"

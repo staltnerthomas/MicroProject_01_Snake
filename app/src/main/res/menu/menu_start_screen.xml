@@ -6,7 +6,19 @@
         android:orderInCategory="100"
         android:title="@string/action_settings" />
     <item
-        android:id="@+id/snake_color"
+        android:id="@+id/background_color"
         android:orderInCategory="100"
-        android:title="@string/snake_color_text" />
+        android:title="@string/background_color_text" />
+    <item
+        android:id="@+id/snake_head_color"
+        android:orderInCategory="100"
+        android:title="@string/snake_head_color_text" />
+    <item
+        android:id="@+id/snake_body_color"
+        android:orderInCategory="100"
+        android:title="@string/snake_body_color_text" />
+    <item
+        android:id="@+id/snake_foot_color"
+        android:orderInCategory="100"
+        android:title="@string/snake_foot_color_text" />
 </menu>

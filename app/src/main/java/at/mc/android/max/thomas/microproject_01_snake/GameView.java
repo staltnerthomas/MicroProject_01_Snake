@@ -226,6 +226,15 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                     playGame();
                 }
             }, ((int) delayTime));
+        } else {
+            SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS , MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+
+            if(gamePoints > sharedPrefs.getInt(StartScreen.GAME_VIEW_HI_SCORE, -1)){
+                editor.putInt(StartScreen.GAME_VIEW_HI_SCORE, (int) gamePoints);
+            }
+            editor.putInt(StartScreen.GAME_VIEW_LAST_SCORE, (int) gamePoints);
+            editor.commit();
         }
     }
 
@@ -263,6 +272,14 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     private void setNextFruit() {
         Coordinates fruitCoordinate = getRandomCoordinates();
 
+        if(isValidFruitCoordinate(fruitCoordinate)){
+            snakeList.set(snakeList.size() - 1, fruitCoordinate);
+        } else {
+            setNextFruit();
+        }
+    }
+
+    private boolean isValidFruitCoordinate(Coordinates fruitCoordinate) {
         for (int i = 0; i <= (snakeList.size() - 1); i++) {
             //run over the Snake and look if the Fruit is not over the Snake
             Coordinates coor = snakeList.get(i);
@@ -275,13 +292,11 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             if (snakeList != null) {
                 if (fruitCoordinate.getCoorX() >= rangeXBodyMin && fruitCoordinate.getCoorX() <= rangeXBodyMax && fruitCoordinate.getCoorY() >= rangeYBodyMin && fruitCoordinate.getCoorY() <= rangeYBodyMax) {
-                    setNextFruit();
+                    return false;
                 }
             }
         }
-
-
-        snakeList.set(snakeList.size() - 1, fruitCoordinate);
+        return true;
     }
 
     /**
