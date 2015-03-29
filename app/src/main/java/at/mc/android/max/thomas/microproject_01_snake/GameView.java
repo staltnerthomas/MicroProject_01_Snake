@@ -333,7 +333,8 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             int eyesDelayToBody = 5;
 
 
-            for (int i = 0; i < snakeList.size(); i++) {
+//            for (int i = 0; i < snakeList.size(); i++) {
+            for (int i = snakeList.size() - 1; i >= 0; i--) {
                 Coordinates coor = snakeList.get(i);
                 if (i == 0) {
                     //Draw the head of the snake
