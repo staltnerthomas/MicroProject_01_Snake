@@ -8,12 +8,12 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.util.Range;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -28,6 +28,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     public static final String RIGHT = "right";
     public static final String UP = "up";
     public static final String DOWN = "down";
+
     Handler mHandler = new Handler();
     GestureDetector mG = null;
     String mNextMotion = "default";
@@ -50,6 +51,8 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
     //defines constants
     private float delayTime = 450;
+    private float gamePoints = 0;
+    private float gamePointsBonus = 80;
 
     private List<Coordinates> snakeList = Collections.synchronizedList(new LinkedList<Coordinates>());
 
@@ -58,10 +61,6 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
-
-//        //Set Screen to Fullscreen
-//        View v = findViewById(android.R.id.content).getRootView();
-//        v.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
         //get Display with and heigth
         gameSurfaceView = (SurfaceView) findViewById(R.id.game_surface_view);
@@ -186,7 +185,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             int rangeYBodyMax = coor.getCoorY() + (dimensionSnakeBodyWidth / 2);
 
             if (snakeList != null) {
-                if(headCoordinate.getCoorX() >= rangeXBodyMin && headCoordinate.getCoorX() <= rangeXBodyMax && headCoordinate.getCoorY() >= rangeYBodyMin && headCoordinate.getCoorY() <= rangeYBodyMax){
+                if (headCoordinate.getCoorX() >= rangeXBodyMin && headCoordinate.getCoorX() <= rangeXBodyMax && headCoordinate.getCoorY() >= rangeYBodyMin && headCoordinate.getCoorY() <= rangeYBodyMax) {
                     return true;
                 }
             }
@@ -212,6 +211,13 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 cutTail();
             } else {
                 setNextFruit();
+                delayTime = delayTime * 0.975f;
+                if (gamePoints == 0){
+                    gamePoints = 100;
+                } else {
+                    gamePoints += gamePointsBonus;
+                    gamePointsBonus *= 1.25f;
+                }
             }
 //            delayTime = delayTime * 0.999f;
             drawGameView();
@@ -231,18 +237,21 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
      */
     private Coordinates getRandomCoordinates() {
         //new Thomas
-        Range<Integer> widthRange = new Range<Integer>(dimensionFruit / 2, SViewWidth - dimensionFruit / 2);
-        Range<Integer> heightRange = new Range<Integer>(dimensionFruit / 2, SViewHeight - dimensionFruit / 2);
+        int widthRangeMin = dimensionFruit /* / 2 */;
+        int widthRangeMax = SViewWidth - dimensionFruit /* / 2 */;
+        int heightRangeMin = dimensionFruit /* / 2 */;
+        int heightRangeMax = SViewHeight - dimensionFruit /* / 2 */;
+
         int xCoor = 0;
         int yCoor = 0;
 
         do {
             xCoor = randomInRange(SViewWidth);
-        } while (!(widthRange.contains(xCoor)));
+        } while (!(xCoor >= widthRangeMin && xCoor <= widthRangeMax));
 
         do {
             yCoor = randomInRange(SViewHeight);
-        } while (!(heightRange.contains(yCoor)));
+        } while (!(yCoor >= heightRangeMin && yCoor <= heightRangeMax));
 
         return new Coordinates(xCoor, yCoor);
     }
@@ -252,9 +261,28 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
         return (int) (Math.random() * (max + 1));
     }
 
-    private void setNextFruit(){
-        Coordinates coor = getRandomCoordinates();
-        snakeList.set(snakeList.size() - 1, coor);
+    private void setNextFruit() {
+        Coordinates fruitCoordinate = getRandomCoordinates();
+
+        for (int i = 0; i <= (snakeList.size() - 1); i++) {
+            //run over the Snake and look if the Fruit is not over the Snake
+            Coordinates coor = snakeList.get(i);
+
+            int rangeXBodyMin = coor.getCoorX() - (dimensionSnakeBodyWidth / 2) - (dimensionFruit / 2);
+            int rangeXBodyMax = coor.getCoorX() + (dimensionSnakeBodyWidth / 2) + (dimensionFruit / 2);
+
+            int rangeYBodyMin = coor.getCoorY() - (dimensionSnakeBodyWidth / 2) - (dimensionFruit / 2);
+            int rangeYBodyMax = coor.getCoorY() + (dimensionSnakeBodyWidth / 2) + (dimensionFruit / 2);
+
+            if (snakeList != null) {
+                if (fruitCoordinate.getCoorX() >= rangeXBodyMin && fruitCoordinate.getCoorX() <= rangeXBodyMax && fruitCoordinate.getCoorY() >= rangeYBodyMin && fruitCoordinate.getCoorY() <= rangeYBodyMax) {
+                    setNextFruit();
+                }
+            }
+        }
+
+
+        snakeList.set(snakeList.size() - 1, fruitCoordinate);
     }
 
     /**
@@ -264,6 +292,8 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     private void drawGameView() {
         Log.i(TAG, "drawGameView!");
         //new Thomas
+        TextView teViewPoints = (TextView) findViewById(R.id.game_text_view_score);
+        teViewPoints.setText(String.valueOf((int) (gamePoints)));
 
         if (sHolder != null) {
             Canvas c = sHolder.lockCanvas();
@@ -338,7 +368,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                             c.drawOval(new RectF(coor.getCoorX() + ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) - snakeHeadEye, coor.getCoorY() - ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) + eyesDelayToBody + snakeHeadEye, coor.getCoorX() + ((int) (dimensionSnakeHeadWidth * factorDimensionSnakeHeadWidth)) + snakeHeadEye, coor.getCoorY() - ((int) (dimensionSnakeHeadHeight * factorDimensionSnakeHeadHeight)) + eyesDelayToBody - snakeHeadEye), eye);
                         }
                     }
-                //Draw the Fruit
+                    //Draw the Fruit
                 } else if (i == snakeList.size() - 1) {
                     c.drawRect(new RectF(coor.getCoorX() - dimensionFruit / 2, coor.getCoorY() + dimensionFruit / 2, coor.getCoorX() + dimensionFruit / 2, coor.getCoorY() - dimensionFruit / 2), fruit);
                 } else {
@@ -360,7 +390,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
         int rangeYFruitMax = snakeList.get(snakeList.size() - 1).getCoorY() + (dimensionFruit / 2) + (dimensionSnakeHeadWidth / 4);
 
         if (snakeList != null) {
-            if(snakeList.get(0).getCoorX() >= rangeXFruitMin && snakeList.get(0).getCoorX() <= rangeXFruitMax && snakeList.get(0).getCoorY() >= rangeYFruitMin && snakeList.get(0).getCoorY() <= rangeYFruitMax){
+            if (snakeList.get(0).getCoorX() >= rangeXFruitMin && snakeList.get(0).getCoorX() <= rangeXFruitMax && snakeList.get(0).getCoorY() >= rangeYFruitMin && snakeList.get(0).getCoorY() <= rangeYFruitMax) {
                 return true;
             }
         }
@@ -402,43 +432,46 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
         snakeList.remove(snakeList.size() - 2);
     }
 
-
     //Sets the first Snake in the GameField
     private void setSnakeAtBeginning() {
         //new Thomas
         int headPointX = SViewWidth / 2;
         int headPointY = SViewHeight / 2;
         int direction = (int) (Math.random() * 5);
-        
-        
+
+
         //set the Snake with a lenght of three
         snakeList.add(new Coordinates(headPointX, headPointY));
-        switch (direction){
-            case 1:{
+        switch (direction) {
+            case 1: {
                 snakeList.add(new Coordinates(headPointX + dimensionSnakeBodyWidth, headPointY));
                 snakeList.add(new Coordinates(headPointX + dimensionSnakeBodyWidth + dimensionSnakeBodyWidth, headPointY));
                 mNextMotion = LEFT;
-            } break;
+            }
+            break;
 
-            case 2:{
+            case 2: {
                 snakeList.add(new Coordinates(headPointX - dimensionSnakeBodyWidth, headPointY));
                 snakeList.add(new Coordinates(headPointX - dimensionSnakeBodyWidth - dimensionSnakeBodyWidth, headPointY));
                 mNextMotion = RIGHT;
-            } break;
+            }
+            break;
 
-            case 3:{
+            case 3: {
                 snakeList.add(new Coordinates(headPointX, headPointY + dimensionSnakeBodyWidth));
                 snakeList.add(new Coordinates(headPointX, headPointY + dimensionSnakeBodyWidth + dimensionSnakeBodyWidth));
                 mNextMotion = DOWN;
-            } break;
+            }
+            break;
 
-            case 4:{
+            case 4: {
                 snakeList.add(new Coordinates(headPointX, headPointY - dimensionSnakeBodyWidth));
                 snakeList.add(new Coordinates(headPointX, headPointY - dimensionSnakeBodyWidth - dimensionSnakeBodyWidth));
                 mNextMotion = UP;
-            } break;
+            }
+            break;
 
-            default:{
+            default: {
                 snakeList.add(new Coordinates(headPointX, headPointY - dimensionSnakeBodyWidth));
                 snakeList.add(new Coordinates(headPointX, headPointY - dimensionSnakeBodyWidth - dimensionSnakeBodyWidth));
                 mNextMotion = UP;
