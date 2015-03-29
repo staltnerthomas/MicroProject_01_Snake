@@ -1,19 +1,53 @@
 package at.mc.android.max.thomas.microproject_01_snake;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SeekBar;
+import android.widget.Switch;
 
 
 public class Settings extends Activity {
+    public static final String TAG = "Snake 01 OptionsScreen";
+
+    public static final String OPTIONS_SWITCH_CONTROL  = "Switch between Motion and Scroll";
+    public static final String OPTIONS_SEEKBAR_TAKEOFFSPEED  = "TakeoffSpeed for Snake";
+
+
+    Switch optionsSwitchControl = null;
+    SeekBar optionsSeekbarTakeoffspeed = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        optionsSwitchControl = (Switch) findViewById(R.id.options_switch_control);
+        optionsSeekbarTakeoffspeed = (SeekBar) findViewById(R.id.options_seekbar_takeoffspeed);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "Options onDestroy...");
+
+        SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS , MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+
+        if(optionsSwitchControl.isChecked()) {
+            editor.putInt(OPTIONS_SWITCH_CONTROL, 1);
+        } else {
+            editor.putInt(OPTIONS_SWITCH_CONTROL, 0);
+        }
+        editor.putInt(OPTIONS_SEEKBAR_TAKEOFFSPEED, optionsSeekbarTakeoffspeed.getProgress());
+
+        editor.commit();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

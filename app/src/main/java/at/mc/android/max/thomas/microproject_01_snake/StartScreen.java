@@ -15,6 +15,7 @@ import android.widget.TextView;
 public class StartScreen extends Activity implements View.OnClickListener {
 
     public static final String TAG                          = "Snake 01 StartScreen";
+
     public static final String SHARED_PREFS                 = "Preverences_Name";
     public static final String GAME_VIEW_BACKGROUND_COLOUR  = "Backgroundcolor_of_GameView";
     public static final String GAME_VIEW_SNAKE_HEAD_COLOUR  = "Snake_Head_color_of_GameView";
@@ -47,8 +48,8 @@ public class StartScreen extends Activity implements View.OnClickListener {
         editor.putInt(GAME_VIEW_SNAKE_BODY_COLOUR, 0xff0000ff);
         editor.putInt(GAME_VIEW_SNAKE_EYE_COLOUR,  0xff000000);
         editor.putInt(GAME_VIEW_FRUIT_COLOUR,      0xffffff00);
-        editor.putInt(GAME_VIEW_LAST_SCORE, Integer.MAX_VALUE);
-        editor.putInt(GAME_VIEW_HI_SCORE, Integer.MAX_VALUE);
+//        editor.putInt(GAME_VIEW_LAST_SCORE, 0);
+//        editor.putInt(GAME_VIEW_HI_SCORE, 0);
 
         editor.commit();
 
@@ -81,6 +82,8 @@ public class StartScreen extends Activity implements View.OnClickListener {
         switch(item.getItemId()){
             case R.id.action_settings:{
                 Log.i(TAG, "SettingsButton pressed...");
+                Intent i = new Intent(this, Settings.class);
+                startActivity(i);
             } break;
 
             case R.id.background_color:{

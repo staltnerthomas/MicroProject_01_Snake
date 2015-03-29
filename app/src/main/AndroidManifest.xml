@@ -30,7 +30,8 @@
         <activity
             android:name=".Settings"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".StartScreen" >
+            android:parentActivityName=".StartScreen"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="at.mc.android.max.thomas.microproject_01_snake.StartScreen" />
