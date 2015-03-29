@@ -41,7 +41,6 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
     //defines the Fruit
     private int dimensionFruit = 25;
-//    private int fruitHeigth = 10;
 
     //Defines the snake
     private int dimensionSnakeBodyWidth = 25;
