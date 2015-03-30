@@ -20,54 +20,54 @@
         android:text="@string/start_button_start_text" />
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/linearLayoutOfHighAndLastScore"
         android:layout_width="fill_parent"
         android:layout_height="380dp"
         android:layout_gravity="bottom"
-        android:id="@+id/linearLayoutOfHighAndLastScore">
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/start_text_view_high_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/start_text_view_high_score"
-            android:id="@+id/start_text_view_high_score" />
+            android:text="@string/start_text_view_high_score" />
 
         <TextView
+            android:id="@+id/start_text_view_high_score_value"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/start_text_view_high_score_value"
-            android:id="@+id/start_text_view_high_score_value"
             android:layout_gravity="center_horizontal"
             android:gravity="center_vertical|center_horizontal"
+            android:text="@string/start_text_view_high_score_value"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ff00ff00"
             android:textSize="50dp"
             android:textStyle="bold"
             android:typeface="monospace" />
 
         <TextView
+            android:id="@+id/start_text_view_last_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/start_text_view_last_score"
-            android:id="@+id/start_text_view_last_score" />
+            android:text="@string/start_text_view_last_score" />
 
         <TextView
+            android:id="@+id/start_text_view_last_score_value"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/start_text_view_last_score_value"
-            android:id="@+id/start_text_view_last_score_value"
             android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/start_text_view_last_score_value"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ff00ff00"
             android:textSize="30dp"
             android:textStyle="bold"
-            android:gravity="center_vertical|center_horizontal"
             android:typeface="monospace" />
 
         <TextView
+            android:id="@+id/start_textView_control_1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/start_textView_control_1" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <GridLayout
@@ -84,6 +84,7 @@
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -93,6 +94,7 @@
             android:layout_column="1"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -102,6 +104,7 @@
             android:layout_column="2"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffffdc00"
             android:text="" />
 
 
@@ -112,6 +115,7 @@
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -121,6 +125,7 @@
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -130,6 +135,7 @@
             android:layout_column="1"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -139,6 +145,7 @@
             android:layout_column="2"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffffdc00"
             android:text="" />
 
 
@@ -149,6 +156,7 @@
             android:layout_column="2"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -158,6 +166,7 @@
             android:layout_column="2"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -167,6 +176,7 @@
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -176,6 +186,7 @@
             android:layout_column="1"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -185,6 +196,7 @@
             android:layout_column="4"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -194,6 +206,7 @@
             android:layout_column="4"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -203,6 +216,7 @@
             android:layout_column="4"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -212,6 +226,7 @@
             android:layout_column="4"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -221,15 +236,7 @@
             android:layout_column="4"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:text="" />
-
-        <Button
-            android:id="@+id/button17"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_column="5"
-            android:layout_gravity="left|center_vertical"
-            android:layout_row="0"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -239,6 +246,17 @@
             android:layout_column="5"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
+            android:background="#ffff0004"
+            android:text="" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_column="5"
+            android:layout_gravity="left|center_vertical"
+            android:layout_row="2"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -248,6 +266,7 @@
             android:layout_column="6"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -257,6 +276,7 @@
             android:layout_column="7"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -266,6 +286,7 @@
             android:layout_column="7"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -275,6 +296,7 @@
             android:layout_column="7"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -284,6 +306,7 @@
             android:layout_column="6"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -293,6 +316,7 @@
             android:layout_column="7"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -302,6 +326,7 @@
             android:layout_column="7"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -311,6 +336,7 @@
             android:layout_column="8"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -320,6 +346,7 @@
             android:layout_column="8"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -329,6 +356,7 @@
             android:layout_column="8"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -338,6 +366,7 @@
             android:layout_column="8"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -347,6 +376,7 @@
             android:layout_column="9"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -356,6 +386,7 @@
             android:layout_column="10"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -365,6 +396,7 @@
             android:layout_column="9"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -374,6 +406,7 @@
             android:layout_column="10"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -383,6 +416,7 @@
             android:layout_column="10"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -392,6 +426,7 @@
             android:layout_column="10"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -401,6 +436,7 @@
             android:layout_column="11"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -410,6 +446,7 @@
             android:layout_column="11"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -419,6 +456,7 @@
             android:layout_column="11"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -428,6 +466,7 @@
             android:layout_column="11"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -437,6 +476,7 @@
             android:layout_column="11"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -446,6 +486,7 @@
             android:layout_column="12"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -455,6 +496,7 @@
             android:layout_column="13"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -464,6 +506,7 @@
             android:layout_column="14"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -473,6 +516,7 @@
             android:layout_column="13"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -482,6 +526,7 @@
             android:layout_column="14"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffff0004"
             android:text="" />
 
         <Button
@@ -491,6 +536,7 @@
             android:layout_column="15"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -500,6 +546,7 @@
             android:layout_column="15"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -509,6 +556,7 @@
             android:layout_column="15"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -518,6 +566,7 @@
             android:layout_column="15"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -527,6 +576,7 @@
             android:layout_column="15"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -536,6 +586,7 @@
             android:layout_column="16"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -545,6 +596,7 @@
             android:layout_column="17"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -554,6 +606,7 @@
             android:layout_column="16"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -563,6 +616,7 @@
             android:layout_column="17"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -572,6 +626,7 @@
             android:layout_column="16"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffffdc00"
             android:text="" />
 
         <Button
@@ -581,6 +636,7 @@
             android:layout_column="17"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
+            android:background="#ffffdc00"
             android:text="" />
 
 
