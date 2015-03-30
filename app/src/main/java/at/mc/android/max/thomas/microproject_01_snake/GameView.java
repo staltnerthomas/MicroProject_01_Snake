@@ -29,7 +29,6 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     public static final String UP = "up";
     public static final String DOWN = "down";
     public List<Coordinates> snakeList = Collections.synchronizedList(new LinkedList<Coordinates>());
-//    public List<Coordinates> snakeListSaved = Collections.synchronizedList(new LinkedList<Coordinates>());
     Handler mHandler = new Handler();
     GestureDetector mG = null;
     String mNextMotion = "default";
@@ -176,14 +175,12 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
         super.onResume();
         SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
         delayTime = 450 - (sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 0));
-//        snakeList = snakeListSaved;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Toast.makeText(GameView.this, "onPause...", Toast.LENGTH_SHORT).show();
-//        snakeListSaved = snakeList;
         gamePause = true;
         firstLongPress = true;
     }
