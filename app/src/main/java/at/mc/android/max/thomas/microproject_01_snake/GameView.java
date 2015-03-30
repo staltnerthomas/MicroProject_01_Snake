@@ -28,33 +28,30 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     public static final String RIGHT = "right";
     public static final String UP = "up";
     public static final String DOWN = "down";
-
+    public List<Coordinates> snakeList = Collections.synchronizedList(new LinkedList<Coordinates>());
+//    public List<Coordinates> snakeListSaved = Collections.synchronizedList(new LinkedList<Coordinates>());
     Handler mHandler = new Handler();
     GestureDetector mG = null;
     String mNextMotion = "default";
-
     //defines the SurfaceView
     private SurfaceView gameSurfaceView = null;
     private SurfaceHolder sHolder;
     private int SViewWidth;
     private int SViewHeight;
-
     //defines the Fruit
     private int dimensionFruit = 25;
-
     //Defines the snake
     private int dimensionSnakeBodyWidth = 25;
     private int dimensionSnakeHeadWidth = 35;
     private int dimensionSnakeHeadHeight = 18;
     private int snakeHeadEye = 4;
-
     //defines constants
     private float delayTime = 450;
     private float gamePoints = 0;
     private float gamePointsBonus = 80;
-
-    private List<Coordinates> snakeList = Collections.synchronizedList(new LinkedList<Coordinates>());
-
+    private boolean firstLongPress = true;
+    private boolean gamePause = false;
+    private boolean firstSurfaceCreated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +73,10 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 Log.i(TAG, "surfaceChanged!");
                 SViewWidth = width;
                 SViewHeight = height;
-
-                setSnakeAtBeginning();
+                if (!firstSurfaceCreated) {
+                    setSnakeAtBeginning();
+                    firstSurfaceCreated = true;
+                }
                 drawGameView();
             }
 
@@ -87,6 +86,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             }
         });
+
 
         mG = new GestureDetector(this, new GestureDetector.OnGestureListener() {
             @Override
@@ -148,8 +148,17 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             @Override
             public void onLongPress(MotionEvent _e) {
-                Toast.makeText(GameView.this, "long press detected", Toast.LENGTH_SHORT).show();
-                playGame();
+
+                if (firstLongPress) {
+                    Toast.makeText(GameView.this, "continue with game...", Toast.LENGTH_SHORT).show();
+                    gamePause = false;
+                    firstLongPress = false;
+                    playGame();
+                } else {
+                    Toast.makeText(GameView.this, "pause...", Toast.LENGTH_SHORT).show();
+                    gamePause = true;
+                    firstLongPress = true;
+                }
             }
 
             @Override
@@ -161,6 +170,28 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
         };
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
+        delayTime = 450 - (sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 0));
+//        snakeList = snakeListSaved;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(GameView.this, "onPause...", Toast.LENGTH_SHORT).show();
+//        snakeListSaved = snakeList;
+        gamePause = true;
+        firstLongPress = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
     private boolean gameOver() {
         Log.i(TAG, "gameOver!");
@@ -204,14 +235,14 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     private void playGame() {
         Log.i(TAG, "playGame!");
         //This is for playing the game
-        if (!gameOver()) {
+        if (!gameOver() && !gamePause) {
             moveSnake();
             if (!isFruitEaten()) {
                 cutTail();
             } else {
                 setNextFruit();
                 delayTime = delayTime * 0.975f;
-                if (gamePoints == 0){
+                if (gamePoints == 0) {
                     gamePoints = 100;
                 } else {
                     gamePoints += gamePointsBonus;
@@ -227,10 +258,10 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
                 }
             }, ((int) delayTime));
         } else {
-            SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS , MODE_PRIVATE);
+            SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPrefs.edit();
 
-            if(gamePoints > sharedPrefs.getInt(StartScreen.GAME_VIEW_HI_SCORE, -1)){
+            if (gamePoints > sharedPrefs.getInt(StartScreen.GAME_VIEW_HI_SCORE, -1)) {
                 editor.putInt(StartScreen.GAME_VIEW_HI_SCORE, (int) gamePoints);
             }
             editor.putInt(StartScreen.GAME_VIEW_LAST_SCORE, (int) gamePoints);
@@ -272,7 +303,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     private void setNextFruit() {
         Coordinates fruitCoordinate = getRandomCoordinates();
 
-        if(isValidFruitCoordinate(fruitCoordinate)){
+        if (isValidFruitCoordinate(fruitCoordinate)) {
             snakeList.set(snakeList.size() - 1, fruitCoordinate);
         } else {
             setNextFruit();

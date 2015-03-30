@@ -28,6 +28,8 @@ public class StartScreen extends Activity implements View.OnClickListener {
     TextView highScore = null;
     TextView lastScore = null;
 
+    TextView startControl1 = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,7 @@ public class StartScreen extends Activity implements View.OnClickListener {
 
         highScore = (TextView) findViewById(R.id.start_text_view_high_score_value);
         lastScore = (TextView) findViewById(R.id.start_text_view_last_score_value);
+        startControl1 = (TextView) findViewById(R.id.start_textView_control_1);
 
 
         SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
@@ -61,7 +64,7 @@ public class StartScreen extends Activity implements View.OnClickListener {
         SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
         highScore.setText(Integer.toString(sharedPrefs.getInt(GAME_VIEW_HI_SCORE, -1)));
         lastScore.setText(Integer.toString(sharedPrefs.getInt(GAME_VIEW_LAST_SCORE, -1)));
-
+        startControl1.setText((Integer.toString(sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 500))));
     }
 
     @Override

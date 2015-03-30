@@ -63,6 +63,11 @@
             android:textStyle="bold"
             android:gravity="center_vertical|center_horizontal"
             android:typeface="monospace" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_textView_control_1" />
     </LinearLayout>
 
     <GridLayout
