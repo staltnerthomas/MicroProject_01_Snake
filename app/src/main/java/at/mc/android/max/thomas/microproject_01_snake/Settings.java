@@ -38,6 +38,7 @@ public class Settings extends Activity {
         optionsSeekbarTakeoffspeed.setProgress(sharedPrefs.getInt(OPTIONS_SEEKBAR_TAKEOFFSPEED, 500));
 
         if(sharedPrefs.getInt(OPTIONS_SWITCH_CONTROL, 0) == 1){
+            //Switch
             optionsSwitchControl.setChecked(true);
         } else {
             optionsSwitchControl.setChecked(false);
