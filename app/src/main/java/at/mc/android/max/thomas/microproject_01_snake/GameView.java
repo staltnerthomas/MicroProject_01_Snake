@@ -104,45 +104,49 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
 
             @Override
             public boolean onScroll(MotionEvent _e1, MotionEvent _e2, float _distanceX, float _distanceY) {
-                float xDif = _e1.getX(0) - _e2.getX(0);
-                float yDif = _e1.getY(0) - _e2.getY(0);
-                float max = Math.max(Math.abs(xDif), Math.abs(yDif));
-                //float max = Math.max(_distanceX, _distanceY);
-                if (Math.abs(xDif) > Math.abs(yDif)) {
-                    if (xDif < 0) {
-                        if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
-                            mNextMotion = RIGHT;//dir
-                            Log.i("snake", RIGHT);
+                SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
+                if (sharedPrefs.getInt(Settings.OPTIONS_SWITCH_CONTROL, -1) == 0) {
+                    float xDif = _e1.getX(0) - _e2.getX(0);
+                    float yDif = _e1.getY(0) - _e2.getY(0);
+                    float max = Math.max(Math.abs(xDif), Math.abs(yDif));
+                    //float max = Math.max(_distanceX, _distanceY);
+                    if (Math.abs(xDif) > Math.abs(yDif)) {
+                        if (xDif < 0) {
+                            if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
+                                mNextMotion = RIGHT;//dir
+                                Log.i("snake", RIGHT);
+                            } else {
+                                Log.i("snake", "right/left detected");
+                            }
                         } else {
-                            Log.i("snake", "right/left detected");
+                            if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
+                                mNextMotion = LEFT;
+                                Log.i("snake", LEFT);
+                            } else {
+                                Log.i("snake", "left/right detected");
+                            }
                         }
                     } else {
-                        if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
-                            mNextMotion = LEFT;
-                            Log.i("snake", LEFT);
+                        if (yDif < 0) {
+                            if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
+                                mNextMotion = UP;
+                                Log.i("snake", UP);
+                            } else {
+                                Log.i("snake", "down/up detected");
+                            }
                         } else {
-                            Log.i("snake", "left/right detected");
+                            if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
+                                mNextMotion = DOWN;
+                                Log.i("snake", DOWN);
+                            } else {
+                                Log.i("snake", "up/down detected");
+                            }
                         }
                     }
-                } else {
-                    if (yDif < 0) {
-                        if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
-                            mNextMotion = UP;
-                            Log.i("snake", UP);
-                        } else {
-                            Log.i("snake", "down/up detected");
-                        }
-                    } else {
-                        if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
-                            mNextMotion = DOWN;
-                            Log.i("snake", DOWN);
-                        } else {
-                            Log.i("snake", "up/down detected");
-                        }
-                    }
+                    //start motion method call
+                    return true;
                 }
-                //start motion method call
-                return true;
+                return false;
             }
 
             @Override

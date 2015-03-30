@@ -27,6 +27,7 @@ public class Settings extends Activity {
 
         optionsSwitchControl = (Switch) findViewById(R.id.options_switch_control);
         optionsSeekbarTakeoffspeed = (SeekBar) findViewById(R.id.options_seekbar_takeoffspeed);
+
     }
 
     @Override
@@ -35,6 +36,12 @@ public class Settings extends Activity {
         Log.i(TAG, "Options onResume...");
         SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS , MODE_PRIVATE);
         optionsSeekbarTakeoffspeed.setProgress(sharedPrefs.getInt(OPTIONS_SEEKBAR_TAKEOFFSPEED, 500));
+
+        if(sharedPrefs.getInt(OPTIONS_SWITCH_CONTROL, 0) == 1){
+            optionsSwitchControl.setChecked(true);
+        } else {
+            optionsSwitchControl.setChecked(false);
+        }
     }
 
     @Override
