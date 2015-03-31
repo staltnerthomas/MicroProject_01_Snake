@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -21,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class GameView extends Activity implements SurfaceHolder.Callback, View.OnTouchListener {
+public class GameView extends Activity implements SensorEventListener, SurfaceHolder.Callback, View.OnTouchListener {
 
     public static final String TAG = "Snake 01 GameView";
     public static final String LEFT = "left";
@@ -51,11 +55,19 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     private boolean firstLongPress = true;
     private boolean gamePause = false;
     private boolean firstSurfaceCreated = false;
+    //for testing the game
+    private boolean testMode = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
+
+        //Initialize the SensorManager
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
         //get Display with and heigth
         gameSurfaceView = (SurfaceView) findViewById(R.id.game_surface_view);
@@ -86,7 +98,6 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             }
         });
 
-
         mG = new GestureDetector(this, new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
@@ -105,6 +116,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             @Override
             public boolean onScroll(MotionEvent _e1, MotionEvent _e2, float _distanceX, float _distanceY) {
                 SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
+
                 if (sharedPrefs.getInt(Settings.OPTIONS_SWITCH_CONTROL, -1) == 0) {
                     float xDif = _e1.getX(0) - _e2.getX(0);
                     float yDif = _e1.getY(0) - _e2.getY(0);
@@ -168,9 +180,7 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 return false;
             }
-        }) {
-
-        };
+        });
     }
 
 
@@ -543,5 +553,103 @@ public class GameView extends Activity implements SurfaceHolder.Callback, View.O
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         sHolder = null;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
+        if (sharedPrefs.getInt(Settings.OPTIONS_SWITCH_CONTROL, -1) == 1) {
+
+            float accelDataX = event.values[0];
+            float accelDataY = event.values[1];
+            float accelDataZ = event.values[2];
+
+            float accurancy = 3.0f;
+            if (sharedPrefs.getInt(Settings.OPTIONS_SWITCH_CONTROL_INVERT, -1) == 0) {
+                if (accelDataX > (accurancy)) {
+                    if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
+                        mNextMotion = RIGHT;//dir
+                        Log.i("snake", RIGHT);
+                    } else {
+                        Log.i("snake", "right/left detected");
+                    }
+                } else if (accelDataX < (-accurancy)) {
+                    if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
+                        mNextMotion = LEFT;
+                        Log.i("snake", LEFT);
+                    } else {
+                        Log.i("snake", "left/right detected");
+                    }
+                }
+
+                if (accelDataY < (-accurancy)) {
+                    if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
+                        mNextMotion = UP;
+                        Log.i("snake", UP);
+                    } else {
+                        Log.i("snake", "down/up detected");
+                    }
+                } else if (accelDataY > (accurancy)) {
+                    if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
+                        mNextMotion = DOWN;
+                        Log.i("snake", DOWN);
+                    } else {
+                        Log.i("snake", "up/down detected");
+                    }
+                }
+
+
+            } else {
+
+
+                if (accelDataX < (-accurancy)) {
+                    if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
+                        mNextMotion = RIGHT;//dir
+                        Log.i("snake", RIGHT);
+                    } else {
+                        Log.i("snake", "right/left detected");
+                    }
+                } else if (accelDataX > (accurancy)) {
+                    if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
+                        mNextMotion = LEFT;
+                        Log.i("snake", LEFT);
+                    } else {
+                        Log.i("snake", "left/right detected");
+                    }
+                }
+
+                if (accelDataY > (accurancy)) {
+                    if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
+                        mNextMotion = UP;
+                        Log.i("snake", UP);
+                    } else {
+                        Log.i("snake", "down/up detected");
+                    }
+                } else if (accelDataY < (-accurancy)) {
+                    if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
+                        mNextMotion = DOWN;
+                        Log.i("snake", DOWN);
+                    } else {
+                        Log.i("snake", "up/down detected");
+                    }
+                }
+            }
+
+
+            if(testMode) {
+                TextView tvX = (TextView) findViewById(R.id.textView_x);
+                TextView tvY = (TextView) findViewById(R.id.textView_y);
+                TextView tvZ = (TextView) findViewById(R.id.textView_z);
+
+                tvX.setText(Float.toString(accelDataX));
+                tvY.setText(Float.toString(accelDataY));
+                tvZ.setText(Float.toString(accelDataZ));
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }

@@ -25,5 +25,6 @@
 
     <string name="options_text_view_control">Bewegungssteuerung</string>
     <string name="options_text_view_takeoffspeed">Startgeschwindigkeit</string>
+    <string name="options_text_view_control_invert">Bewegungssteuerung umdrehen</string>
 
 </resources>
