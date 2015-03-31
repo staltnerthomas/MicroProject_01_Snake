@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.TextView;
 
 /**
  * Created by thomasstaltner on 31/03/15.
@@ -36,6 +38,15 @@ public class GameViewDialogFragment extends DialogFragment {
                 startActivity(i);
             }
         });
-        return builder.create();
+
+        AlertDialog dialog = builder.show();
+        TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER);
+        dialog.show();
+        return null;
     }
+
+
+
+
 }

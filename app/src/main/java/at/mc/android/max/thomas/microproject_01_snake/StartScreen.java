@@ -3,6 +3,7 @@ package at.mc.android.max.thomas.microproject_01_snake;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,9 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
-public class StartScreen extends Activity implements View.OnClickListener {
+public class StartScreen extends Activity implements View.OnClickListener, ColorPickerDialog.OnColorChangedListener {
 
     public static final String TAG                          = "Snake 01 StartScreen";
 
@@ -91,10 +93,27 @@ public class StartScreen extends Activity implements View.OnClickListener {
 
             case R.id.background_color:{
                 Log.i(TAG, "Background-Button pressed...");
+//                final ColorPickerDialog newColor = new ColorPickerDialog(this,this, "picker", Color.BLACK,Color.WHITE);
+//                newColor.show();
+//                DialogFragment dialog = new ColorPickerDialog(getApplicationContext(), new ColorPickerDialog.OnColorChangedListener() {
+//                    @Override
+//                    public void colorChanged(String key, int _color) {
+//                        SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPrefs.edit();
+//                        editor.putInt(GAME_VIEW_BACKGROUND_COLOUR, newColor.toString());
+//
+//                    }
+//                }, GAME_VIEW_BACKGROUND_COLOUR, 0x00ff00ff);
+//                dialog.show(getFragmentManager(), "ColorPicker Dialog Fragment");
             } break;
 
             case R.id.snake_head_color:{
                 Log.i(TAG, "Head-Button pressed...");
+                SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
+
+                ColorPickerDialog color = new ColorPickerDialog(this,this, GAME_VIEW_SNAKE_HEAD_COLOUR,sharedPrefs.getInt(GAME_VIEW_SNAKE_HEAD_COLOUR, 0xffffffff), Color.WHITE);
+                color.show();
+
             } break;
 
             case R.id.snake_body_color:{
@@ -123,5 +142,17 @@ public class StartScreen extends Activity implements View.OnClickListener {
             } //switch id //text comment
         }
 
+    }
+
+    @Override
+    public void colorChanged(String key, int color) {
+        Toast.makeText(this, "colorChanged...", Toast.LENGTH_SHORT).show();
+        String info = "key: " + key.toString() + " color: " + Integer.toHexString(color);
+        Log.i(TAG, info);
+
+        SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putInt(key, color);
+        editor.commit();
     }
 }

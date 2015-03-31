@@ -283,6 +283,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 Log.i(TAG, "gameOver() && !gamePause");
                 DialogFragment dialog = new GameViewDialogFragment();
                 dialog.show(getFragmentManager(), "Game View Dialog Fragment");
+
             }
         }
     }
