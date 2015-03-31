@@ -64,8 +64,14 @@ public class Settings extends Activity {
         if(sharedPrefs.getInt(OPTIONS_SWITCH_CONTROL, 0) == 1){
             //Switch
             optionsSwitchControl.setChecked(true);
+            optionsSwitchControlInvert.setClickable(true);
+            optionsSwitchControlInvert.setAlpha(1f);
+            optionsTextViewControlInvert.setAlpha((1f));
         } else {
             optionsSwitchControl.setChecked(false);
+            optionsSwitchControlInvert.setClickable(false);
+            optionsSwitchControlInvert.setAlpha(.5f);
+            optionsTextViewControlInvert.setAlpha((.5f));
         }
 
         if(sharedPrefs.getInt(OPTIONS_SWITCH_CONTROL_INVERT, 0) == 1){

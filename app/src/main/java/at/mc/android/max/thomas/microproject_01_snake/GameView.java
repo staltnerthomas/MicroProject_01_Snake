@@ -1,6 +1,7 @@
 package at.mc.android.max.thomas.microproject_01_snake;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -277,6 +278,12 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
             }
             editor.putInt(StartScreen.GAME_VIEW_LAST_SCORE, (int) gamePoints);
             editor.commit();
+
+            if(gameOver() && !gamePause){
+                Log.i(TAG, "gameOver() && !gamePause");
+                DialogFragment dialog = new GameViewDialogFragment();
+                dialog.show(getFragmentManager(), "Game View Dialog Fragment");
+            }
         }
     }
 

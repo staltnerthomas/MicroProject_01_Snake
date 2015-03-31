@@ -27,4 +27,12 @@
     <string name="options_text_view_takeoffspeed">Startgeschwindigkeit</string>
     <string name="options_text_view_control_invert">Bewegungssteuerung umdrehen</string>
 
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- GameView Fragment -->
+    <string name="game_view_fragment_back">Zurück</string>
+    <string name="game_view_fragment_continue">Nochmal</string>
+    <string name="game_view_fragment_text">Sie haben das Spiel verloren!!</string>
+
 </resources>
