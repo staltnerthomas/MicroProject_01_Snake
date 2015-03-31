@@ -26,6 +26,7 @@ public class GameViewDialogFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "+ button pressed...");
                 Intent i = new Intent(getActivity(), GameView.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
         });

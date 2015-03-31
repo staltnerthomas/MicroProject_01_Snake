@@ -49,8 +49,10 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     private int dimensionSnakeHeadWidth = 35;
     private int dimensionSnakeHeadHeight = 18;
     private int snakeHeadEye = 4;
+
     //defines constants
-    private float delayTime = 450;
+    private float delayTime;
+    private float slowestDelayTime = 450;
     private float gamePoints = 0;
     private float gamePointsBonus = 80;
     private boolean firstLongPress = true;
@@ -164,12 +166,14 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
             public void onLongPress(MotionEvent _e) {
 
                 if (firstLongPress) {
-                    Toast.makeText(GameView.this, "continue with game...", Toast.LENGTH_SHORT).show();
+                    if (StartScreen.testMode)
+                        Toast.makeText(GameView.this, "continue with game...", Toast.LENGTH_SHORT).show();
                     gamePause = false;
                     firstLongPress = false;
                     playGame();
                 } else {
-                    Toast.makeText(GameView.this, "pause...", Toast.LENGTH_SHORT).show();
+                    if (StartScreen.testMode)
+                        Toast.makeText(GameView.this, "pause...", Toast.LENGTH_SHORT).show();
                     gamePause = true;
                     firstLongPress = true;
                 }
@@ -187,13 +191,14 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     protected void onResume() {
         super.onResume();
         SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
-        delayTime = 450 - (sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 0));
+        delayTime = slowestDelayTime - (sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 0));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Toast.makeText(GameView.this, "onPause...", Toast.LENGTH_SHORT).show();
+        if (StartScreen.testMode)
+            Toast.makeText(GameView.this, "onPause...", Toast.LENGTH_SHORT).show();
         gamePause = true;
         firstLongPress = true;
     }

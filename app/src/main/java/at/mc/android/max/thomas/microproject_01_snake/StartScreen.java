@@ -17,11 +17,7 @@ import android.widget.Toast;
 
 public class StartScreen extends Activity implements View.OnClickListener, ColorPickerDialog.OnColorChangedListener {
 
-    //For testing the Game
-    public static boolean testMode = true;
-
     public static final String TAG = "Snake 01 StartScreen";
-
     public static final String SHARED_PREFS = "Preverences_Name";
     public static final String GAME_VIEW_BACKGROUND_COLOUR = "Backgroundcolor_of_GameView";
     public static final String GAME_VIEW_SNAKE_HEAD_COLOUR = "Snake_Head_color_of_GameView";
@@ -31,6 +27,8 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
     public static final String GAME_VIEW_HI_SCORE = "High_Score";
     public static final String GAME_VIEW_LAST_SCORE = "Last_Score";
 
+    //For testing the Game
+    public static boolean testMode = true;
     Button b = null;
     TextView highScore = null;
     TextView lastScore = null;
@@ -164,7 +162,8 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
 
     @Override
     public void colorChanged(String key, int color) {
-        Toast.makeText(this, "colorChanged...", Toast.LENGTH_SHORT).show();
+        if (testMode)
+            Toast.makeText(this, "colorChanged...", Toast.LENGTH_SHORT).show();
         String info = "key: " + key.toString() + " color: " + Integer.toHexString(color);
         Log.i(TAG, info);
 

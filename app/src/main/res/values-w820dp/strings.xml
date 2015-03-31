@@ -8,4 +8,5 @@
     <string name="start_text_view_last_score_value" />
     <string name="options_control">Bewegungssteuerung</string>
     <string name="options_text_view_control_invert">Bewegungssteuerung umdrehen</string>
+    <string name="options_text_view_severity_1">easy</string>
 </resources>

@@ -34,6 +34,11 @@
     <string name="options_text_view_takeoffspeed">lift-off speed</string>
     <string name="options_text_view_control_invert">invert movement control</string>
 
+    <string name="options_text_view_severity_1">easy</string>
+    <string name="options_text_view_severity_2">medium</string>
+    <string name="options_text_view_severity_3">ohh</string>
+    <string name="options_text_view_severity_4">you are really cool man</string>
+
     <!-- GameView Fragment -->
     <string name="game_view_fragment_negative">back</string>
     <string name="game_view_fragment_positive">continue</string>
@@ -44,5 +49,6 @@
     <string name="start_view_fragment_neutral">only colors</string>
     <string name="start_view_fragment_positive">also highscores</string>
     <string name="start_view_fragment_text">reset highscores?</string>
+
 
 </resources>

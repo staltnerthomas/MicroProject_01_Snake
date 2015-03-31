@@ -22,6 +22,7 @@ public class Settings extends Activity {
     Switch optionsSwitchControlInvert = null;
     SeekBar optionsSeekbarTakeoffspeed = null;
     TextView optionsTextViewControlInvert = null;
+    TextView optionsTextViewSeverity = null;
 
 
     @Override
@@ -34,6 +35,8 @@ public class Settings extends Activity {
         optionsSwitchControlInvert = (Switch) findViewById(R.id.options_switch_control_invert);
         optionsSeekbarTakeoffspeed = (SeekBar) findViewById(R.id.options_seekbar_takeoffspeed);
         optionsTextViewControlInvert = (TextView) findViewById(R.id.options_text_view_control_invert);
+        optionsTextViewSeverity = (TextView) findViewById(R.id.options_text_view_severity);
+
 
     }
 
@@ -60,7 +63,26 @@ public class Settings extends Activity {
 
         SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS , MODE_PRIVATE);
         optionsSeekbarTakeoffspeed.setProgress(sharedPrefs.getInt(OPTIONS_SEEKBAR_TAKEOFFSPEED, 500));
+        setTakeOffSpeedText(sharedPrefs.getInt(OPTIONS_SEEKBAR_TAKEOFFSPEED, 500));
 
+        optionsSeekbarTakeoffspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(seekBar.getId() == R.id.options_seekbar_takeoffspeed) {
+                    setTakeOffSpeedText(progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         if(sharedPrefs.getInt(OPTIONS_SWITCH_CONTROL, 0) == 1){
             //Switch
             optionsSwitchControl.setChecked(true);
@@ -79,6 +101,18 @@ public class Settings extends Activity {
             optionsSwitchControlInvert.setChecked(true);
         } else {
             optionsSwitchControlInvert.setChecked(false);
+        }
+    }
+
+    private void setTakeOffSpeedText(int progress) {
+        if(progress < 100){
+            optionsTextViewSeverity.setText(R.string.options_text_view_severity_1);
+        } else if(progress < 200){
+            optionsTextViewSeverity.setText(R.string.options_text_view_severity_2);
+        } else if(progress < 300){
+            optionsTextViewSeverity.setText(R.string.options_text_view_severity_3);
+        } else {
+            optionsTextViewSeverity.setText(R.string.options_text_view_severity_4);
         }
     }
 
