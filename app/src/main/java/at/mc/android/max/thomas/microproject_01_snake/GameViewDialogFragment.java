@@ -21,7 +21,7 @@ public class GameViewDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder = builder.setMessage(R.string.game_view_fragment_text);
 
-        builder = builder.setPositiveButton(R.string.game_view_fragment_continue, new DialogInterface.OnClickListener() {
+        builder = builder.setPositiveButton(R.string.game_view_fragment_positive, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "+ button pressed...");
@@ -30,7 +30,7 @@ public class GameViewDialogFragment extends DialogFragment {
             }
         });
 
-        builder = builder.setNegativeButton(R.string.game_view_fragment_back, new DialogInterface.OnClickListener() {
+        builder = builder.setNegativeButton(R.string.game_view_fragment_negative, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "- button pressed...");

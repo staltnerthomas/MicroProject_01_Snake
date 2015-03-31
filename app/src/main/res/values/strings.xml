@@ -12,7 +12,12 @@
     <string name="background_color_text">background color</string>
     <string name="snake_head_color_text">head color</string>
     <string name="snake_body_color_text">body color</string>
+    <string name="snake_eye_color_text">eye color</string>
     <string name="snake_foot_color_text">foot color</string>
+    <string name="action_settings_reset">reset settings</string>
+    <string name="action_settings_placeholder">-</string>
+
+
 
     <!-- Game View -->
     <string name="game_text_view_score">score</string>
@@ -30,8 +35,14 @@
     <string name="options_text_view_control_invert">invert movement control</string>
 
     <!-- GameView Fragment -->
-    <string name="game_view_fragment_back">back</string>
-    <string name="game_view_fragment_continue">continue</string>
+    <string name="game_view_fragment_negative">back</string>
+    <string name="game_view_fragment_positive">continue</string>
     <string name="game_view_fragment_text">you loose the game!!</string>
+
+    <!-- StartView Fragment -->
+    <string name="start_view_fragment_negative">nothing</string>
+    <string name="start_view_fragment_neutral">only colors</string>
+    <string name="start_view_fragment_positive">also highscores</string>
+    <string name="start_view_fragment_text">reset highscores?</string>
 
 </resources>

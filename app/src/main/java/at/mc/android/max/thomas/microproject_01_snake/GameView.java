@@ -56,8 +56,6 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     private boolean firstLongPress = true;
     private boolean gamePause = false;
     private boolean firstSurfaceCreated = false;
-    //for testing the game
-    private boolean testMode = true;
 
 
     @Override
@@ -279,7 +277,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
             editor.putInt(StartScreen.GAME_VIEW_LAST_SCORE, (int) gamePoints);
             editor.commit();
 
-            if(gameOver() && !gamePause){
+            if (gameOver() && !gamePause) {
                 Log.i(TAG, "gameOver() && !gamePause");
                 DialogFragment dialog = new GameViewDialogFragment();
                 dialog.show(getFragmentManager(), "Game View Dialog Fragment");
@@ -644,7 +642,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
             }
 
 
-            if(testMode) {
+            if (StartScreen.testMode) {
                 TextView tvX = (TextView) findViewById(R.id.textView_x);
                 TextView tvY = (TextView) findViewById(R.id.textView_y);
                 TextView tvZ = (TextView) findViewById(R.id.textView_z);
