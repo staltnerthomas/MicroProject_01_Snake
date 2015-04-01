@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -15,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 
 public class StartScreen extends Activity implements View.OnClickListener, ColorPickerDialog.OnColorChangedListener {
@@ -41,6 +44,7 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
 
     //For testing the Game
     public static boolean testMode = false;
+    public static boolean localeEnglish = true;
     Button b = null;
     TextView highScore = null;
     TextView lastScore = null;
@@ -50,6 +54,14 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (testMode || localeEnglish) {
+            Locale locale = new Locale("en_US");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            this.getApplicationContext().getResources().updateConfiguration(config, null);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
 

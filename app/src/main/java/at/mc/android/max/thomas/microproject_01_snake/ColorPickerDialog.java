@@ -49,6 +49,7 @@ public class ColorPickerDialog extends Dialog {
 
         setContentView(new ColorPickerView(getContext(), l, mInitialColor,
                 mDefaultColor));
+        //Set the title of the Dialog
         switch (mKey) {
             case StartScreen.GAME_VIEW_BACKGROUND_COLOR:{
                 setTitle(R.string.color_picker_dialog_background);
