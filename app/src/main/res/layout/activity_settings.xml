@@ -53,7 +53,7 @@
 
         <SeekBar
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:id="@+id/options_seekbar_takeoffspeed"
             android:indeterminate="false"
             android:max="400" />
@@ -64,6 +64,26 @@
             android:text="@string/options_text_view_severity_1"
             android:id="@+id/options_text_view_severity"
             android:layout_gravity="center_horizontal" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/options_text_view_snake_size"
+            android:id="@+id/options_text_view_snake_size" />
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/options_seekbar_sizeofthesnake"
+            android:layout_gravity="center_horizontal"
+            android:max="4"
+            android:indeterminate="false" />
+
     </LinearLayout>
 
 </RelativeLayout>

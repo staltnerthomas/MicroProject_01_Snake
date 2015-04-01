@@ -12,13 +12,6 @@
     android:transitionGroup="false"
     tools:context=".StartScreen">
 
-    <Button
-        android:id="@+id/start_button_start"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        android:text="@string/start_button_start_text" />
-
     <LinearLayout
         android:id="@+id/linearLayoutOfHighAndLastScore"
         android:layout_width="fill_parent"
@@ -26,11 +19,28 @@
         android:layout_gravity="bottom"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/start_text_view_high_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start_text_view_high_score" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/start_text_view_high_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_text_view_high_score"
+                android:layout_weight="0.7" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="thomas staltner max stader"
+                android:id="@+id/start_textView_copyright"
+                android:layout_gravity="right|bottom"
+                android:textColor="#88888888"
+                android:layout_weight="0.3" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/start_text_view_high_score_value"
@@ -68,6 +78,22 @@
             android:id="@+id/start_textView_control_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="100px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_textView_control_2__sizeofthesnake" />
+
+        <Button
+            android:id="@+id/start_button_start"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:text="@string/start_button_start_text" />
     </LinearLayout>
 
     <GridLayout
@@ -641,6 +667,4 @@
 
 
     </GridLayout>
-
-
 </FrameLayout>

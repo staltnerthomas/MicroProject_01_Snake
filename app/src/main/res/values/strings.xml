@@ -13,7 +13,7 @@
     <string name="snake_head_color_text">head color</string>
     <string name="snake_body_color_text">body color</string>
     <string name="snake_eye_color_text">eye color</string>
-    <string name="snake_foot_color_text">foot color</string>
+    <string name="snake_foot_color_text">fruit color</string>
     <string name="action_settings_reset">reset settings</string>
     <string name="action_settings_placeholder">-</string>
 
@@ -39,16 +39,26 @@
     <string name="options_text_view_severity_3">ohh</string>
     <string name="options_text_view_severity_4">you are really cool man</string>
 
+    <string name="options_text_view_snake_size">size of the snake</string>
+
+    <!-- Color Picker Dialog -->
+    <string name="color_picker_dialog_background">set background color</string>
+    <string name="color_picker_dialog_head">set head color</string>
+    <string name="color_picker_dialog_body">set body color</string>
+    <string name="color_picker_dialog_eye">set eye color</string>
+    <string name="color_picker_dialog_fruit">set fruit color</string>
+
     <!-- GameView Fragment -->
     <string name="game_view_fragment_negative">back</string>
     <string name="game_view_fragment_positive">continue</string>
-    <string name="game_view_fragment_text">you loose the game!!</string>
+    <string name="game_view_fragment_text">game over!!</string>
 
     <!-- StartView Fragment -->
     <string name="start_view_fragment_negative">nothing</string>
     <string name="start_view_fragment_neutral">only colors</string>
     <string name="start_view_fragment_positive">also highscores</string>
     <string name="start_view_fragment_text">reset highscores?</string>
+
 
 
 </resources>

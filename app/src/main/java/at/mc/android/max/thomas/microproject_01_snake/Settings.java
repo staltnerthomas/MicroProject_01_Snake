@@ -11,16 +11,20 @@ import android.widget.TextView;
 
 
 public class Settings extends Activity {
-    public static final String TAG = "Snake 01 OptionsScreen";
+    public static final String TAG = "Settings";
 
-    public static final String OPTIONS_SWITCH_CONTROL  = "Switch between Motion and Scroll";
-    public static final String OPTIONS_SWITCH_CONTROL_INVERT  = "Switch Motion between regular and invert";
-    public static final String OPTIONS_SEEKBAR_TAKEOFFSPEED  = "TakeoffSpeed for Snake";
+    public static final String OPTIONS_SWITCH_CONTROL = "Switch between Motion and Scroll";
+    public static final String OPTIONS_SWITCH_CONTROL_INVERT = "Switch Motion between regular and invert";
+    public static final String OPTIONS_SEEKBAR_TAKEOFFSPEED = "TakeoffSpeed for Snake";
+    public static final String OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE = "Sets the size of the Snake";
 
 
     Switch optionsSwitchControl = null;
     Switch optionsSwitchControlInvert = null;
+
     SeekBar optionsSeekbarTakeoffspeed = null;
+    SeekBar optionsSeekbarSizeOfTheSnake = null;
+
     TextView optionsTextViewControlInvert = null;
     TextView optionsTextViewSeverity = null;
 
@@ -34,6 +38,7 @@ public class Settings extends Activity {
         optionsSwitchControl = (Switch) findViewById(R.id.options_switch_control);
         optionsSwitchControlInvert = (Switch) findViewById(R.id.options_switch_control_invert);
         optionsSeekbarTakeoffspeed = (SeekBar) findViewById(R.id.options_seekbar_takeoffspeed);
+        optionsSeekbarSizeOfTheSnake = (SeekBar) findViewById(R.id.options_seekbar_sizeofthesnake);
         optionsTextViewControlInvert = (TextView) findViewById(R.id.options_text_view_control_invert);
         optionsTextViewSeverity = (TextView) findViewById(R.id.options_text_view_severity);
 
@@ -48,7 +53,7 @@ public class Settings extends Activity {
         optionsSwitchControl.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     optionsSwitchControlInvert.setClickable(true);
                     optionsSwitchControlInvert.setAlpha(1f);
                     optionsTextViewControlInvert.setAlpha((1f));
@@ -61,15 +66,29 @@ public class Settings extends Activity {
         });
 
 
-        SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS , MODE_PRIVATE);
+        //Set the Progress of the Seekbars to the current value
+        SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
         optionsSeekbarTakeoffspeed.setProgress(sharedPrefs.getInt(OPTIONS_SEEKBAR_TAKEOFFSPEED, 500));
         setTakeOffSpeedText(sharedPrefs.getInt(OPTIONS_SEEKBAR_TAKEOFFSPEED, 500));
+        optionsSeekbarSizeOfTheSnake.setProgress(sharedPrefs.getInt(OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 3));
 
         optionsSeekbarTakeoffspeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(seekBar.getId() == R.id.options_seekbar_takeoffspeed) {
-                    setTakeOffSpeedText(progress);
+                switch (seekBar.getId()) {
+                    case R.id.options_seekbar_takeoffspeed: {
+                        Log.i(TAG, "Takefoffspeed changed to..." + progress);
+                        setTakeOffSpeedText(progress);
+                    }
+                    break;
+
+                    case R.id.options_seekbar_sizeofthesnake: {
+                        Log.i(TAG, "SizeOfTheSnake changed to..." + progress);
+                    }
+                    break;
+                    default: {
+                        Log.i(TAG, "unknown ProgressBar changed to..." + progress);
+                    }
                 }
             }
 
@@ -83,7 +102,7 @@ public class Settings extends Activity {
 
             }
         });
-        if(sharedPrefs.getInt(OPTIONS_SWITCH_CONTROL, 0) == 1){
+        if (sharedPrefs.getInt(OPTIONS_SWITCH_CONTROL, 0) == 1) {
             //Switch
             optionsSwitchControl.setChecked(true);
             optionsSwitchControlInvert.setClickable(true);
@@ -96,7 +115,7 @@ public class Settings extends Activity {
             optionsTextViewControlInvert.setAlpha((.5f));
         }
 
-        if(sharedPrefs.getInt(OPTIONS_SWITCH_CONTROL_INVERT, 0) == 1){
+        if (sharedPrefs.getInt(OPTIONS_SWITCH_CONTROL_INVERT, 0) == 1) {
             //Switch
             optionsSwitchControlInvert.setChecked(true);
         } else {
@@ -105,11 +124,11 @@ public class Settings extends Activity {
     }
 
     private void setTakeOffSpeedText(int progress) {
-        if(progress < 100){
+        if (progress < 100) {
             optionsTextViewSeverity.setText(R.string.options_text_view_severity_1);
-        } else if(progress < 200){
+        } else if (progress < 200) {
             optionsTextViewSeverity.setText(R.string.options_text_view_severity_2);
-        } else if(progress < 300){
+        } else if (progress < 300) {
             optionsTextViewSeverity.setText(R.string.options_text_view_severity_3);
         } else {
             optionsTextViewSeverity.setText(R.string.options_text_view_severity_4);
@@ -121,46 +140,25 @@ public class Settings extends Activity {
         super.onDestroy();
         Log.i(TAG, "Options onDestroy...");
 
-        SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS , MODE_PRIVATE);
+        SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
 
-        if(optionsSwitchControl.isChecked()) {
+        if (optionsSwitchControl.isChecked()) {
             editor.putInt(OPTIONS_SWITCH_CONTROL, 1);
         } else {
             editor.putInt(OPTIONS_SWITCH_CONTROL, 0);
         }
 
-        if(optionsSwitchControlInvert.isChecked()) {
+        if (optionsSwitchControlInvert.isChecked()) {
             editor.putInt(OPTIONS_SWITCH_CONTROL_INVERT, 1);
         } else {
             editor.putInt(OPTIONS_SWITCH_CONTROL_INVERT, 0);
         }
 
         editor.putInt(OPTIONS_SEEKBAR_TAKEOFFSPEED, optionsSeekbarTakeoffspeed.getProgress());
+        editor.putInt(OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, optionsSeekbarSizeOfTheSnake.getProgress());
 
         editor.commit();
 
     }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_settings, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 }

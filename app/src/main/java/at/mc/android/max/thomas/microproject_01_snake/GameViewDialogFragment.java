@@ -14,7 +14,7 @@ import android.widget.TextView;
  * Created by thomasstaltner on 31/03/15.
  */
 public class GameViewDialogFragment extends DialogFragment {
-    public static final String TAG = "Snake01 GaView Fragment";
+    public static final String TAG = "GameViewDialogFragment";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class GameViewDialogFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "- button pressed...");
                 Intent i = new Intent(getActivity(), StartScreen.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
         });

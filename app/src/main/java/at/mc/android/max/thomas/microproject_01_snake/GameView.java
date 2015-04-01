@@ -28,7 +28,7 @@ import java.util.List;
 
 public class GameView extends Activity implements SensorEventListener, SurfaceHolder.Callback, View.OnTouchListener {
 
-    public static final String TAG = "Snake 01 GameView";
+    public static final String TAG = "GameView";
     public static final String LEFT = "left";
     public static final String RIGHT = "right";
     public static final String UP = "up";
@@ -43,12 +43,13 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     private int SViewWidth;
     private int SViewHeight;
     //defines the Fruit
-    private int dimensionFruit = 25;
+    private int dimensionFruit = 25;            // 25
     //Defines the snake
-    private int dimensionSnakeBodyWidth = 25;
-    private int dimensionSnakeHeadWidth = 35;
-    private int dimensionSnakeHeadHeight = 18;
-    private int snakeHeadEye = 4;
+    private int dimensionSnakeBodyWidth = 25;   // 25
+    private int dimensionSnakeHeadWidth = 35;   // 35
+    private int dimensionSnakeHeadHeight = 18;  // 18
+    private int snakeHeadEye = 4;               // 4
+//    private int headDelay = 5;
 
     //defines constants
     private float delayTime;
@@ -64,6 +65,65 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
+
+        //Set the dimensions of the Snake and Fruit
+        SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
+        switch(sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 3)){
+            case 0:{
+                //defines the Fruit
+                dimensionFruit = 19;            // 25
+                //Defines the snake
+                dimensionSnakeBodyWidth = 19;   // 25
+                dimensionSnakeHeadWidth = 27;   // 35
+                dimensionSnakeHeadHeight = 14;  // 18
+                snakeHeadEye = 3;
+//                headDelay = 5;
+            } break;
+
+            case 1:{
+                //defines the Fruit
+                dimensionFruit = 22;
+                //Defines the snake
+                dimensionSnakeBodyWidth = 22;
+                dimensionSnakeHeadWidth = 31;
+                dimensionSnakeHeadHeight = 16;
+                snakeHeadEye = 4;
+//                headDelay = 5;
+            } break;
+
+            case 2:{
+                //defines the Fruit
+                dimensionFruit = 25;
+                //Defines the snake
+                dimensionSnakeBodyWidth = 25;
+                dimensionSnakeHeadWidth = 35;
+                dimensionSnakeHeadHeight = 18;
+                snakeHeadEye = 4;
+//                headDelay = 5;
+            } break;
+
+            case 3:{
+                //defines the Fruit
+                dimensionFruit = 28;
+                //Defines the snake
+                dimensionSnakeBodyWidth = 28;
+                dimensionSnakeHeadWidth = 39;
+                dimensionSnakeHeadHeight = 20;
+                snakeHeadEye = 4;
+//                headDelay = 5;
+            } break;
+
+            default:{
+                //defines the Fruit
+                dimensionFruit = 31;
+                //Defines the snake
+                dimensionSnakeBodyWidth = 31;
+                dimensionSnakeHeadWidth = 43;
+                dimensionSnakeHeadHeight = 22;
+                snakeHeadEye = 5;
+//                headDelay = 5;
+            }
+        }
 
         //Initialize the SensorManager
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -212,10 +272,10 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
         Log.i(TAG, "gameOver!");
         Coordinates headCoordinate = snakeList.get(0);
 
-        if (headCoordinate.getCoorX() >= SViewWidth - dimensionSnakeHeadHeight ||
-                headCoordinate.getCoorX() <= 0 + dimensionSnakeHeadHeight ||
-                headCoordinate.getCoorY() <= 0 + dimensionSnakeHeadHeight ||
-                headCoordinate.getCoorY() >= SViewHeight - dimensionSnakeHeadHeight) {
+        if (headCoordinate.getCoorX() >= SViewWidth - dimensionSnakeHeadHeight / 4 ||
+                headCoordinate.getCoorX() <= 0 + dimensionSnakeHeadHeight / 4 ||
+                headCoordinate.getCoorY() <= 0 + dimensionSnakeHeadHeight / 4 ||
+                headCoordinate.getCoorY() >= SViewHeight - dimensionSnakeHeadHeight / 4 ) {
             return true;
         }
 
@@ -371,22 +431,22 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
             //The fruit
             Paint fruit = new Paint();
-            fruit.setStrokeWidth(3.0f);
+            fruit.setStrokeWidth(1.0f);
             fruit.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, 0x0));
 
             //The head
             Paint head = new Paint();
-            head.setStrokeWidth(3.0f);
+            head.setStrokeWidth(1.0f);
             head.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOUR, 0x0));
 
             //The tail
             Paint tail = new Paint();
-            tail.setStrokeWidth(3.0f);
+            tail.setStrokeWidth(1.0f);
             tail.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOUR, 0x0));
 
             //The eye
             Paint eye = new Paint();
-            eye.setStrokeWidth(3.0f);
+            eye.setStrokeWidth(1.0f);
             eye.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOUR, 0x0));
 
 

@@ -9,4 +9,5 @@
     <string name="options_control">Bewegungssteuerung</string>
     <string name="options_text_view_control_invert">Bewegungssteuerung umdrehen</string>
     <string name="options_text_view_severity_1">easy</string>
+    <string name="options_text_view_snake_size">set the size of the snake</string>
 </resources>

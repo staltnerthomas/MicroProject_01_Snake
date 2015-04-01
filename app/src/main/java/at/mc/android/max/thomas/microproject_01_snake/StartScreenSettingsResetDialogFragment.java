@@ -16,7 +16,7 @@ import android.widget.TextView;
  * Created by thomasstaltner on 31/03/15.
  */
 public class StartScreenSettingsResetDialogFragment extends DialogFragment {
-    public static final String TAG = "ResetSettings Fragment";
+    public static final String TAG = "StartScreenResetDial...";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -38,11 +38,13 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
                 SharedPreferences sharedPrefs = getActivity().getSharedPreferences(StartScreen.SHARED_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPrefs.edit();
 
-                editor.putInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0xffff0000);
-                editor.putInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOUR, 0xf000ff00);
-                editor.putInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOUR, 0xf00000ff);
-                editor.putInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOUR,  0xf0000000);
-                editor.putInt(StartScreen.GAME_VIEW_FRUIT_COLOUR,      0xf0ffff00);
+                editor.putInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, StartScreen.DEFAULT_GAME_VIEW_BACKGROUND_COLOUR);
+                editor.putInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOUR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_HEAD_COLOUR);
+                editor.putInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOUR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_BODY_COLOUR);
+                editor.putInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOUR,  StartScreen.DEFAULT_GAME_VIEW_SNAKE_EYE_COLOUR);
+                editor.putInt(StartScreen.GAME_VIEW_FRUIT_COLOUR,      StartScreen.DEFAULT_GAME_VIEW_FRUIT_COLOUR);
+                editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE,       3);
+                editor.putInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED,            0);
 
                 editor.commit();
             }
@@ -55,11 +57,13 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
                 SharedPreferences sharedPrefs = getActivity().getSharedPreferences(StartScreen.SHARED_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPrefs.edit();
 
-                editor.putInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0xffff0000);
-                editor.putInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOUR, 0xf000ff00);
-                editor.putInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOUR, 0xf00000ff);
-                editor.putInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOUR,  0xf0000000);
-                editor.putInt(StartScreen.GAME_VIEW_FRUIT_COLOUR,      0xf0ffff00);
+                editor.putInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, StartScreen.DEFAULT_GAME_VIEW_BACKGROUND_COLOUR);
+                editor.putInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOUR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_HEAD_COLOUR);
+                editor.putInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOUR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_BODY_COLOUR);
+                editor.putInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOUR,  StartScreen.DEFAULT_GAME_VIEW_SNAKE_EYE_COLOUR);
+                editor.putInt(StartScreen.GAME_VIEW_FRUIT_COLOUR,      StartScreen.DEFAULT_GAME_VIEW_FRUIT_COLOUR);
+                editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE,       3);
+                editor.putInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED,            0);
                 editor.putInt(StartScreen.GAME_VIEW_LAST_SCORE,        0);
                 editor.putInt(StartScreen.GAME_VIEW_HI_SCORE,          0);
 
