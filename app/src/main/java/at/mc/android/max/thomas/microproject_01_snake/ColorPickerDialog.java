@@ -51,27 +51,32 @@ public class ColorPickerDialog extends Dialog {
                 mDefaultColor));
         //Set the title of the Dialog
         switch (mKey) {
-            case StartScreen.GAME_VIEW_BACKGROUND_COLOR:{
+            case StartScreen.GAME_VIEW_BACKGROUND_COLOR: {
                 setTitle(R.string.color_picker_dialog_background);
-            } break;
+            }
+            break;
 
-            case StartScreen.GAME_VIEW_SNAKE_HEAD_COLOR:{
+            case StartScreen.GAME_VIEW_SNAKE_HEAD_COLOR: {
                 setTitle(R.string.color_picker_dialog_head);
-            } break;
+            }
+            break;
 
-            case StartScreen.GAME_VIEW_SNAKE_BODY_COLOR:{
+            case StartScreen.GAME_VIEW_SNAKE_BODY_COLOR: {
                 setTitle(R.string.color_picker_dialog_body);
-            } break;
+            }
+            break;
 
-            case StartScreen.GAME_VIEW_SNAKE_EYE_COLOR:{
+            case StartScreen.GAME_VIEW_SNAKE_EYE_COLOR: {
                 setTitle(R.string.color_picker_dialog_eye);
-            } break;
+            }
+            break;
 
-            case StartScreen.GAME_VIEW_FRUIT_COLOUR:{
+            case StartScreen.GAME_VIEW_FRUIT_COLOUR: {
                 setTitle(R.string.color_picker_dialog_fruit);
-            } break;
+            }
+            break;
 
-            default:{
+            default: {
                 setTitle("Pick Color");
             }
         }

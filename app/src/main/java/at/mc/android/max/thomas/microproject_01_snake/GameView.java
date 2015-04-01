@@ -235,7 +235,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 if (firstLongPress) {
                     if (StartScreen.testMode)
                         Toast.makeText(GameView.this, "continue with game...", Toast.LENGTH_SHORT).show();
-                    if (snakeList.get(0).getCoorX() == SViewWidth/2)
+                    if (snakeList.get(0).getCoorX() == SViewWidth / 2)
                         //Because it should only be shone once
                         Toast.makeText(GameView.this, R.string.game_toast_go_on_pause, Toast.LENGTH_SHORT).show();
                     gamePause = false;

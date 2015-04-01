@@ -31,7 +31,7 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
             }
         });
 
-        builder = builder.setNeutralButton(R.string.start_view_fragment_neutral,  new DialogInterface.OnClickListener() {
+        builder = builder.setNeutralButton(R.string.start_view_fragment_neutral, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "o button pressed...");
@@ -41,10 +41,10 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
                 editor.putInt(StartScreen.GAME_VIEW_BACKGROUND_COLOR, StartScreen.DEFAULT_GAME_VIEW_BACKGROUND_COLOR);
                 editor.putInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_HEAD_COLOR);
                 editor.putInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_BODY_COLOR);
-                editor.putInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOR,  StartScreen.DEFAULT_GAME_VIEW_SNAKE_EYE_COLOR);
-                editor.putInt(StartScreen.GAME_VIEW_FRUIT_COLOUR,      StartScreen.DEFAULT_GAME_VIEW_FRUIT_COLOR);
-                editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE,       3);
-                editor.putInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED,            0);
+                editor.putInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_EYE_COLOR);
+                editor.putInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, StartScreen.DEFAULT_GAME_VIEW_FRUIT_COLOR);
+                editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 3);
+                editor.putInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 0);
 
                 editor.commit();
             }
@@ -60,12 +60,12 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
                 editor.putInt(StartScreen.GAME_VIEW_BACKGROUND_COLOR, StartScreen.DEFAULT_GAME_VIEW_BACKGROUND_COLOR);
                 editor.putInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_HEAD_COLOR);
                 editor.putInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_BODY_COLOR);
-                editor.putInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOR,  StartScreen.DEFAULT_GAME_VIEW_SNAKE_EYE_COLOR);
-                editor.putInt(StartScreen.GAME_VIEW_FRUIT_COLOUR,      StartScreen.DEFAULT_GAME_VIEW_FRUIT_COLOR);
-                editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE,       3);
-                editor.putInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED,            0);
-                editor.putInt(StartScreen.GAME_VIEW_LAST_SCORE,        0);
-                editor.putInt(StartScreen.GAME_VIEW_HI_SCORE,          0);
+                editor.putInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_EYE_COLOR);
+                editor.putInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, StartScreen.DEFAULT_GAME_VIEW_FRUIT_COLOR);
+                editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 3);
+                editor.putInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 0);
+                editor.putInt(StartScreen.GAME_VIEW_LAST_SCORE, 0);
+                editor.putInt(StartScreen.GAME_VIEW_HI_SCORE, 0);
 
                 editor.commit();
 
@@ -75,7 +75,7 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
         });
 
         AlertDialog dialog = builder.show();
-        TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+        TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
         messageText.setGravity(Gravity.CENTER);
         dialog.show();
         return null;

@@ -42,13 +42,11 @@ public class GameViewDialogFragment extends DialogFragment {
         });
 
         AlertDialog dialog = builder.show();
-        TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+        TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
         messageText.setGravity(Gravity.CENTER);
         dialog.show();
         return null;
     }
-
-
 
 
 }

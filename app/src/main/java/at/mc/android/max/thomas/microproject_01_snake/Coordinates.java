@@ -7,24 +7,24 @@ public class Coordinates {
     private int coorX;
     private int coorY;
 
-    public Coordinates(int coorX, int coorY){
+    public Coordinates(int coorX, int coorY) {
         this.coorX = coorX;
         this.coorY = coorY;
     }
 
-    public int getCoorX(){
+    public int getCoorX() {
         return this.coorX;
     }
 
-    public int getCoorY(){
-        return this.coorY;
-    }
-
-    public void setCoorX(int coorX){
+    public void setCoorX(int coorX) {
         this.coorX = coorX;
     }
 
-    public void setCoorY(int coorY){
+    public int getCoorY() {
+        return this.coorY;
+    }
+
+    public void setCoorY(int coorY) {
         this.coorY = coorY;
     }
 }
