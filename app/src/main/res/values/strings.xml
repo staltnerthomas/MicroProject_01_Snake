@@ -21,6 +21,8 @@
 
     <!-- Game View -->
     <string name="game_text_view_score">score</string>
+    <string name="game_toast_start_the_game">press looong to start</string>
+    <string name="game_toast_go_on_pause">press looong to pause</string>
 
     <!-- Settings -->
     <string name="title_activity_settings">settings</string>

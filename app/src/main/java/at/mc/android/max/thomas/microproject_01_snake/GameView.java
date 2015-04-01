@@ -59,12 +59,15 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     private boolean firstLongPress = true;
     private boolean gamePause = false;
     private boolean firstSurfaceCreated = false;
+    private int tongueCounter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
+
+        Toast.makeText(this, R.string.game_toast_start_the_game, Toast.LENGTH_SHORT).show();
 
         //Set the dimensions of the Snake and Fruit
         SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
@@ -228,6 +231,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 if (firstLongPress) {
                     if (StartScreen.testMode)
                         Toast.makeText(GameView.this, "continue with game...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GameView.this, R.string.game_toast_go_on_pause, Toast.LENGTH_SHORT).show();
                     gamePause = false;
                     firstLongPress = false;
                     playGame();
@@ -321,7 +325,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                     gamePoints = 100;
                 } else {
                     gamePoints += gamePointsBonus;
-                    gamePointsBonus *= 1.25f;
+                    gamePointsBonus *= 1.05f;
                 }
             }
 //            delayTime = delayTime * 0.999f;
@@ -427,7 +431,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
             SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
 
-            c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOUR, 0x0));
+            c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOR, 0x0));
 
             //The fruit
             Paint fruit = new Paint();
@@ -437,17 +441,22 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
             //The head
             Paint head = new Paint();
             head.setStrokeWidth(1.0f);
-            head.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOUR, 0x0));
+            head.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOR, 0x0));
 
             //The tail
             Paint tail = new Paint();
             tail.setStrokeWidth(1.0f);
-            tail.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOUR, 0x0));
+            tail.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOR, 0x0));
 
             //The eye
             Paint eye = new Paint();
             eye.setStrokeWidth(1.0f);
-            eye.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOUR, 0x0));
+            eye.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOR, 0x0));
+
+            //The Tongue
+            Paint tongue = new Paint();
+            tongue.setStrokeWidth(5.0f);
+            tongue.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_TONGUE_COLOR, 0x0));
 
 
             /**
@@ -463,6 +472,8 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
 //            for (int i = 0; i < snakeList.size(); i++) {
             for (int i = snakeList.size() - 1; i >= 0; i--) {
+                //First of all draw the Fruit
+                //At last draw the Head
                 Coordinates coor = snakeList.get(i);
                 if (i == 0) {
                     //Draw the head of the snake
@@ -499,6 +510,33 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                     //Draw the Fruit
                 } else if (i == snakeList.size() - 1) {
                     c.drawRect(new RectF(coor.getCoorX() - dimensionFruit / 2, coor.getCoorY() + dimensionFruit / 2, coor.getCoorX() + dimensionFruit / 2, coor.getCoorY() - dimensionFruit / 2), fruit);
+                    if(tongueCounter > 0){
+                        switch (mNextMotion) {
+                            case LEFT:{
+                                c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(),snakeList.get(0).getCoorX() - ((int) (dimensionSnakeHeadHeight * 1.5f)), snakeList.get(0).getCoorY() + 5, tongue);
+                                c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(),snakeList.get(0).getCoorX() - ((int) (dimensionSnakeHeadHeight * 1.5f)), snakeList.get(0).getCoorY() - 5, tongue);
+                            } break;
+
+                            case RIGHT:{
+                                c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(),snakeList.get(0).getCoorX() + ((int) (dimensionSnakeHeadHeight * 1.5f)), snakeList.get(0).getCoorY() + 5, tongue);
+                                c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(),snakeList.get(0).getCoorX() + ((int) (dimensionSnakeHeadHeight * 1.5f)), snakeList.get(0).getCoorY() - 5, tongue);
+                            } break;
+
+                            case UP:{
+                                c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(),snakeList.get(0).getCoorX() + 5, snakeList.get(0).getCoorY()  + ((int) (dimensionSnakeHeadHeight * 1.5f)), tongue);
+                                c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(),snakeList.get(0).getCoorX() - 5, snakeList.get(0).getCoorY()  + ((int) (dimensionSnakeHeadHeight * 1.5f)), tongue);
+                            } break;
+
+                            case DOWN:{
+                                c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(),snakeList.get(0).getCoorX() + 5, snakeList.get(0).getCoorY()  - ((int) (dimensionSnakeHeadHeight * 1.5f)), tongue);
+                                c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(),snakeList.get(0).getCoorX() - 5, snakeList.get(0).getCoorY()  - ((int) (dimensionSnakeHeadHeight * 1.5f)), tongue);
+                            } break;
+                            default:{
+
+                            }
+                        }
+                        tongueCounter--;
+                    }
                 } else {
                     //Draw the body of the snake
                     c.drawRect(new RectF(coor.getCoorX() - dimensionSnakeBodyWidth / 2, coor.getCoorY() + dimensionSnakeBodyWidth / 2, coor.getCoorX() + dimensionSnakeBodyWidth / 2, coor.getCoorY() - dimensionSnakeBodyWidth / 2), tail);
@@ -519,6 +557,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
         if (snakeList != null) {
             if (snakeList.get(0).getCoorX() >= rangeXFruitMin && snakeList.get(0).getCoorX() <= rangeXFruitMax && snakeList.get(0).getCoorY() >= rangeYFruitMin && snakeList.get(0).getCoorY() <= rangeYFruitMax) {
+                tongueCounter = 1;
                 return true;
             }
         }

@@ -97,7 +97,7 @@
     </LinearLayout>
 
     <GridLayout
-        android:layout_width="fill_parent"
+        android:layout_width="345dp"
         android:layout_height="105dp"
         android:layout_gravity="center_horizontal|top"
         android:columnCount="22"
@@ -110,7 +110,7 @@
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -120,7 +120,7 @@
             android:layout_column="1"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -130,7 +130,7 @@
             android:layout_column="2"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
 
@@ -141,7 +141,7 @@
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -151,7 +151,7 @@
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -161,7 +161,7 @@
             android:layout_column="1"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -171,7 +171,7 @@
             android:layout_column="2"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
 
@@ -182,7 +182,7 @@
             android:layout_column="2"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -192,7 +192,7 @@
             android:layout_column="2"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -202,7 +202,7 @@
             android:layout_column="0"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -212,7 +212,7 @@
             android:layout_column="1"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -222,7 +222,7 @@
             android:layout_column="4"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -232,7 +232,7 @@
             android:layout_column="4"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -242,7 +242,7 @@
             android:layout_column="4"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -252,7 +252,7 @@
             android:layout_column="4"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -262,7 +262,7 @@
             android:layout_column="4"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -272,7 +272,7 @@
             android:layout_column="5"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -282,7 +282,7 @@
             android:layout_column="5"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -292,7 +292,7 @@
             android:layout_column="6"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -302,7 +302,7 @@
             android:layout_column="7"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -312,7 +312,7 @@
             android:layout_column="7"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -322,7 +322,7 @@
             android:layout_column="7"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -332,7 +332,7 @@
             android:layout_column="6"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -342,7 +342,7 @@
             android:layout_column="7"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -352,7 +352,7 @@
             android:layout_column="7"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -362,7 +362,7 @@
             android:layout_column="8"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -372,7 +372,7 @@
             android:layout_column="8"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -382,7 +382,7 @@
             android:layout_column="8"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -392,7 +392,7 @@
             android:layout_column="8"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -402,7 +402,7 @@
             android:layout_column="9"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -412,7 +412,7 @@
             android:layout_column="10"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -422,7 +422,7 @@
             android:layout_column="9"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -432,7 +432,7 @@
             android:layout_column="10"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -442,7 +442,7 @@
             android:layout_column="10"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -452,7 +452,7 @@
             android:layout_column="10"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -462,7 +462,7 @@
             android:layout_column="11"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -472,7 +472,7 @@
             android:layout_column="11"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -482,7 +482,7 @@
             android:layout_column="11"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -492,7 +492,7 @@
             android:layout_column="11"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -502,7 +502,7 @@
             android:layout_column="11"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -512,7 +512,7 @@
             android:layout_column="12"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -522,7 +522,7 @@
             android:layout_column="13"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -532,7 +532,7 @@
             android:layout_column="14"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -542,7 +542,7 @@
             android:layout_column="13"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -552,7 +552,7 @@
             android:layout_column="14"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffff0004"
+            android:background="#ff73a6e8"
             android:text="" />
 
         <Button
@@ -562,7 +562,7 @@
             android:layout_column="15"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -572,7 +572,7 @@
             android:layout_column="15"
             android:layout_gravity="left|center_vertical"
             android:layout_row="1"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -582,7 +582,7 @@
             android:layout_column="15"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -592,7 +592,7 @@
             android:layout_column="15"
             android:layout_gravity="left|center_vertical"
             android:layout_row="3"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -602,7 +602,7 @@
             android:layout_column="15"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -612,7 +612,7 @@
             android:layout_column="16"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -622,7 +622,7 @@
             android:layout_column="17"
             android:layout_gravity="left|center_vertical"
             android:layout_row="0"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -632,7 +632,7 @@
             android:layout_column="16"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -642,7 +642,7 @@
             android:layout_column="17"
             android:layout_gravity="left|center_vertical"
             android:layout_row="2"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -652,7 +652,7 @@
             android:layout_column="16"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
         <Button
@@ -662,7 +662,7 @@
             android:layout_column="17"
             android:layout_gravity="left|center_vertical"
             android:layout_row="4"
-            android:background="#ffffdc00"
+            android:background="#ff00ff00"
             android:text="" />
 
 

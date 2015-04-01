@@ -50,19 +50,19 @@ public class ColorPickerDialog extends Dialog {
         setContentView(new ColorPickerView(getContext(), l, mInitialColor,
                 mDefaultColor));
         switch (mKey) {
-            case StartScreen.GAME_VIEW_BACKGROUND_COLOUR:{
+            case StartScreen.GAME_VIEW_BACKGROUND_COLOR:{
                 setTitle(R.string.color_picker_dialog_background);
             } break;
 
-            case StartScreen.GAME_VIEW_SNAKE_HEAD_COLOUR:{
+            case StartScreen.GAME_VIEW_SNAKE_HEAD_COLOR:{
                 setTitle(R.string.color_picker_dialog_head);
             } break;
 
-            case StartScreen.GAME_VIEW_SNAKE_BODY_COLOUR:{
+            case StartScreen.GAME_VIEW_SNAKE_BODY_COLOR:{
                 setTitle(R.string.color_picker_dialog_body);
             } break;
 
-            case StartScreen.GAME_VIEW_SNAKE_EYE_COLOUR:{
+            case StartScreen.GAME_VIEW_SNAKE_EYE_COLOR:{
                 setTitle(R.string.color_picker_dialog_eye);
             } break;
 
