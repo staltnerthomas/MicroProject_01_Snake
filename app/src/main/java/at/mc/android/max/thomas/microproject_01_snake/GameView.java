@@ -233,12 +233,12 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
             @Override
             public void onLongPress(MotionEvent _e) {
-
+                //Long press is used for start the game and go on pause
                 if (firstLongPress) {
                     if (StartScreen.testMode)
                         Toast.makeText(GameView.this, "continue with game...", Toast.LENGTH_SHORT).show();
                     if (snakeList.get(0).getCoorX() == SViewWidth / 2)
-                        //Because it should only be shone once
+                        //Because it should only be shown once
                         Toast.makeText(GameView.this, R.string.game_toast_go_on_pause, Toast.LENGTH_SHORT).show();
                     gamePause = false;
                     firstLongPress = false;
