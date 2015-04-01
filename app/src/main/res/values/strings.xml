@@ -59,7 +59,7 @@
     <string name="start_view_fragment_negative">nothing</string>
     <string name="start_view_fragment_neutral">only colors</string>
     <string name="start_view_fragment_positive">also highscores</string>
-    <string name="start_view_fragment_text">reset highscores?</string>
+    <string name="start_view_fragment_text">reset settings and highscores?</string>
 
 
 

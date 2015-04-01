@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MicroProject_01_Snake</string>
+    <string name="startscreen_title">S N A K E</string>
+
+
+    <!-- Start View -->
+    <string name="start_button_start_text">start</string>
+    <string name="title_activity_game_view">gameView</string>
+
+    <!-- Start View Options -->
+    <string name="action_settings">einstellungen</string>
+    <string name="background_color_text">hintergrundfarbe</string>
+    <string name="snake_head_color_text">kopffarbe</string>
+    <string name="snake_body_color_text">körperfarbe</string>
+    <string name="snake_eye_color_text">augenfarbe</string>
+    <string name="snake_foot_color_text">fruchtfarbe</string>
+    <string name="action_settings_reset">einstellungen zurücksetzen</string>
+    <string name="action_settings_placeholder">-</string>
+
+
+
+    <!-- Game View -->
+    <string name="game_text_view_score">punkte</string>
+    <string name="game_toast_start_the_game">für start laaaange drücken</string>
+    <string name="game_toast_go_on_pause">für pause laaaange drücken</string>
+
+    <!-- Settings -->
+    <string name="title_activity_settings">einstellungen</string>
+
+    <string name="start_text_view_high_score">höchstanzahl punkte</string>
+    <string name="start_text_view_last_score">punkte in der letzten runde</string>
+    <string name="start_text_view_high_score_value" />
+    <string name="start_text_view_last_score_value" />
+
+    <string name="options_text_view_control">bewegungssteuerung</string>
+    <string name="options_text_view_takeoffspeed">startgeschwindigkeit</string>
+    <string name="options_text_view_control_invert">bewegungssteuerung umkehren</string>
+
+    <string name="options_text_view_severity_1">leicht</string>
+    <string name="options_text_view_severity_2">mittel</string>
+    <string name="options_text_view_severity_3">ohh</string>
+    <string name="options_text_view_severity_4">oh mann das ist cool</string>
+
+    <string name="options_text_view_snake_size">schlangengrösse</string>
+
+    <!-- Color Picker Dialog -->
+    <string name="color_picker_dialog_background">hintergrundfarbe setzen</string>
+    <string name="color_picker_dialog_head">kopffarbe setzen</string>
+    <string name="color_picker_dialog_body">körperfarbe setzen</string>
+    <string name="color_picker_dialog_eye">augenfarbe setzen</string>
+    <string name="color_picker_dialog_fruit">fruchtfarbe setzen</string>
+
+    <!-- GameView Fragment -->
+    <string name="game_view_fragment_negative">zurück</string>
+    <string name="game_view_fragment_positive">noch einmal</string>
+    <string name="game_view_fragment_text">game over!!</string>
+
+    <!-- StartView Fragment -->
+    <string name="start_view_fragment_negative">nichts</string>
+    <string name="start_view_fragment_neutral">nur farben</string>
+    <string name="start_view_fragment_positive">auch punktezahl</string>
+    <string name="start_view_fragment_text">welche einstellungen möchten sie löschen?</string>
+</resources>
