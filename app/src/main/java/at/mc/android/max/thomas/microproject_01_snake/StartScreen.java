@@ -44,7 +44,7 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
 
     //For testing the Game
     public static boolean testMode = false;
-    public static boolean localeEnglish = true;
+    public static boolean localeEnglish = false;
     Button b = null;
     TextView highScore = null;
     TextView lastScore = null;

@@ -10,6 +10,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -288,6 +289,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 headCoordinate.getCoorX() <= dimensionSnakeHeadHeight / 4 ||
                 headCoordinate.getCoorY() <= dimensionSnakeHeadHeight / 4 ||
                 headCoordinate.getCoorY() >= SViewHeight - dimensionSnakeHeadHeight / 4) {
+            playGameOverSound();
             return true;
         }
 
@@ -303,6 +305,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
             if (snakeList != null) {
                 if (headCoordinate.getCoorX() >= rangeXBodyMin && headCoordinate.getCoorX() <= rangeXBodyMax && headCoordinate.getCoorY() >= rangeYBodyMin && headCoordinate.getCoorY() <= rangeYBodyMax) {
+                    playGameOverSound();
                     return true;
                 }
             }
@@ -523,24 +526,28 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                             case LEFT: {
                                 c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(), snakeList.get(0).getCoorX() - ((int) (dimensionSnakeHeadHeight * 1.5f)), snakeList.get(0).getCoorY() + 5, tongue);
                                 c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(), snakeList.get(0).getCoorX() - ((int) (dimensionSnakeHeadHeight * 1.5f)), snakeList.get(0).getCoorY() - 5, tongue);
+                                playFruitSound(false);
                             }
                             break;
 
                             case RIGHT: {
                                 c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(), snakeList.get(0).getCoorX() + ((int) (dimensionSnakeHeadHeight * 1.5f)), snakeList.get(0).getCoorY() + 5, tongue);
                                 c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(), snakeList.get(0).getCoorX() + ((int) (dimensionSnakeHeadHeight * 1.5f)), snakeList.get(0).getCoorY() - 5, tongue);
+                                playFruitSound(true);
                             }
                             break;
 
                             case UP: {
                                 c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(), snakeList.get(0).getCoorX() + 5, snakeList.get(0).getCoorY() + ((int) (dimensionSnakeHeadHeight * 1.5f)), tongue);
                                 c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(), snakeList.get(0).getCoorX() - 5, snakeList.get(0).getCoorY() + ((int) (dimensionSnakeHeadHeight * 1.5f)), tongue);
+                                playFruitSound(false);
                             }
                             break;
 
                             case DOWN: {
                                 c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(), snakeList.get(0).getCoorX() + 5, snakeList.get(0).getCoorY() - ((int) (dimensionSnakeHeadHeight * 1.5f)), tongue);
                                 c.drawLine(snakeList.get(0).getCoorX(), snakeList.get(0).getCoorY(), snakeList.get(0).getCoorX() - 5, snakeList.get(0).getCoorY() - ((int) (dimensionSnakeHeadHeight * 1.5f)), tongue);
+                                playFruitSound(true);
                             }
                             break;
                             default: {
@@ -548,6 +555,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                             }
                         }
                         tongueCounter--;
+
                     }
                 } else {
                     //Draw the body of the snake
@@ -557,6 +565,37 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
             }
             sHolder.unlockCanvasAndPost(c);
         }
+    }
+
+    private void playFruitSound(final boolean right) {
+        Log.i(TAG, "should play sound... ");
+        if (StartScreen.testMode)
+            Toast.makeText(getApplication(), "should play sound...", Toast.LENGTH_SHORT).show();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (right) {
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.drawable.right);
+                    mediaPlayer.start();
+                } else {
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.drawable.left);
+                    mediaPlayer.start();
+                }
+            }
+        });
+    }
+
+    private void playGameOverSound() {
+        Log.i(TAG, "should play sound... ");
+        if (StartScreen.testMode)
+            Toast.makeText(getApplication(), "should play sound...", Toast.LENGTH_SHORT).show();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.drawable.gameover);
+                mediaPlayer.start();
+            }
+        });
     }
 
     private boolean isFruitEaten() {
