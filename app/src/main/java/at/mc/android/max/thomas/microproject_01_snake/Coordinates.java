@@ -1,8 +1,5 @@
 package at.mc.android.max.thomas.microproject_01_snake;
 
-/**
- * Created by thomasstaltner on 29/03/15.
- */
 public class Coordinates {
     private int coorX;
     private int coorY;

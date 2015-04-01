@@ -77,7 +77,7 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
         SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt(GAME_VIEW_SNAKE_TONGUE_COLOR, DEFAULT_GAME_VIEW_SNAKE_TONGUE_COLOR);
-        editor.commit();
+        editor.apply();
     }
 
     @Override
@@ -255,7 +255,7 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
         SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt(key, color);
-        editor.commit();
+        editor.apply();
 
         changeOptionsMenuColor(optionsMenu);
     }

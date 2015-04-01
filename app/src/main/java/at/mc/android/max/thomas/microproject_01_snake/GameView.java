@@ -169,6 +169,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
         mG = new GestureDetector(this, new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
+
                 return false;
             }
 
@@ -178,6 +179,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
+
                 return false;
             }
 
@@ -283,8 +285,8 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
         Coordinates headCoordinate = snakeList.get(0);
 
         if (headCoordinate.getCoorX() >= SViewWidth - dimensionSnakeHeadHeight / 4 ||
-                headCoordinate.getCoorX() <= 0 + dimensionSnakeHeadHeight / 4 ||
-                headCoordinate.getCoorY() <= 0 + dimensionSnakeHeadHeight / 4 ||
+                headCoordinate.getCoorX() <= dimensionSnakeHeadHeight / 4 ||
+                headCoordinate.getCoorY() <= dimensionSnakeHeadHeight / 4 ||
                 headCoordinate.getCoorY() >= SViewHeight - dimensionSnakeHeadHeight / 4) {
             return true;
         }
@@ -350,7 +352,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 editor.putInt(StartScreen.GAME_VIEW_HI_SCORE, (int) gamePoints);
             }
             editor.putInt(StartScreen.GAME_VIEW_LAST_SCORE, (int) gamePoints);
-            editor.commit();
+            editor.apply();
 
             if (gameOver() && !gamePause) {
                 Log.i(TAG, "gameOver() && !gamePause");
