@@ -570,7 +570,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     private void playFruitSound(final boolean right) {
         Log.i(TAG, "should play sound... ");
         if (StartScreen.testMode)
-            Toast.makeText(getApplication(), "should play sound...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), "should playFruitSound...", Toast.LENGTH_SHORT).show();
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -588,7 +588,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     private void playGameOverSound() {
         Log.i(TAG, "should play sound... ");
         if (StartScreen.testMode)
-            Toast.makeText(getApplication(), "should play sound...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), "should playGameOverSound...", Toast.LENGTH_SHORT).show();
         mHandler.post(new Runnable() {
             @Override
             public void run() {
