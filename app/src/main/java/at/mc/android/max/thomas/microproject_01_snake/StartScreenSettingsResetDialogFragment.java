@@ -12,9 +12,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
-/**
- * Created by thomasstaltner on 31/03/15.
- */
 public class StartScreenSettingsResetDialogFragment extends DialogFragment {
     public static final String TAG = "StartScreenResetDial...";
 
@@ -46,7 +43,7 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
                 editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 3);
                 editor.putInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 0);
 
-                editor.commit();
+                editor.apply();
             }
         });
 
@@ -67,7 +64,7 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
                 editor.putInt(StartScreen.GAME_VIEW_LAST_SCORE, 0);
                 editor.putInt(StartScreen.GAME_VIEW_HI_SCORE, 0);
 
-                editor.commit();
+                editor.apply();
 
                 Intent i = new Intent(getActivity(), StartScreen.class);
                 startActivity(i);

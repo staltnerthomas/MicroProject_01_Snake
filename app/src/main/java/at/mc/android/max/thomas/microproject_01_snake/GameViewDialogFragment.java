@@ -10,9 +10,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 
-/**
- * Created by thomasstaltner on 31/03/15.
- */
 public class GameViewDialogFragment extends DialogFragment {
     public static final String TAG = "GameViewDialogFragment";
 

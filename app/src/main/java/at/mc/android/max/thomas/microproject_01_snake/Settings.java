@@ -158,7 +158,7 @@ public class Settings extends Activity {
         editor.putInt(OPTIONS_SEEKBAR_TAKEOFFSPEED, optionsSeekbarTakeoffspeed.getProgress());
         editor.putInt(OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, optionsSeekbarSizeOfTheSnake.getProgress());
 
-        editor.commit();
+        editor.apply();
 
     }
 }
