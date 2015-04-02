@@ -7,6 +7,12 @@
     <string name="start_button_start_text">start</string>
     <string name="title_activity_game_view">gameView</string>
 
+    <string name="start_text_view_high_score">highscore</string>
+    <string name="start_text_view_last_score">lastscore</string>
+    <string name="start_text_view_high_score_value" />
+    <string name="start_text_view_last_score_value" />
+
+
     <!-- Start View Options -->
     <string name="action_settings">settings</string>
     <string name="background_color_text">background color</string>
@@ -17,8 +23,6 @@
     <string name="action_settings_reset">reset settings</string>
     <string name="action_settings_placeholder">-</string>
 
-
-
     <!-- Game View -->
     <string name="game_text_view_score">score</string>
     <string name="game_toast_start_the_game">press looong to start</string>
@@ -27,21 +31,18 @@
     <!-- Settings -->
     <string name="title_activity_settings">settings</string>
 
-    <string name="start_text_view_high_score">highscore</string>
-    <string name="start_text_view_last_score">lastscore</string>
-    <string name="start_text_view_high_score_value" />
-    <string name="start_text_view_last_score_value" />
-
     <string name="options_text_view_control">movement control</string>
-    <string name="options_text_view_takeoffspeed">lift-off speed</string>
     <string name="options_text_view_control_invert">invert movement control</string>
 
+    <string name="options_text_view_takeoffspeed">lift-off speed</string>
     <string name="options_text_view_severity_1">easy</string>
     <string name="options_text_view_severity_2">medium</string>
     <string name="options_text_view_severity_3">ohh</string>
     <string name="options_text_view_severity_4">you are really cool man</string>
 
     <string name="options_text_view_snake_size">size of the snake</string>
+
+    <string name="options_text_view_play_sound">play sound for eating</string>
 
     <!-- Color Picker Dialog -->
     <string name="color_picker_dialog_background">set background color</string>

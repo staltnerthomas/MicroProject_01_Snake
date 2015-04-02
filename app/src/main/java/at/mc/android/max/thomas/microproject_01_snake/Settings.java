@@ -17,10 +17,12 @@ public class Settings extends Activity {
     public static final String OPTIONS_SWITCH_CONTROL_INVERT = "Switch Motion between regular and invert";
     public static final String OPTIONS_SEEKBAR_TAKEOFFSPEED = "TakeoffSpeed for Snake";
     public static final String OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE = "Sets the size of the Snake";
+    public static final String OPTIONS_SWITCH_PLAY_SOUND = "Switch between mute and sound";
 
 
     Switch optionsSwitchControl = null;
     Switch optionsSwitchControlInvert = null;
+    Switch optionsSwitchPlaySound = null;
 
     SeekBar optionsSeekbarTakeoffspeed = null;
     SeekBar optionsSeekbarSizeOfTheSnake = null;
@@ -37,6 +39,7 @@ public class Settings extends Activity {
 
         optionsSwitchControl = (Switch) findViewById(R.id.options_switch_control);
         optionsSwitchControlInvert = (Switch) findViewById(R.id.options_switch_control_invert);
+        optionsSwitchPlaySound = (Switch) findViewById(R.id.options_switch_play_sound);
         optionsSeekbarTakeoffspeed = (SeekBar) findViewById(R.id.options_seekbar_takeoffspeed);
         optionsSeekbarSizeOfTheSnake = (SeekBar) findViewById(R.id.options_seekbar_sizeofthesnake);
         optionsTextViewControlInvert = (TextView) findViewById(R.id.options_text_view_control_invert);
@@ -121,6 +124,12 @@ public class Settings extends Activity {
         } else {
             optionsSwitchControlInvert.setChecked(false);
         }
+
+        if (sharedPrefs.getInt(OPTIONS_SWITCH_PLAY_SOUND, 1) == 1) {
+            optionsSwitchPlaySound.setChecked(true);
+        } else {
+            optionsSwitchPlaySound.setChecked(false);
+        }
     }
 
     private void setTakeOffSpeedText(int progress) {
@@ -153,6 +162,12 @@ public class Settings extends Activity {
             editor.putInt(OPTIONS_SWITCH_CONTROL_INVERT, 1);
         } else {
             editor.putInt(OPTIONS_SWITCH_CONTROL_INVERT, 0);
+        }
+
+        if (optionsSwitchPlaySound.isChecked()) {
+            editor.putInt(OPTIONS_SWITCH_PLAY_SOUND, 1);
+        } else {
+            editor.putInt(OPTIONS_SWITCH_PLAY_SOUND, 0);
         }
 
         editor.putInt(OPTIONS_SEEKBAR_TAKEOFFSPEED, optionsSeekbarTakeoffspeed.getProgress());

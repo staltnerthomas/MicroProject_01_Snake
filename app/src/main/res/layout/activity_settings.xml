@@ -84,6 +84,24 @@
             android:max="4"
             android:indeterminate="false" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/options_text_view_play_sound"
+            android:id="@+id/options_text_view_play_sound" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/options_switch_play_sound"
+            android:layout_gravity="center_horizontal"
+            android:checked="false" />
+
     </LinearLayout>
 
 </RelativeLayout>

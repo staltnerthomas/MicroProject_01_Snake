@@ -26,6 +26,10 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "- button pressed...");
+
+                Intent i = new Intent(getActivity(), StartScreen.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
         });
 
@@ -41,10 +45,15 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
                 editor.putInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_BODY_COLOR);
                 editor.putInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_EYE_COLOR);
                 editor.putInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, StartScreen.DEFAULT_GAME_VIEW_FRUIT_COLOR);
-                editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 3);
+                editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 2);
                 editor.putInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 0);
+                editor.putInt(Settings.OPTIONS_SWITCH_PLAY_SOUND, 1);
 
                 editor.apply();
+
+                Intent i = new Intent(getActivity(), StartScreen.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
         });
 
@@ -60,14 +69,17 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
                 editor.putInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_BODY_COLOR);
                 editor.putInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_EYE_COLOR);
                 editor.putInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, StartScreen.DEFAULT_GAME_VIEW_FRUIT_COLOR);
-                editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 3);
+                editor.putInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 2);
                 editor.putInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 0);
+                editor.putInt(Settings.OPTIONS_SWITCH_PLAY_SOUND, 1);
+
                 editor.putInt(StartScreen.GAME_VIEW_LAST_SCORE, 0);
                 editor.putInt(StartScreen.GAME_VIEW_HI_SCORE, 0);
 
                 editor.apply();
 
                 Intent i = new Intent(getActivity(), StartScreen.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
         });

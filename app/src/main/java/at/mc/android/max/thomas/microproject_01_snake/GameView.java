@@ -35,11 +35,11 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     public static final String UP = "up";
     public static final String DOWN = "down";
     public List<Coordinates> snakeList = Collections.synchronizedList(new LinkedList<Coordinates>());
+    //defines the SurfaceView
+    public SurfaceView gameSurfaceView = null;
     Handler mHandler = new Handler();
     GestureDetector mG = null;
     String mNextMotion = "default";
-    //defines the SurfaceView
-    public SurfaceView gameSurfaceView = null;
     private SurfaceHolder sHolder;
     private int SViewWidth;
     private int SViewHeight;
@@ -50,27 +50,32 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     private int dimensionSnakeHeadWidth = 35;   // 35
     private int dimensionSnakeHeadHeight = 18;  // 18
     private int snakeHeadEye = 4;               // 4
-//    private int headDelay = 5;
 
     //defines constants
-    private float delayTime;
-    private float slowestDelayTime = 450;
-    private float gamePoints = 0;
-    private float gamePointsBonus = 80;
-    private boolean firstLongPress = true;
-    private boolean gamePause = false;
-    private boolean firstSurfaceCreated = false;
-    private int tongueCounter;
+    private float delayTime;                            //theese two variables are used to calculate the delaytime
+    private float slowestDelayTime = 450;               //      which means the snake is in off state
+
+    private float gamePoints = 0;                       //theese two variables are used for calculating
+    private float gamePointsBonus = 80;                 //  the points after eating
+
+    private boolean firstLongPress = true;              //Set if it was the first Long press for go on pause and resume
+    private boolean gamePause = false;                  //is true if game is in pause-modus
+    private boolean firstSurfaceCreated = false;        //is used for pause function not to create a new snake after resume
+    private int tongueCounter;                          //is used for how often should go the tongue out of the mouth
+    private boolean mayNextMotion = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_view);
+        if (StartScreen.testMode)
+            Toast.makeText(GameView.this, "onCreate...", Toast.LENGTH_SHORT).show();
 
         Toast.makeText(this, R.string.game_toast_start_the_game, Toast.LENGTH_SHORT).show();
 
         //Set the dimensions of the Snake and Fruit
+        //as preselected in the settings
         SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
         switch (sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 3)) {
             case 0: {
@@ -81,7 +86,6 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 dimensionSnakeHeadWidth = 27;   // 35
                 dimensionSnakeHeadHeight = 14;  // 18
                 snakeHeadEye = 3;
-//                headDelay = 5;
             }
             break;
 
@@ -93,7 +97,6 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 dimensionSnakeHeadWidth = 31;
                 dimensionSnakeHeadHeight = 16;
                 snakeHeadEye = 4;
-//                headDelay = 5;
             }
             break;
 
@@ -105,7 +108,6 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 dimensionSnakeHeadWidth = 35;
                 dimensionSnakeHeadHeight = 18;
                 snakeHeadEye = 4;
-//                headDelay = 5;
             }
             break;
 
@@ -117,7 +119,6 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 dimensionSnakeHeadWidth = 39;
                 dimensionSnakeHeadHeight = 20;
                 snakeHeadEye = 4;
-//                headDelay = 5;
             }
             break;
 
@@ -129,7 +130,6 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 dimensionSnakeHeadWidth = 43;
                 dimensionSnakeHeadHeight = 22;
                 snakeHeadEye = 5;
-//                headDelay = 5;
             }
         }
 
@@ -139,6 +139,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
         //get Display with and heigth
+        //for calculating random numbers for each display
         gameSurfaceView = (SurfaceView) findViewById(R.id.game_surface_view);
         gameSurfaceView.setOnTouchListener(this);
         gameSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -154,7 +155,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 SViewWidth = width;
                 SViewHeight = height;
                 if (!firstSurfaceCreated) {
-                    setSnakeAtBeginning();
+                        setSnakeAtBeginning();
                     firstSurfaceCreated = true;
                 }
                 drawGameView();
@@ -163,14 +164,12 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-
             }
         });
 
         mG = new GestureDetector(this, new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
-
                 return false;
             }
 
@@ -180,7 +179,6 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-
                 return false;
             }
 
@@ -188,22 +186,29 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
             public boolean onScroll(MotionEvent _e1, MotionEvent _e2, float _distanceX, float _distanceY) {
                 SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
 
+                //if a scroll is detected the code below sets
+                //the variables for "UP" "DOWN" "LEFT" "RIGHT"
                 if (sharedPrefs.getInt(Settings.OPTIONS_SWITCH_CONTROL, -1) == 0) {
                     float xDif = _e1.getX(0) - _e2.getX(0);
                     float yDif = _e1.getY(0) - _e2.getY(0);
                     float max = Math.max(Math.abs(xDif), Math.abs(yDif));
-                    //float max = Math.max(_distanceX, _distanceY);
                     if (Math.abs(xDif) > Math.abs(yDif)) {
                         if (xDif < 0) {
                             if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
-                                mNextMotion = RIGHT;//dir
+                                if(mayNextMotion) {
+                                    mNextMotion = RIGHT;//dir
+                                    mayNextMotion = false;
+                                }
                                 Log.i("snake", RIGHT);
                             } else {
                                 Log.i("snake", "right/left detected");
                             }
                         } else {
                             if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
-                                mNextMotion = LEFT;
+                                if(mayNextMotion) {
+                                    mNextMotion = LEFT;//dir
+                                    mayNextMotion = false;
+                                }
                                 Log.i("snake", LEFT);
                             } else {
                                 Log.i("snake", "left/right detected");
@@ -212,14 +217,20 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                     } else {
                         if (yDif < 0) {
                             if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
-                                mNextMotion = UP;
+                                if(mayNextMotion) {
+                                    mNextMotion = UP;//dir
+                                    mayNextMotion = false;
+                                }
                                 Log.i("snake", UP);
                             } else {
                                 Log.i("snake", "down/up detected");
                             }
                         } else {
                             if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
-                                mNextMotion = DOWN;
+                                if(mayNextMotion) {
+                                    mNextMotion = DOWN;//dir
+                                    mayNextMotion = false;
+                                }
                                 Log.i("snake", DOWN);
                             } else {
                                 Log.i("snake", "up/down detected");
@@ -232,6 +243,11 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 return false;
             }
 
+            /**
+             * This method detects a long press and switch between
+             * playing the game and go on pause
+             * @param _e
+             */
             @Override
             public void onLongPress(MotionEvent _e) {
                 //Long press is used for start the game and go on pause
@@ -239,7 +255,8 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                     if (StartScreen.testMode)
                         Toast.makeText(GameView.this, "continue with game...", Toast.LENGTH_SHORT).show();
                     if (snakeList.get(0).getCoorX() == SViewWidth / 2)
-                        //Because it should only be shown once
+                        //Because the message should only be shown once
+                        //for the player at the beginning
                         Toast.makeText(GameView.this, R.string.game_toast_go_on_pause, Toast.LENGTH_SHORT).show();
                     gamePause = false;
                     firstLongPress = false;
@@ -263,6 +280,8 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     @Override
     protected void onResume() {
         super.onResume();
+        if (StartScreen.testMode)
+            Toast.makeText(GameView.this, "onResume...", Toast.LENGTH_SHORT).show();
         SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
         delayTime = slowestDelayTime - (sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 0));
     }
@@ -281,6 +300,13 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
         super.onDestroy();
     }
 
+
+    /**
+     * This method checks if the game is over
+     * The game is over, if the snake runs across the border or it runs against its tail.
+     *
+     * @return boolean
+     */
     private boolean gameOver() {
         Log.i(TAG, "gameOver!");
         Coordinates headCoordinate = snakeList.get(0);
@@ -322,6 +348,10 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
         return true;
     }
 
+    /**
+     * This method coordinates the gameplay
+     * increases the gamePoints and lets the snake move faster
+     */
     private void playGame() {
         Log.i(TAG, "playGame!");
         //This is for playing the game
@@ -339,7 +369,6 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                     gamePointsBonus *= 1.05f;
                 }
             }
-//            delayTime = delayTime * 0.999f;
             drawGameView();
             mHandler.postDelayed(new Runnable() {
                 @Override
@@ -569,18 +598,21 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
         Log.i(TAG, "should play sound... ");
         if (StartScreen.testMode)
             Toast.makeText(getApplication(), "should playFruitSound...", Toast.LENGTH_SHORT).show();
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (right) {
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.drawable.right);
-                    mediaPlayer.start();
-                } else {
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.drawable.left);
-                    mediaPlayer.start();
+        SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
+        if (sharedPrefs.getInt(Settings.OPTIONS_SWITCH_PLAY_SOUND, 1) == 1) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (right) {
+                        MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.drawable.right);
+                        mediaPlayer.start();
+                    } else {
+                        MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.drawable.left);
+                        mediaPlayer.start();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void playGameOverSound() {
@@ -622,21 +654,25 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
         switch (mNextMotion) {
             case LEFT: {
                 snakeList.add(0, new Coordinates(headX - dimensionSnakeBodyWidth, headY));
+                mayNextMotion = true;
             }
             break;
 
             case RIGHT: {
                 snakeList.add(0, new Coordinates(headX + dimensionSnakeBodyWidth, headY));
+                mayNextMotion = true;
             }
             break;
 
             case UP: {
                 snakeList.add(0, new Coordinates(headX, headY + dimensionSnakeBodyWidth));
+                mayNextMotion = true;
             }
             break;
 
             case DOWN: {
                 snakeList.add(0, new Coordinates(headX, headY - dimensionSnakeBodyWidth));
+                mayNextMotion = true;
             }
             break;
             default:
