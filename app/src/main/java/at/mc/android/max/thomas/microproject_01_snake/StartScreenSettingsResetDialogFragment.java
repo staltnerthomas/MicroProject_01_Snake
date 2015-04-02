@@ -19,6 +19,7 @@ public class StartScreenSettingsResetDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setCancelable(false);
         builder = builder.setMessage(R.string.start_view_fragment_text);
 
         builder = builder.setNegativeButton(R.string.start_view_fragment_negative, new DialogInterface.OnClickListener() {

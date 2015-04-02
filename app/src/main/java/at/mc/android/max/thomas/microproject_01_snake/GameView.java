@@ -39,7 +39,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     GestureDetector mG = null;
     String mNextMotion = "default";
     //defines the SurfaceView
-    private SurfaceView gameSurfaceView = null;
+    public SurfaceView gameSurfaceView = null;
     private SurfaceHolder sHolder;
     private int SViewWidth;
     private int SViewHeight;
@@ -361,7 +361,6 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 Log.i(TAG, "gameOver() && !gamePause");
                 DialogFragment dialog = new GameViewDialogFragment();
                 dialog.show(getFragmentManager(), "Game View Dialog Fragment");
-
             }
         }
     }
@@ -481,7 +480,6 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
             int eyesDelayToBody = 5;
 
 
-//            for (int i = 0; i < snakeList.size(); i++) {
             for (int i = snakeList.size() - 1; i >= 0; i--) {
                 //First of all draw the Fruit
                 //At last draw the Head

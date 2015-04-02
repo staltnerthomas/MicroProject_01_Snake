@@ -16,6 +16,7 @@ public class GameViewDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setCancelable(false);
         builder = builder.setMessage(R.string.game_view_fragment_text);
 
         builder = builder.setPositiveButton(R.string.game_view_fragment_positive, new DialogInterface.OnClickListener() {
@@ -37,13 +38,15 @@ public class GameViewDialogFragment extends DialogFragment {
                 startActivity(i);
             }
         });
+//        builder = builder.setPositiveButton(R.string.game_view_fragment_positive, this);
+//        builder = builder.setNegativeButton(R.string.game_view_fragment_negative, this);
 
         AlertDialog dialog = builder.show();
         TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
         messageText.setGravity(Gravity.CENTER);
+
+        dialog.setInverseBackgroundForced(false);
         dialog.show();
         return null;
     }
-
-
 }

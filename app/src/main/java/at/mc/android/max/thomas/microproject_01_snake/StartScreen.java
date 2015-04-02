@@ -44,7 +44,7 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
 
     //For testing the Game
     public static boolean testMode = false;
-    public static boolean localeEnglish = false;
+    public static boolean localeEnglish = true;
     Button b = null;
     TextView highScore = null;
     TextView lastScore = null;
@@ -161,6 +161,7 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
             case R.id.action_settings: {
                 Log.i(TAG, "SettingsButton pressed...");
                 Intent i = new Intent(this, Settings.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
             break;
@@ -235,6 +236,7 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
         switch (_v.getId()) {
             case R.id.start_button_start: {
                 Intent i = new Intent(this, GameView.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
             break;
