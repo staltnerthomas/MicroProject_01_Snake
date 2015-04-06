@@ -436,8 +436,8 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
     }
 
     private boolean isValidFruitCoordinate(Coordinates fruitCoordinate) {
-        for (int i = 0; i <= (snakeList.size() - 1); i++) {
-            //run over the Snake and look if the Fruit is not over the Snake
+        for (int i = 0; i <= (snakeList.size() - 2); i++) {
+            //run over the Snake and look if the Fruit is not in the Snake
             Coordinates coor = snakeList.get(i);
 
             int rangeXBodyMin = coor.getCoorX() - (dimensionSnakeBodyWidth / 2) - (dimensionFruit / 2);
@@ -763,14 +763,20 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
             if (sharedPrefs.getInt(Settings.OPTIONS_SWITCH_CONTROL_INVERT, -1) == 0) {
                 if (accelDataX > (accurancy)) {
                     if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
-                        mNextMotion = RIGHT;//dir
+                        if(mayNextMotion) {
+                            mNextMotion = RIGHT;//dir
+                            mayNextMotion = false;
+                        }
                         Log.i("snake", RIGHT);
                     } else {
                         Log.i("snake", "right/left detected");
                     }
                 } else if (accelDataX < (-accurancy)) {
                     if (!mNextMotion.equals(LEFT) && !mNextMotion.equals(RIGHT)) {
-                        mNextMotion = LEFT;
+                        if(mayNextMotion) {
+                            mNextMotion = LEFT;//dir
+                            mayNextMotion = false;
+                        }
                         Log.i("snake", LEFT);
                     } else {
                         Log.i("snake", "left/right detected");
@@ -779,14 +785,20 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
                 if (accelDataY < (-accurancy)) {
                     if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
-                        mNextMotion = UP;
+                        if(mayNextMotion) {
+                            mNextMotion = UP;//dir
+                            mayNextMotion = false;
+                        }
                         Log.i("snake", UP);
                     } else {
                         Log.i("snake", "down/up detected");
                     }
                 } else if (accelDataY > (accurancy)) {
                     if (!mNextMotion.equals(UP) && !mNextMotion.equals(DOWN)) {
-                        mNextMotion = DOWN;
+                        if(mayNextMotion) {
+                            mNextMotion = DOWN;//dir
+                            mayNextMotion = false;
+                        }
                         Log.i("snake", DOWN);
                     } else {
                         Log.i("snake", "up/down detected");
