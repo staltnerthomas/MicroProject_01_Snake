@@ -361,7 +361,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
                 cutTail();
             } else {
                 setNextFruit();
-                delayTime = delayTime * 0.975f;
+                delayTime *= 0.975f;
                 if (gamePoints == 0) {
                     gamePoints = 100;
                 } else {
