@@ -84,8 +84,8 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
     protected void onResume() {
         super.onResume();
         SharedPreferences sharedPrefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        highScore.setText(Integer.toString(sharedPrefs.getInt(GAME_VIEW_HI_SCORE, -1)));
-        lastScore.setText(Integer.toString(sharedPrefs.getInt(GAME_VIEW_LAST_SCORE, -1)));
+        highScore.setText(Integer.toString(sharedPrefs.getInt(GAME_VIEW_HI_SCORE, 0)));
+        lastScore.setText(Integer.toString(sharedPrefs.getInt(GAME_VIEW_LAST_SCORE, 0)));
         if (testMode) {
             startControl1.setText((Integer.toString(sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_TAKEOFFSPEED, 500))));
             startControl2.setText((Integer.toString(sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 0))));

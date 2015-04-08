@@ -470,32 +470,32 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
             SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
 
-            c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOR, 0x0));
+            c.drawColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_BACKGROUND_COLOR, StartScreen.DEFAULT_GAME_VIEW_BACKGROUND_COLOR));
 
             //The fruit
             Paint fruit = new Paint();
             fruit.setStrokeWidth(1.0f);
-            fruit.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, 0x0));
+            fruit.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_FRUIT_COLOUR, StartScreen.DEFAULT_GAME_VIEW_FRUIT_COLOR));
 
             //The head
             Paint head = new Paint();
             head.setStrokeWidth(1.0f);
-            head.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOR, 0x0));
+            head.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_HEAD_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_HEAD_COLOR));
 
             //The tail
             Paint tail = new Paint();
             tail.setStrokeWidth(1.0f);
-            tail.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOR, 0x0));
+            tail.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_BODY_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_BODY_COLOR));
 
             //The eye
             Paint eye = new Paint();
             eye.setStrokeWidth(1.0f);
-            eye.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOR, 0x0));
+            eye.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_EYE_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_EYE_COLOR));
 
             //The Tongue
             Paint tongue = new Paint();
             tongue.setStrokeWidth(5.0f);
-            tongue.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_TONGUE_COLOR, 0x0));
+            tongue.setColor(sharedPrefs.getInt(StartScreen.GAME_VIEW_SNAKE_TONGUE_COLOR, StartScreen.DEFAULT_GAME_VIEW_SNAKE_TONGUE_COLOR));
 
 
             /**
