@@ -238,6 +238,7 @@ public class StartScreen extends Activity implements View.OnClickListener, Color
                 Intent i = new Intent(this, GameView.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
+                overridePendingTransition(R.anim.animation_alpha, R.anim.animation_alpha);
             }
             break;
             default: {

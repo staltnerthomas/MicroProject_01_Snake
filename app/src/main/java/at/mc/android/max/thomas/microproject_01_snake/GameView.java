@@ -77,7 +77,7 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
         //Set the dimensions of the Snake and Fruit
         //as preselected in the settings
         SharedPreferences sharedPrefs = getSharedPreferences(StartScreen.SHARED_PREFS, MODE_PRIVATE);
-        switch (sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 3)) {
+        switch (sharedPrefs.getInt(Settings.OPTIONS_SEEKBAR_SIZE_OF_THE_SNAKE, 2)) {
             case 0: {
                 //defines the Fruit
                 dimensionFruit = 19;            // 25
@@ -164,6 +164,8 @@ public class GameView extends Activity implements SensorEventListener, SurfaceHo
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
+                Log.i(TAG, "surfaceDestroyed!");
+                sHolder = null;
             }
         });
 
